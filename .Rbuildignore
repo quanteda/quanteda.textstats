@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^CONDUCT\.md$
+^README\.Rmd$
+^cran-comments.md$
+^LICENSE$
+
