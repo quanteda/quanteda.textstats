@@ -24,7 +24,7 @@ Imports:
     Rcpp (>= 0.12.12),
     RcppParallel,
     stringi
-LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0)
+LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
 Suggests:
     entropy,
     ExPosition,     
