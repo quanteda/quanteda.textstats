@@ -333,7 +333,7 @@
 #'   including through pattern-matching, using [corpus_trim()].
 #' @param intermediate if `TRUE`, include intermediate quantities in the output
 #' @param ... not used
-#' @importFrom quanteda texts char_trim nsentence char_tolower tokens_remove dfm nscrabble
+#' @importFrom quanteda.core texts char_trim nsentence char_tolower tokens_remove dfm
 #' @importFrom nsyllable nsyllable
 #' @author Kenneth Benoit, re-engineered from Meik Michalke's \pkg{koRpus}
 #'   package.
@@ -346,7 +346,7 @@
 #' textstat_readability(txt, measure = "Flesch")
 #' textstat_readability(txt, measure = c("FOG", "FOG.PSK", "FOG.NRI"))
 #'
-#' textstat_readability(data_corpus_inaugural[48:58],
+#' textstat_readability(quanteda.core::data_corpus_inaugural[48:58],
 #'                      measure = c("Flesch.Kincaid", "Dale.Chall.old"))
 #' @references
 #'   Anderson, J. (1983). Lix and rix: Variations on a little-known readability
@@ -577,7 +577,7 @@ textstat_readability.corpus <- function(x,
     # look up D-C words if needed
     if (any(c("Dale.Chall", "Dale.Chall.old", "Dale.Chall.PSK", "Bormuth.MC", "Bormuth.GP", "DRP") %in% measure)) {
         temp[, W_wl.Dale.Chall := lengths(tokens_remove(toks,
-                                                        pattern = quanteda.textstat::data_char_wordlists$dalechall,
+                                                        pattern = quanteda.textstats::data_char_wordlists$dalechall,
                                                         valuetype = "fixed",
                                                         case_insensitive = TRUE))]
     }
@@ -750,7 +750,7 @@ textstat_readability.corpus <- function(x,
     if (any(c("Spache", "Spache.old") %in% measure)) {
         # number of words which are not in the Spache word list
         temp[, W_wl.Spache := lengths(tokens_remove(toks,
-                                                    pattern = quanteda.textstat::data_char_wordlists$spache,
+                                                    pattern = quanteda.textstats::data_char_wordlists$spache,
                                                     valuetype = "fixed",
                                                     case_insensitive = TRUE))]
     }

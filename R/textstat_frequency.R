@@ -13,7 +13,7 @@
 #' @param ... additional arguments passed to [dfm_group()].  This can
 #'   be useful in passing `force = TRUE`, for instance, if you are grouping a
 #'   dfm that has been weighted.
-#' @inheritParams quanteda::groups
+#' @inheritParams quanteda.core::groups
 #' @return a data.frame containing the following variables:
 #' \describe{
 #' \item{`feature`}{(character) the feature}
@@ -29,7 +29,7 @@
 #' column is omitted from the returned data.frame.}
 #' }
 #' @examples
-#' library("quanteda")
+#' library("quanteda.core")
 #' set.seed(20)
 #' dfmat1 <- dfm(c("a a b b c d", "a d d d", "a a a"))
 #'
@@ -72,7 +72,7 @@
 #' @return `textstat_frequency` returns a data.frame of features and
 #'   their term and document frequencies within groups.
 #' @export
-#' @importFrom quanteda dfm_group
+#' @importFrom quanteda.core dfm_group
 #' @keywords plot
 textstat_frequency <- function(x, n = NULL, groups = NULL,
                                ties_method = c("min", "average", "first", "random", "max", "dense"),

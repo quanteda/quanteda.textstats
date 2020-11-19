@@ -59,7 +59,7 @@ different categories.  Here, the categories are defined by reference to a
 consisting of all other documents.
 }
 \examples{
-library("quanteda")
+library("quanteda.core")
 
 # compare pre- v. post-war terms using grouping
 period <- ifelse(docvars(data_corpus_inaugural, "Year") < 1945, "pre-war", "post-war")

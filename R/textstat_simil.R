@@ -154,7 +154,7 @@ setMethod("tail", signature(x = "textstat_proxy"), function(x, n = 6L, ...) {
 #' @seealso \code{\link[stats:dist]{stats::as.dist()}}
 #' @examples
 #' # similarities for documents
-#' library("quanteda")
+#' library("quanteda.core")
 #' dfmat <- dfm(corpus_subset(data_corpus_inaugural, Year > 2000),
 #'              remove_punct = TRUE, remove = stopwords("english"))
 #' (tstat1 <- textstat_simil(dfmat, method = "cosine", margin = "documents"))
@@ -311,7 +311,7 @@ textstat_dist.default <- function(x, y = NULL, selection = NULL,
 }
 
 #' @export
-#' @importFrom quanteda featnames is.dfm
+#' @importFrom quanteda.core featnames is.dfm
 textstat_dist.dfm <- function(x, y = NULL, selection = NULL,
                               margin = c("documents", "features"),
                               method = c("euclidean",

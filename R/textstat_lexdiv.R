@@ -137,7 +137,7 @@
 #' @return A data.frame of documents and their lexical diversity scores.
 #' @export
 #' @examples
-#' library("quanteda")
+#' library("quanteda.core")
 #'
 #' txt <- c("Anyway, like I was sayin', shrimp is the fruit of the sea. You can
 #'           barbecue it, boil it, broil it, bake it, saute it.",
@@ -171,7 +171,7 @@ textstat_lexdiv.default <- function(x, ...) {
 }
 
 #' @export
-#' @importFrom quanteda dfm_remove as.dfm
+#' @importFrom quanteda.core dfm_remove as.dfm
 textstat_lexdiv.dfm <- function(x,
                                 measure = c("TTR", "C", "R", "CTTR", "U", "S", "K", "I", "D",
                                             "Vm", "Maas", "all"),
@@ -220,7 +220,7 @@ textstat_lexdiv.dfm <- function(x,
 }
 
 #' @export
-#' @importFrom quanteda dfm
+#' @importFrom quanteda.core dfm
 textstat_lexdiv.tokens <-
     function(x,
              measure = c("TTR", "C", "R", "CTTR", "U", "S", "K", "I", "D",
@@ -293,7 +293,7 @@ NULL
 #' @details `compute_lexdiv_dfm_stats` in an internal function that
 #'   computes the lexical diversity measures from a [dfm] input.
 #' @importFrom data.table :=
-#' @importFrom quanteda ntoken ntype docnames
+#' @importFrom quanteda.core ntoken ntype docnames
 compute_lexdiv_dfm_stats <- function(x, measure = NULL, log.base = 10) {
 
     n_tokens <- n_types <- TTR <- C <- R <- CTTR <- U <- S <- Maas <-
@@ -411,7 +411,7 @@ compute_lexdiv_tokens_stats <- function(x, measure = c("MATTR", "MSTTR"),
 #' @param MATTR_window integer; the size of the moving window for computation of
 #'   TTR, between 1 and the number of tokens of the document
 #' @keywords internal textstat lexdiv
-#' @importFrom quanteda ntoken tokens_chunk tokens_ngrams dfm
+#' @importFrom quanteda.core ntoken tokens_chunk tokens_ngrams dfm
 compute_mattr <- function(x, MATTR_window = 100L) {
 
     if (MATTR_window < 1)
@@ -466,10 +466,10 @@ compute_msttr <- function(x, MSTTR_segment) {
 #' in the same was as `tokens(x, remove_hyphens = TRUE)` would have done.
 #' @param x input [dfm]
 #' @keywords internal dfm
-#' @importFrom quanteda featnames tokens dfm_compress
+#' @importFrom quanteda.core featnames tokens dfm_compress
 #' @examples
-#' (dfmat <- quanteda::dfm("One-two one two three."))
-#' quanteda:::dfm_split_hyphenated_features(dfmat)
+#' (dfmat <- quanteda.core::dfm("One-two one two three."))
+#' quanteda.textstats:::dfm_split_hyphenated_features(dfmat)
 dfm_split_hyphenated_features <- function(x) {
     # the global for matching the hyphens and similar characters
     hyphen_regex <- "^.+\\p{Pd}.+$"

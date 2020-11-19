@@ -128,7 +128,7 @@ are ignored.}
 }
 }
 \examples{
-library("quanteda")
+library("quanteda.core")
 
 txt <- c("Anyway, like I was sayin', shrimp is the fruit of the sea. You can
           barbecue it, boil it, broil it, bake it, saute it.",

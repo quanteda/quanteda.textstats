@@ -102,6 +102,7 @@ Wald test \eqn{z}-statistic \eqn{z} is calculated as:
 \deqn{z = \frac{\lambda}{[\sum_{i=1}^{M} n_{i}^{-1}]^{(1/2)}}}
 }
 \examples{
+library("quanteda.core")
 corp <- data_corpus_inaugural[1:2]
 head(cols <- textstat_collocations(corp, size = 2, min_count = 2), 10)
 head(cols <- textstat_collocations(corp, size = 3, min_count = 2), 10)
@@ -120,6 +121,16 @@ txt <- c(". . . . a b c . . a b c . . . c d e",
          "b c d . . b c . b c . . . b c")
 textstat_collocations(txt, size = 2:3)
 
+# compounding tokens from collocations
+toks <- tokens("This is the European Union.")
+colls <- tokens("The new European Union is not the old European Union.") \%>\%
+    textstat_collocations(size = 2, min_count = 1, tolower = FALSE)
+colls
+tokens_compound(toks, colls, case_insensitive = FALSE)
+
+#' # from a collocations object
+(coll <- textstat_collocations(tokens("a b c a b d e b d a b")))
+phrase(coll)
 }
 \references{
 Blaheta, D. & Johnson, M. (2001). \href{http://web.science.mq.edu.au/~mjohnson/papers/2001/dpb-colloc01.pdf}{Unsupervised learning of multi-word verbs}.

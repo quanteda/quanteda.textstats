@@ -78,9 +78,10 @@
 #' @keywords textstat collocations
 #' @aliases collocations
 #' @author Kenneth Benoit, Jouni Kuha, Haiyan Wang, and Kohei Watanabe
-#' @importFrom quanteda corpus as.corpus tokens as.tokens tokens_tolower
+#' @importFrom quanteda.core corpus as.corpus tokens as.tokens tokens_tolower
 #'   pattern2id
 #' @examples
+#' library("quanteda.core")
 #' corp <- data_corpus_inaugural[1:2]
 #' head(cols <- textstat_collocations(corp, size = 2, min_count = 2), 10)
 #' head(cols <- textstat_collocations(corp, size = 3, min_count = 2), 10)
@@ -99,6 +100,16 @@
 #'          "b c d . . b c . b c . . . b c")
 #' textstat_collocations(txt, size = 2:3)
 #'
+#' # compounding tokens from collocations
+#' toks <- tokens("This is the European Union.")
+#' colls <- tokens("The new European Union is not the old European Union.") %>%
+#'     textstat_collocations(size = 2, min_count = 1, tolower = FALSE)
+#' colls
+#' tokens_compound(toks, colls, case_insensitive = FALSE)
+#'
+#' #' # from a collocations object
+#' (coll <- textstat_collocations(tokens("a b c a b d e b d a b")))
+#' phrase(coll)
 textstat_collocations <- function(x, method = "lambda",
                                   size = 2,
                                   min_count = 2,
@@ -120,7 +131,7 @@ textstat_collocations.default <- function(x, method = "lambda",
 
 
 #' @importFrom stats na.omit
-#' @importFrom quanteda types
+#' @importFrom quanteda.core types
 #' @export
 textstat_collocations.tokens <- function(x, method = "lambda",
                                          size = 2,

@@ -1,8 +1,8 @@
 context("test textstat_*")
 
 txt <- c("A a b b c d", "B d d d", "C a a")
-toks <- quanteda::tokens(txt)
-mt <- quanteda::dfm(toks)
+toks <- quanteda.core::tokens(txt)
+mt <- quanteda.core::dfm(toks)
 
 col <- textstat_collocations(toks, min_count = 1)
 key <- textstat_keyness(mt)

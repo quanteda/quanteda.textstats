@@ -58,14 +58,14 @@ using vectorized computation
 using vectorized computation
 }
 \examples{
-library("quanteda")
+library("quanteda.core")
 dfmat <- dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
                d2 = "a a b c c d d d d e f h"))
-quanteda:::keyness_chi2_dt(dfmat)
-quanteda:::keyness_chi2_stats(dfmat)
-quanteda:::keyness_exact(dfmat)
-quanteda:::keyness_lr(dfmat)
-quanteda:::keyness_pmi(dfmat)
+quanteda.textstats:::keyness_chi2_dt(dfmat)
+quanteda.textstats:::keyness_chi2_stats(dfmat)
+quanteda.textstats:::keyness_exact(dfmat)
+quanteda.textstats:::keyness_lr(dfmat)
+quanteda.textstats:::keyness_pmi(dfmat)
 }
 \references{
 \url{https://en.wikipedia.org/wiki/Yates's_correction_for_continuity}

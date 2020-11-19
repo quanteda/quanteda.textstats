@@ -79,7 +79,7 @@ test_that("textstat_lexdiv works with a single document dfm (#706)", {
 test_that("raises error when dfm is empty (#1419)", {
     mx <- dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textstat_lexdiv(mx, c("TTR", "C")),
-                 quanteda:::message_error("dfm_empty"))
+                 quanteda.textstats:::message_error("dfm_empty"))
 })
 
 test_that("Yule's K and Herndon's Vm correction are (approximately) correct", {
@@ -346,7 +346,7 @@ test_that("compute_MSTTR internal function has working exception handlers", {
     mytoken <- tokens(mytxt)
 
     expect_warning(
-        quanteda:::compute_msttr(mytoken, 20),
+        quanteda.textstats:::compute_msttr(mytoken, 20),
         "MSTTR_segment exceeds some documents' token lengths, resetting to 8"
     )
 
@@ -361,12 +361,12 @@ test_that("compute_MSTTR internal function has working exception handlers", {
     # )
 
     # Test misspecification of Segment Size
-    expect_error(quanteda:::compute_msttr(mytoken, 0),
+    expect_error(quanteda.textstats:::compute_msttr(mytoken, 0),
                  "MSTTR_segment must be positive")
 
     # # Case when neither mean segmental TTR or each segment TTR is not requested
     # expect_error(compute_msttr(mytoken,segment_size=2,mean_sttr = FALSE ,all_segments=FALSE),
-    #              quanteda:::message_error("at least one MSTTR value type to be returned"))
+    #              quanteda.textstats:::message_error("at least one MSTTR value type to be returned"))
 })
 
 test_that("textstat_lexdiv.tokens works right when all measures are requested", {

@@ -123,7 +123,7 @@ for which different document lengths matter), then wrap the input dfm in
 }
 \examples{
 # similarities for documents
-library("quanteda")
+library("quanteda.core")
 dfmat <- dfm(corpus_subset(data_corpus_inaugural, Year > 2000),
              remove_punct = TRUE, remove = stopwords("english"))
 (tstat1 <- textstat_simil(dfmat, method = "cosine", margin = "documents"))

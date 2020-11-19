@@ -31,12 +31,12 @@ tokens = number of tokens; equal to \code{\link[=ntoken]{ntoken()}}
 (\verb{^\\p\{Sc\}\{0,1\}\\p\{N\}+([.,]*\\p\{N\})*\\p\{Sc\}\{0,1\}$})
 \item symbols = number of symbols (\verb{^\\p\{S\}$})
 \item tags = number of tags; sum of \code{pattern_username} and \code{pattern_hashtag}
-in \code{\link[quanteda:quanteda_options]{quanteda::quanteda_options()}}
+in \code{\link[quanteda.core:quanteda_options]{quanteda.core::quanteda_options()}}
 \item emojis = number of emojis (\verb{^\\p\{Emoji_Presentation\}+$})
 }
 }
 \examples{
-library("quanteda")
+library("quanteda.core")
 corp <- data_corpus_inaugural
 textstat_summary(corp, cache = TRUE)
 toks <- tokens(corp)

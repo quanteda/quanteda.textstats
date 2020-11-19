@@ -6,18 +6,33 @@
 \usage{
 \method{nsyllable}{tokens}(
   x,
-  syllable_dictionary = quanteda::data_int_syllables,
+  syllable_dictionary = nsyllable::data_syllables_en,
   use.names = FALSE
 )
 }
+\arguments{
+\item{x}{character vector whose
+syllables will be counted.  This will count all syllables in a character
+vector without regard to separating tokens, so it is recommended that x be
+individual terms.}
+
+\item{syllable_dictionary}{optional named integer vector of syllable counts where
+the names are lower case tokens.  When set to \code{NULL} (default), then
+the function will use the data object \code{data_int_syllables}, an
+English pronunciation dictionary from CMU.}
+
+\item{use.names}{logical; if \code{TRUE}, assign the tokens as the names of
+the syllable count vector}
+}
 \description{
-Extends \code{nsyllable()} methods for \link[quanteda:tokens]{quanteda::tokens} objects.
+Extends \code{nsyllable()} methods for \link{tokens} objects.
 }
 \examples{
 \dontshow{
+library("nsyllable")
 txt <- c(one = "super freakily yes",
          two = "merrily all go aerodynamic")
-toks <- quanteda::tokens(txt)
+toks <- quanteda.core::tokens(txt)
 nsyllable(toks)
 }
 }

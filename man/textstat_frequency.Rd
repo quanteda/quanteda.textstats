@@ -22,7 +22,7 @@ within group if \code{groups} is specified}
 variables to be used for grouping; or a factor or object that can be
 coerced into a factor equal in length or rows to the number of documents.
 \code{NA} values of the grouping value are dropped.
-See \link[quanteda]{groups} for details.}
+See \link[quanteda.core]{groups} for details.}
 
 \item{ties_method}{character string specifying how ties are treated.  See
 \code{\link[data.table:frank]{data.table::frank()}} for details.  Unlike that function,
@@ -58,7 +58,7 @@ Produces counts and document frequencies summaries of the features in a
 grouping variable.
 }
 \examples{
-library("quanteda")
+library("quanteda.core")
 set.seed(20)
 dfmat1 <- dfm(c("a a b b c d", "a d d d", "a a a"))
 
