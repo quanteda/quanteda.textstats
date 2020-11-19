@@ -1,4 +1,4 @@
-Package: quanteda.textstat
+Package: quanteda.textstats
 Version: 2.2
 Title: Textual Statistics for the Quantitative Analysis of Textual Data
 Description: Textual statistics functions formerly in the 'quanteda' package.
@@ -38,7 +38,7 @@ Remotes:
     quanteda/nsyllable
 URL: https://quanteda.io
 Encoding: UTF-8
-BugReports: https://github.com/quanteda/quanteda/issues
+BugReports: https://github.com/quanteda/textstats/issues
 LazyData: TRUE
 VignetteBuilder: knitr
 Language: en-GB

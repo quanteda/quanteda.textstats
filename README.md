@@ -1,43 +1,39 @@
 
-# quanteda.textstat: textual statistics for quanteda
+# quanteda.textstats: textual statistics for quanteda
 
 <!-- badges: start -->
 
 [![CRAN
-Version](https://www.r-pkg.org/badges/version/quanteda.textstat)](https://CRAN.R-project.org/package=quanteda.textstat)
-[![](https://img.shields.io/badge/devel%20version-2.1.3-royalblue.svg)](https://github.com/quanteda/quanteda.textstat)
-[![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textstat)](https://CRAN.R-project.org/package=quanteda.textstat)
+Version](https://www.r-pkg.org/badges/version/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
+[![](https://img.shields.io/badge/devel%20version-2.2-royalblue.svg)](https://github.com/quanteda/quanteda.textstats)
+[![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
 [![Total
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textstat?color=orange)](https://CRAN.R-project.org/package=quanteda.textstat)
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textstats?color=orange)](https://CRAN.R-project.org/package=quanteda.textstats)
 [![R build
-status](https://github.com/quanteda/quanteda.textstat/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textstat/actions)
-[![codecov](https://codecov.io/gh/quanteda/quanteda.textstat/branch/master/graph/badge.svg)](https://codecov.io/gh/quanteda/quanteda.textstat)
+status](https://github.com/quanteda/quanteda.textstats/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textstats/actions)
+[![codecov](https://codecov.io/gh/quanteda/quanteda.textstats/branch/master/graph/badge.svg)](https://codecov.io/gh/quanteda/quanteda.textstats)
 [![DOI](https://zenodo.org/badge/5424649.svg)](https://zenodo.org/badge/latestdoi/5424649)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00774/status.svg)](https://doi.org/10.21105/joss.00774)
 <!-- badges: end -->
 
 ## About
 
-Contains the textstat functions formerly in \*\*quanteda\*8, an R
-package for managing and analyzing text, created by [Kenneth
-Benoit](https://kenbenoit.net). Supported by the European Research
-Council grant ERC-2011-StG 283794-QUANTESS.
-
-For more details, see <https://quanteda.io>.
+Contains the textstat functions formerly in **quanteda**. For more
+details, see <https://quanteda.io>.
 
 ## How to Install
 
 The normal way from CRAN, using your R GUI or
 
 ``` r
-install.packages("quanteda.textstat") 
+install.packages("quanteda.textstats") 
 ```
 
 Or for the latest development version:
 
 ``` r
 # devtools package required to install quanteda from Github 
-devtools::install_github("quanteda/quanteda.textstat") 
+devtools::install_github("quanteda/quanteda.textstats") 
 ```
 
 Because this compiles some C++ and Fortran source code, you will need to
@@ -49,7 +45,7 @@ software available from CRAN.
 
 **If you are using macOS**, you should install the [macOS
 tools](https://cran.r-project.org/bin/macosx/tools/), namely the Clang
-6.x compiler and the GNU Fortran compiler (as **quanteda.textstat**
+6.x compiler and the GNU Fortran compiler (as **quanteda.textstats**
 requires gfortran to build). If you are still getting errors related to
 gfortran, follow the fixes
 [here](https://thecoatlessprofessor.com/programming/rcpp-rcpparmadillo-and-os-x-mavericks--lgfortran-and--lquadmath-error/).

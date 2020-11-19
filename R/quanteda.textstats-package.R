@@ -1,7 +1,7 @@
 #' @keywords internal
 #' @import methods Matrix
 #' @importFrom Rcpp evalCpp
-#' @useDynLib "quanteda.textstat", .registration = TRUE
+#' @useDynLib "quanteda.textstats", .registration = TRUE
 "_PACKAGE"
 
 # The following block is used by usethis to automatically manage
