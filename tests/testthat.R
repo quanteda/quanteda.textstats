@@ -3,8 +3,8 @@ Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = TRUE)
 
 library(testthat)
 library(quanteda)
-library(quanteda.textstat)
+library(quanteda.textstats)
 quanteda_options(reset = TRUE)
 
-test_check("quanteda.textstat")
+test_check("quanteda.textstats")
 

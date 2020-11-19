@@ -88,7 +88,7 @@ test_that("Yule's K and Herndon's Vm correction are (approximately) correct", {
     # “Yule's Characteristic K Revisited.” Language Resources and Evaluation
     # 39(4): 287–94.
     # text source: http://www.latinvulgate.com/verse.aspx?t=1&b=4&c=1
-    data_corpus_stjohn <- read.csv("../data/corpora/stjohn_latin.csv", stringsAsFactors = FALSE) %>%
+    data_corpus_stjohn <- read.csv("../data/stjohn_latin.csv", stringsAsFactors = FALSE) %>%
         corpus(text_field = "latin") %>%
         texts(groups = "chapter") %>%  # combine verses into a single document
         corpus(docvars = data.frame(chapter = 1:4))
