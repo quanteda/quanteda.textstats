@@ -78,10 +78,10 @@
 #' @keywords textstat collocations
 #' @aliases collocations
 #' @author Kenneth Benoit, Jouni Kuha, Haiyan Wang, and Kohei Watanabe
-#' @importFrom quanteda.core corpus as.corpus tokens as.tokens tokens_tolower
+#' @importFrom quanteda corpus as.corpus tokens as.tokens tokens_tolower
 #'   pattern2id
 #' @examples
-#' library("quanteda.core")
+#' library("quanteda")
 #' corp <- data_corpus_inaugural[1:2]
 #' head(cols <- textstat_collocations(corp, size = 2, min_count = 2), 10)
 #' head(cols <- textstat_collocations(corp, size = 3, min_count = 2), 10)
@@ -131,7 +131,7 @@ textstat_collocations.default <- function(x, method = "lambda",
 
 
 #' @importFrom stats na.omit
-#' @importFrom quanteda.core types
+#' @importFrom quanteda types
 #' @export
 textstat_collocations.tokens <- function(x, method = "lambda",
                                          size = 2,

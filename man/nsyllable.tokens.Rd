@@ -16,13 +16,13 @@ syllables will be counted.  This will count all syllables in a character
 vector without regard to separating tokens, so it is recommended that x be
 individual terms.}
 
-\item{syllable_dictionary}{optional named integer vector of syllable counts where
-the names are lower case tokens.  When set to \code{NULL} (default), then
-the function will use the data object \code{data_int_syllables}, an
-English pronunciation dictionary from CMU.}
+\item{syllable_dictionary}{optional named integer vector of syllable counts
+where the names are lower case tokens.  This can be used to override the
+language setting, when set to \code{NULL} (the default).  If a syllable
+dictionary is supplied, this will override the \code{language} argument.}
 
-\item{use.names}{logical; if \code{TRUE}, assign the tokens as the names of
-the syllable count vector}
+\item{use.names}{logical; if \code{TRUE}, assign the tokens as the names of the
+syllable count vector}
 }
 \description{
 Extends \code{nsyllable()} methods for \link{tokens} objects.
@@ -32,7 +32,7 @@ Extends \code{nsyllable()} methods for \link{tokens} objects.
 library("nsyllable")
 txt <- c(one = "super freakily yes",
          two = "merrily all go aerodynamic")
-toks <- quanteda.core::tokens(txt)
+toks <- quanteda::tokens(txt)
 nsyllable(toks)
 }
 }

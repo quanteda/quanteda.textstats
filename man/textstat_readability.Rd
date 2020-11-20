@@ -365,7 +365,7 @@ txt <- c(doc1 = "Readability zero one. Ten, Eleven.",
 textstat_readability(txt, measure = "Flesch")
 textstat_readability(txt, measure = c("FOG", "FOG.PSK", "FOG.NRI"))
 
-textstat_readability(quanteda.core::data_corpus_inaugural[48:58],
+textstat_readability(quanteda::data_corpus_inaugural[48:58],
                      measure = c("Flesch.Kincaid", "Dale.Chall.old"))
 }
 \references{

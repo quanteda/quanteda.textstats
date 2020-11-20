@@ -7,7 +7,7 @@
 #' library("nsyllable")
 #' txt <- c(one = "super freakily yes",
 #'          two = "merrily all go aerodynamic")
-#' toks <- quanteda.core::tokens(txt)
+#' toks <- quanteda::tokens(txt)
 #' nsyllable(toks)
 #' }
 #' @importFrom nsyllable nsyllable

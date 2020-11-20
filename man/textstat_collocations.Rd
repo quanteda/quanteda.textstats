@@ -102,7 +102,7 @@ Wald test \eqn{z}-statistic \eqn{z} is calculated as:
 \deqn{z = \frac{\lambda}{[\sum_{i=1}^{M} n_{i}^{-1}]^{(1/2)}}}
 }
 \examples{
-library("quanteda.core")
+library("quanteda")
 corp <- data_corpus_inaugural[1:2]
 head(cols <- textstat_collocations(corp, size = 2, min_count = 2), 10)
 head(cols <- textstat_collocations(corp, size = 3, min_count = 2), 10)

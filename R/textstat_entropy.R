@@ -6,7 +6,7 @@
 #' @return a data.frame of entropies for the given document or feature
 #' @export
 #' @examples
-#' library("quanteda.core")
+#' library("quanteda")
 #' textstat_entropy(data_dfm_lbgexample)
 #' textstat_entropy(data_dfm_lbgexample, "features")
 textstat_entropy <- function(x, margin = c("documents", "features"), base = 2) {
@@ -19,7 +19,7 @@ textstat_entropy.default <- function(x, margin = c("documents", "features"), bas
 }
 
 #' @export
-#' @importFrom quanteda.core as.dfm dfm_weight
+#' @importFrom quanteda as.dfm dfm_weight
 textstat_entropy.dfm <- function(x, margin = c("documents", "features"), base = 2) {
     x <- as.dfm(x)
     margin <- match.arg(margin)

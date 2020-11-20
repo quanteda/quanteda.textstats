@@ -30,7 +30,7 @@ function} if you send us the values for your language!
 }
 \examples{
 nscrabble(c("muzjiks", "excellency"))
-nscrabble(quanteda.core::data_corpus_inaugural[1:5], mean)
+nscrabble(quanteda::data_corpus_inaugural[1:5], mean)
 }
 \author{
 Kenneth Benoit

@@ -333,7 +333,7 @@
 #'   including through pattern-matching, using [corpus_trim()].
 #' @param intermediate if `TRUE`, include intermediate quantities in the output
 #' @param ... not used
-#' @importFrom quanteda.core texts char_trim nsentence char_tolower tokens_remove dfm
+#' @importFrom quanteda texts char_trim nsentence char_tolower tokens_remove dfm
 #' @importFrom nsyllable nsyllable
 #' @author Kenneth Benoit, re-engineered from Meik Michalke's \pkg{koRpus}
 #'   package.
@@ -346,7 +346,7 @@
 #' textstat_readability(txt, measure = "Flesch")
 #' textstat_readability(txt, measure = c("FOG", "FOG.PSK", "FOG.NRI"))
 #'
-#' textstat_readability(quanteda.core::data_corpus_inaugural[48:58],
+#' textstat_readability(quanteda::data_corpus_inaugural[48:58],
 #'                      measure = c("Flesch.Kincaid", "Dale.Chall.old"))
 #' @references
 #'   Anderson, J. (1983). Lix and rix: Variations on a little-known readability

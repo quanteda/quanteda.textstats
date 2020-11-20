@@ -20,7 +20,7 @@ a data.frame of entropies for the given document or feature
 Compute entropies of documents or features
 }
 \examples{
-library("quanteda.core")
+library("quanteda")
 textstat_entropy(data_dfm_lbgexample)
 textstat_entropy(data_dfm_lbgexample, "features")
 }

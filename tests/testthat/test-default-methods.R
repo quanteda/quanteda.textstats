@@ -26,14 +26,8 @@ test_that("test default textstat methods", {
         "textstat_summary() only works on corpus, dfm, tokens objects",
         fixed = TRUE
     )
-})
-
-test_that("test phrase for collocations", {
-    toks <- tokens(c("United States", "Congress", "federal government"))
-
-    colls <- textstat_collocations(toks, min_count = 1, tolower = FALSE)
-    expect_equivalent(
-        phrase(colls),
-        list(c("United", "States"), c("federal", "government"))
+    expect_error(
+        nscrabble(TRUE),
+        "nscrabble\\(\\) only works on character.*objects"
     )
 })

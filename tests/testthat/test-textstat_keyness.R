@@ -59,8 +59,8 @@ test_that("keyness_chi2 internal methods are equivalent", {
     dfmt <- dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
                    d2 = "a a b c c d d d d e f h"))
     expect_equal(
-        quanteda.core:::keyness_chi2_stats(dfmt),
-        quanteda.core:::keyness_chi2_dt(dfmt)
+        quanteda:::keyness_chi2_stats(dfmt),
+        quanteda:::keyness_chi2_dt(dfmt)
     )
 
     ## stats::chisq.test is wrong for small tables
@@ -336,7 +336,7 @@ test_that("raises error when dfm is empty (#1419)", {
 
     mx <- dfm_trim(data_dfm_lbgexample, 1000)
     expect_error(textstat_keyness(mx),
-                 quanteda.core:::message_error("dfm_empty"))
+                 quanteda:::message_error("dfm_empty"))
 })
 
 test_that("keyness works correctly for default, single, and multiple targets", {

@@ -16,7 +16,7 @@
 #'   function* if you send us the values for your language!
 #' @examples
 #' nscrabble(c("muzjiks", "excellency"))
-#' nscrabble(quanteda.core::data_corpus_inaugural[1:5], mean)
+#' nscrabble(quanteda::data_corpus_inaugural[1:5], mean)
 #' @export
 nscrabble <- function(x, FUN = sum) {
   UseMethod("nscrabble")
@@ -29,7 +29,7 @@ nscrabble.default <- function(x, FUN = sum) {
 
 #' @rdname nscrabble
 #' @importFrom data.table setkey
-#' @importFrom quanteda.core tokens_tolower
+#' @importFrom quanteda tokens_tolower
 #' @noRd
 #' @export
 nscrabble.character <- function(x, FUN = sum) {

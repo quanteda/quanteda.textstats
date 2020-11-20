@@ -2,7 +2,7 @@ Sys.setenv("R_TESTS" = "")
 Sys.setenv("_R_CHECK_LENGTH_1_CONDITION_" = TRUE)
 
 library("testthat")
-library("quanteda.core")
+library("quanteda")
 library("quanteda.textstats")
 quanteda_options(reset = TRUE)
 

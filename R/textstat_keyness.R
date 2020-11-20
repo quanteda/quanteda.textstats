@@ -50,7 +50,7 @@
 #' @keywords textstat
 #' @importFrom stats chisq.test
 #' @examples
-#' library("quanteda.core")
+#' library("quanteda")
 #'
 #' # compare pre- v. post-war terms using grouping
 #' period <- ifelse(docvars(data_corpus_inaugural, "Year") < 1945, "pre-war", "post-war")
@@ -86,7 +86,7 @@ textstat_keyness.default <- function(x, target = 1L,
     stop(friendly_class_undefined_message(class(x), "textstat_keyness"))
 }
 
-#' @importFrom quanteda.core dfm_group
+#' @importFrom quanteda dfm_group
 #' @export
 textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "lr", "pmi"),
                                  sort = TRUE,
@@ -189,14 +189,14 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
 #' objects.
 #' @return a data.frame of chi2 and p-values with rows named for each feature
 #' @examples
-#' library("quanteda.core")
+#' library("quanteda")
 #' dfmat <- dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
 #'                d2 = "a a b c c d d d d e f h"))
 #' quanteda.textstats:::keyness_chi2_dt(dfmat)
 #' @keywords textstat internal
 #' @importFrom data.table data.table :=
 #' @importFrom stats dchisq
-#' @importFrom quanteda.core ndoc featnames
+#' @importFrom quanteda ndoc featnames
 #' @references
 #'   <https://en.wikipedia.org/wiki/Yates's_correction_for_continuity>
 #'
@@ -317,7 +317,7 @@ keyness_exact <- function(x) {
 #' @param correction implement the Yates correction for 2x2 tables
 #' @details `keyness_lr` computes the \eqn{G^2} likelihood ratio statistic
 #'   using vectorized computation
-#' @importFrom quanteda.core ndoc featnames
+#' @importFrom quanteda ndoc featnames
 #' @examples
 #' quanteda.textstats:::keyness_lr(dfmat)
 #' @references
@@ -382,7 +382,7 @@ keyness_lr <- function(x, correction = c("default", "yates", "williams", "none")
 #' @rdname keyness
 #' @details `keyness_pmi` computes the Pointwise Mutual Information stat
 #'   using vectorized computation
-#' @importFrom quanteda.core ndoc featnames
+#' @importFrom quanteda ndoc featnames
 #' @examples
 #' quanteda.textstats:::keyness_pmi(dfmat)
 keyness_pmi <- function(x) {

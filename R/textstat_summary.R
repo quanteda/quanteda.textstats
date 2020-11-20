@@ -16,7 +16,7 @@
 #' (`^\p{Sc}{0,1}\p{N}+([.,]*\p{N})*\p{Sc}{0,1}$`)
 #' \item symbols = number of symbols (`^\p{S}$`)
 #' \item tags = number of tags; sum of `pattern_username` and `pattern_hashtag`
-#' in [quanteda.core::quanteda_options()]
+#' in [quanteda::quanteda_options()]
 #' \item emojis = number of emojis (`^\p{Emoji_Presentation}+$`)
 #' }
 #' @param x corpus to be summarized
@@ -25,7 +25,7 @@
 #' @export
 #' @keywords textstat
 #' @examples
-#' library("quanteda.core")
+#' library("quanteda")
 #' corp <- data_corpus_inaugural
 #' textstat_summary(corp, cache = TRUE)
 #' toks <- tokens(corp)
@@ -72,14 +72,14 @@ summarize <- function(x, cache = TRUE, ...) {
     patterns <- removals_regex(punct = TRUE, symbols = TRUE,
                                numbers = TRUE, url = TRUE)
     patterns[["tag"]] <-
-        list("username" = paste0("^", quanteda.core::quanteda_options("pattern_username"), "$"),
-             "hashtag" = paste0("^", quanteda.core::quanteda_options("pattern_hashtag"), "$"))
+        list("username" = paste0("^", quanteda::quanteda_options("pattern_username"), "$"),
+             "hashtag" = paste0("^", quanteda::quanteda_options("pattern_hashtag"), "$"))
     patterns[["emoji"]] <- "^\\p{Emoji_Presentation}+$"
-    dict <- quanteda.core::dictionary(patterns)
+    dict <- quanteda::dictionary(patterns)
 
     y <- dfm(x, ...)
-    temp <- quanteda.core::convert(
-        quanteda.core::dfm_lookup(y, dictionary = dict, valuetype = "regex", levels = 1),
+    temp <- quanteda::convert(
+        quanteda::dfm_lookup(y, dictionary = dict, valuetype = "regex", levels = 1),
         "data.frame",
         docid_field = "document"
     )
@@ -99,7 +99,7 @@ summarize <- function(x, cache = TRUE, ...) {
         stringsAsFactors = FALSE
     )
 
-    if (quanteda.core::is.corpus(x)) {
+    if (quanteda::is.corpus(x)) {
         result$chars <- nchar(x)
         result$sents <- ntoken(tokens(x, what = "sentence"))
     }

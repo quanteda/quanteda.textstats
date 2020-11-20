@@ -20,14 +20,14 @@
 #' `textstat_keyness` or `textstat_frequency` based on
 #' `"glob"`, `"regex"` or `"fixed"` patterns using this method.
 #' @param x a `textstat` object
-#' @inheritParams quanteda.core::pattern
+#' @inheritParams quanteda::pattern
 #' @param selection whether to `"keep"` or `"remove"` the rows that
 #'   match the pattern
-#' @inheritParams quanteda.core::valuetype
+#' @inheritParams quanteda::valuetype
 #' @keywords textstat internal
 #' @export
 #' @examples
-#' library("quanteda.core")
+#' library("quanteda")
 #'
 #' period <- ifelse(docvars(data_corpus_inaugural, "Year") < 1945, "pre-war", "post-war")
 #' dfmat <- dfm(data_corpus_inaugural, groups = period)

@@ -15,19 +15,19 @@ textstat_select(
 \arguments{
 \item{x}{a \code{textstat} object}
 
-\item{pattern}{a character vector, list of character vectors, \link[quanteda.core]{dictionary},
+\item{pattern}{a character vector, list of character vectors, \link[quanteda]{dictionary},
 or \link[quanteda.textstats:textstat_collocations]{collocations} object.  See
-\link[quanteda.core]{pattern} for details.}
+\link[quanteda]{pattern} for details.}
 
 \item{selection}{whether to \code{"keep"} or \code{"remove"} the rows that
 match the pattern}
 
 \item{valuetype}{the type of pattern matching: \code{"glob"} for "glob"-style
 wildcard expressions; \code{"regex"} for regular expressions; or \code{"fixed"} for
-exact matching. See \link[quanteda.core]{valuetype} for details.}
+exact matching. See \link[quanteda]{valuetype} for details.}
 
 \item{case_insensitive}{logical; if \code{TRUE}, ignore case when matching a
-\code{pattern} or \link[quanteda.core]{dictionary} values}
+\code{pattern} or \link[quanteda]{dictionary} values}
 }
 \description{
 Users can subset output object of \code{textstat_collocations},
@@ -35,7 +35,7 @@ Users can subset output object of \code{textstat_collocations},
 \code{"glob"}, \code{"regex"} or \code{"fixed"} patterns using this method.
 }
 \examples{
-library("quanteda.core")
+library("quanteda")
 
 period <- ifelse(docvars(data_corpus_inaugural, "Year") < 1945, "pre-war", "post-war")
 dfmat <- dfm(data_corpus_inaugural, groups = period)

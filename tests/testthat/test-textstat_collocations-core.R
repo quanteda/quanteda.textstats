@@ -7,7 +7,7 @@ test_that("pattern2list is working with collocations", {
     toks <- tokens(txt)
     type <- types(toks)
     col <- textstat_collocations(toks, size = 2:3)
-    ids <- quanteda.core:::pattern2list(col, type, 'fixed', TRUE)
+    ids <- quanteda:::pattern2list(col, type, 'fixed', TRUE)
     expect_equivalent(col$collocation,
                       vapply(ids, function(x, y) paste0(y[x], collapse = " "), character(1), type))
     expect_equal(names(ids), col$collocation)
@@ -191,5 +191,28 @@ test_that("kwic works as expected with and without collocations phrases", {
     expect_equal(
         nrow(kwic(toks_bi, phrase(coll_bi))),
         0
+    )
+})
+
+test_that("char_select works with collocations pattern", {
+    txt <- c(c1 = "aa bb", c2 = "ab", c3 = "aa bc", c4 = "bcd", c5 = "bcd")
+    patt <- textstat_collocations("aa bb aa bb aa bc bcd", min_count = 1)
+    expect_identical(
+        char_keep(txt, patt),
+        c(c1 = "aa bb", c3 = "aa bc")
+    )
+    expect_identical(
+        char_remove(txt, patt),
+        c(c2 = "ab", c4 = "bcd", c5 = "bcd")
+    )
+})
+
+test_that("test phrase for collocations", {
+    toks <- tokens(c("United States", "Congress", "federal government"))
+
+    colls <- textstat_collocations(toks, min_count = 1, tolower = FALSE)
+    expect_equivalent(
+        phrase(colls),
+        list(c("United", "States"), c("federal", "government"))
     )
 })

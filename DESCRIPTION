@@ -15,7 +15,7 @@ Depends:
     R (>= 3.1.0),
     methods
 Imports:
-    quanteda.core,
+    quanteda,
     data.table (>= 1.9.6),
     digest,
     Matrix (>= 1.2),
@@ -24,7 +24,7 @@ Imports:
     Rcpp (>= 0.12.12),
     RcppParallel,
     stringi
-LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda.core
+LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
 Suggests:
     entropy,
     ExPosition,     
@@ -35,8 +35,8 @@ Suggests:
     testthat,
     knitr
 Remotes:
-    quanteda/nsyllable
-    koheiw/quanteda.core@modularise
+    quanteda/nsyllable,
+    quanteda/quanteda@separate-textstat
 URL: https://quanteda.io
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/textstats/issues
