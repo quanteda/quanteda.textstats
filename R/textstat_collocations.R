@@ -200,15 +200,6 @@ textstat_collocations.character <- function(x, method = "lambda",
                           smoothing = smoothing, tolower = tolower, ...)
 }
 
-
-#' @rdname textstat_collocations
-#' @export
-#' @return `is.collocation` returns `TRUE` if the object is of class
-#'   `collocations`, `FALSE` otherwise.
-is.collocations <- function(x) {
-    "collocations" %in% class(x)
-}
-
 # Internal Functions ------------------------------------------------------
 
 # function to get lower-order interactions for k-grams

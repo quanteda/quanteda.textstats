@@ -3,7 +3,6 @@
 \name{textstat_collocations}
 \alias{textstat_collocations}
 \alias{collocations}
-\alias{is.collocations}
 \title{Identify and score multi-word expressions}
 \usage{
 textstat_collocations(
@@ -15,8 +14,6 @@ textstat_collocations(
   tolower = TRUE,
   ...
 )
-
-is.collocations(x)
 }
 \arguments{
 \item{x}{a character, \link{corpus}, or \link{tokens} object whose collocations will be
@@ -51,9 +48,6 @@ counts, length, and \eqn{\lambda} and \eqn{z} statistics.  When \code{size} is a
 vector, then \code{count_nested} counts the lower-order collocations that occur
 within a higher-order collocation (but this does not affect the
 statistics).
-
-\code{is.collocation} returns \code{TRUE} if the object is of class
-\code{collocations}, \code{FALSE} otherwise.
 }
 \description{
 Identify and score multi-word expressions, or adjacent fixed-length
