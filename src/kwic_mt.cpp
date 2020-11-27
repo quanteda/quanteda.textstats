@@ -1,5 +1,4 @@
 #include "lib.h"
-#include "recompile.h"
 #include "dev.h"
 using namespace quanteda;
 
