@@ -18,6 +18,7 @@
 #' nscrabble(c("muzjiks", "excellency"))
 #' nscrabble(quanteda::data_corpus_inaugural[1:5], mean)
 #' @export
+#' @keywords internal
 nscrabble <- function(x, FUN = sum) {
   UseMethod("nscrabble")
 }

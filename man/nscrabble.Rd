@@ -35,3 +35,4 @@ nscrabble(quanteda::data_corpus_inaugural[1:5], mean)
 \author{
 Kenneth Benoit
 }
+\keyword{internal}

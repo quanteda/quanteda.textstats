@@ -1,5 +1,5 @@
 Package: quanteda.textstats
-Version: 2.2
+Version: 0.90
 Title: Textual Statistics for the Quantitative Analysis of Textual Data
 Description: Textual statistics functions formerly in the 'quanteda' package.
 Authors@R: c( 
@@ -12,13 +12,13 @@ Authors@R: c(
     )
 License: GPL-3
 Depends:
-    R (>= 3.1.0),
-    methods
+    R (>= 3.2.0)
 Imports:
     quanteda,
     data.table (>= 1.9.6),
     digest,
     Matrix (>= 1.2),
+    methods,
     nsyllable,
     proxyC (>= 0.1.4),
     Rcpp (>= 0.12.12),
@@ -35,8 +35,7 @@ Suggests:
     testthat,
     knitr
 Remotes:
-    quanteda/nsyllable,
-    quanteda/quanteda@separate-textstat
+    quanteda/nsyllable
 URL: https://quanteda.io
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/textstats/issues
