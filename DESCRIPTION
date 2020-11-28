@@ -38,7 +38,7 @@ Remotes:
     quanteda/nsyllable
 URL: https://quanteda.io
 Encoding: UTF-8
-BugReports: https://github.com/quanteda/textstats/issues
+BugReports: https://github.com/quanteda/quanteda.textstats/issues
 LazyData: TRUE
 VignetteBuilder: knitr
 Language: en-GB
