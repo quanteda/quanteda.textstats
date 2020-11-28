@@ -76,7 +76,6 @@
 #'   statistics).
 #' @export
 #' @keywords textstat collocations
-#' @aliases collocations
 #' @author Kenneth Benoit, Jouni Kuha, Haiyan Wang, and Kohei Watanabe
 #' @importFrom quanteda corpus as.corpus tokens as.tokens tokens_tolower
 #'   pattern2id
