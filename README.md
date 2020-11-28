@@ -5,14 +5,13 @@
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
-[![](https://img.shields.io/badge/devel%20version-2.2-royalblue.svg)](https://github.com/quanteda/quanteda.textstats)
+[![](https://img.shields.io/badge/devel%20version-0.90-royalblue.svg)](https://github.com/quanteda/quanteda.textstats)
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textstats?color=orange)](https://CRAN.R-project.org/package=quanteda.textstats)
 [![R build
 status](https://github.com/quanteda/quanteda.textstats/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textstats/actions)
 [![codecov](https://codecov.io/gh/quanteda/quanteda.textstats/branch/master/graph/badge.svg)](https://codecov.io/gh/quanteda/quanteda.textstats)
-[![DOI](https://zenodo.org/badge/5424649.svg)](https://zenodo.org/badge/latestdoi/5424649)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00774/status.svg)](https://doi.org/10.21105/joss.00774)
 <!-- badges: end -->
 
@@ -60,4 +59,4 @@ data](https://www.theoj.org/joss-papers/joss.00774/10.21105.joss.00774.pdf)”.
 <https://doi.org/10.21105/joss.00774>.
 
 For a BibTeX entry, use the output from `citation(package =
-"quanteda")`.
+"quanteda.textstats")`.
