@@ -8,42 +8,10 @@ removals_regex <- quanteda:::removals_regex
 
 pad_dfm <- quanteda:::pad_dfm
 
-get_cache <- function(x, field, ...) {
-    if (Sys.info()[["sysname"]] == "SunOS")
-        return(NULL)
-    meta <- meta(x, type = "all")
-    hash <- hash_object(x, ...)
-    #print(hash)
-    if (identical(meta$object[[field]][["hash"]], hash)) {
-        result <- meta$object[[field]][["data"]]
-    } else {
-        result <- NULL
-    }
-    return(result)
-}
+get_cache <- quanteda:::get_cache
 
-set_cache <- function(x, field, object, ...) {
-    if (Sys.info()[["sysname"]] == "SunOS")
-        return()
-    meta <- meta(x, type = "all")
-    hash <- hash_object(x, ...)
-    #print(hash)
-    meta$object[[field]] <- list("hash" = hash, "data" = object)
-    qatd_cpp_set_meta(x, meta)
-}
+set_cache <- quanteda:::set_cache
 
-clear_cache <- function(x, field) {
-    if (Sys.info()[["sysname"]] == "SunOS")
-        return()
-    meta <- meta(x, type = "all")
-    if (field %in% names(meta$object)) {
-        meta$object[[field]] <- list()
-        qatd_cpp_set_meta(x, meta)
-    }
-}
+clear_cache <- quanteda:::clear_cache
 
-hash_object <- function(x, ...) {
-    attr(x, "meta") <- NULL
-    digest::digest(list(x, utils::packageVersion("quanteda"), ...),
-                   algo = "sha256")
-}
+hash_object <- quanteda:::clear_cache
