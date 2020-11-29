@@ -2,6 +2,11 @@ Package: quanteda.textstats
 Version: 0.90
 Title: Textual Statistics for the Quantitative Analysis of Textual Data
 Description: Textual statistics functions formerly in the 'quanteda' package.
+    Textual statistics for characterizing and comparing textual data. Includes 
+    functions for measuring term and document frequency, the co-occurrence of 
+    words, similarity and distance between features and documents, feature entropy, 
+    keyword occurrence, readability, and lexical diversity.  These functions 
+    extend the 'quanteda' package and are specially designed for sparse textual data.
 Authors@R: c( 
     person("Kenneth", "Benoit", email = "kbenoit@lse.ac.uk", role = c("cre", "aut", "cph"), comment = c(ORCID = "0000-0002-0797-564X")), 
     person("Kohei", "Watanabe", email = "watanabe.kohei@gmail.com", role = "aut", comment = c(ORCID = "0000-0001-6519-5265")), 
@@ -40,7 +45,6 @@ URL: https://quanteda.io
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/quanteda.textstats/issues
 LazyData: TRUE
-VignetteBuilder: knitr
 Language: en-GB
 RoxygenNote: 7.1.1
 SystemRequirements: C++11

@@ -7,12 +7,17 @@
 \title{quanteda.textstats: Textual Statistics for the Quantitative Analysis of Textual Data}
 \description{
 Textual statistics functions formerly in the 'quanteda' package.
+    Textual statistics for characterizing and comparing textual data. Includes 
+    functions for measuring term and document frequency, the co-occurrence of 
+    words, similarity and distance between features and documents, feature entropy, 
+    keyword occurrence, readability, and lexical diversity.  These functions 
+    extend the 'quanteda' package and are specially designed for sparse textual data.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://quanteda.io}
-  \item Report bugs at \url{https://github.com/quanteda/textstats/issues}
+  \item Report bugs at \url{https://github.com/quanteda/quanteda.textstats/issues}
 }
 
 }
