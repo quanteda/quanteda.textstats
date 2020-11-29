@@ -13,7 +13,6 @@
 
 No ERRORs, NOTEs, or WARNINGs produced.
 
-
 ## Downstream dependencies
 
-This release causes no breaks in other packages, as checked via `revdepcheck::revdepcheck()`.
+This package currently has no reverse dependences.

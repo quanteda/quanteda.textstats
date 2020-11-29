@@ -7,4 +7,3 @@ library("quanteda.textstats")
 quanteda_options(reset = TRUE)
 
 test_check("quanteda.textstats")
-
