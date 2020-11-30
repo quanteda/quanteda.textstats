@@ -419,7 +419,7 @@ compute_mattr <- function(x, MATTR_window = 100L) {
     if (any(ntoken(x) < MATTR_window)) {
         MATTR_window <- max(ntoken(x))
         warning("MATTR_window exceeds some documents' token lengths, resetting to ",
-                MATTR_window)
+                MATTR_window, call. = FALSE)
     }
 
     # create each document window as an "ngram"
