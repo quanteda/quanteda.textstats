@@ -41,10 +41,6 @@ qatd_cpp_keyness <- function(mt, measure, correct) {
     .Call(`_quanteda_textstats_qatd_cpp_keyness`, mt, measure, correct)
 }
 
-qatd_cpp_kwic <- function(texts_, types_, words_, pats_, window, delim_) {
-    .Call(`_quanteda_textstats_qatd_cpp_kwic`, texts_, types_, words_, pats_, window, delim_)
-}
-
 qatd_cpp_set_meta <- function(object_, meta_) {
     invisible(.Call(`_quanteda_textstats_qatd_cpp_set_meta`, object_, meta_))
 }
