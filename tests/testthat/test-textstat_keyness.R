@@ -381,4 +381,34 @@ test_that("keyness works correctly for default, single, and multiple targets", {
       "logical target value length must equal the number of documents"
   )
 
+  # for illegal target values
+  expect_error(
+      textstat_keyness(d, d),
+      "target must be numeric, character or logical"
+  )
+})
+
+test_that("comparisons with old measures work", {
+  dfmat <- corpus(c(d1 = "a a a a a b b b c c c c ",
+                    d2 = "a b c d d d d e f g",
+                    d3 = "a b c d d e e e e f g")) %>%
+    dfm()
+
+  expect_identical(
+    textstat_keyness(dfmat, measure = "chi2", old = TRUE),
+    textstat_keyness(dfmat, measure = "chi2", old = FALSE)
+  )
+  expect_identical(
+    textstat_keyness(dfmat, measure = "lr", old = TRUE),
+    textstat_keyness(dfmat, measure = "lr", old = FALSE)
+  )
+  expect_identical(
+    textstat_keyness(dfmat, measure = "pmi", old = TRUE),
+    textstat_keyness(dfmat, measure = "pmi", old = FALSE)
+  )
+  expect_identical(
+    textstat_keyness(dfmat, measure = "exact", old = TRUE),
+    textstat_keyness(dfmat, measure = "exact", old = FALSE)
+  )
+
 })

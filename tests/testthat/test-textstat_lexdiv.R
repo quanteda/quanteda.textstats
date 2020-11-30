@@ -288,6 +288,11 @@ test_that("textstat_lexdiv.tokens MATTR works correctly on its own", {
         textstat_lexdiv(mytoken, measure = "MATTR", MATTR_window = 4)[["MATTR"]],
         wsize4_MATTR
     )
+
+    expect_warning(
+        textstat_lexdiv(mytoken, measure = "MATTR", MATTR_window = 100),
+        "MATTR_window exceeds some documents' token lengths, resetting to 7"
+    )
 })
 
 test_that("textstat_lexdiv.tokens MATTR works correctly in conjunction with static measures", {
@@ -386,4 +391,12 @@ test_that("textstat_lexdiv.tokens works right when all measures are requested", 
     ),
     cbind(textstat_lexdiv(mytoken, measure = static_measures),
           moving_measures_df))
+})
+
+test_that("textstat_lexdiv works with measure = 'all'", {
+    res <- textstat_lexdiv(dfm(tokens("What, oh what, are we doing?")), measure = "all")
+    expect_true(
+        setequal(names(res),
+                 c("document", "TTR", "C", "R", "CTTR", "U", "S", "K", "I", "D", "Vm", "Maas", "lgV0", "lgeV0"))
+    )
 })
