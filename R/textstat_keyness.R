@@ -239,7 +239,7 @@ keyness_chi2_dt <- function(x, correction = c("default", "yates", "williams", "n
     dt[, p := 1 - stats::pchisq(abs(chi2), 1)]
 
     data.frame(feature = dt$feature,
-               chi2 = dt[, chi2],
+               stat = dt[, chi2],
                p = dt[, p],
                n_target = as.vector(x[1, ]),
                n_reference = as.vector(x[2, ]),
@@ -259,12 +259,12 @@ keyness_chi2_stats <- function(x) {
     sums <- rowSums(x)
     result <- as.data.frame(
         do.call(rbind, apply(x, 2, function(y) keyness(as.numeric(y[1]),
-                                                              as.numeric(y[2]),
-                                                              sums[1], sums[2])))
+                                                       as.numeric(y[2]),
+                                                       sums[1], sums[2])))
     )
 
     data.frame(feature = colnames(x),
-               chi2 = result$chi2,
+               stat = result$chi2,
                p = result$p,
                n_target = as.vector(x[1, ]),
                n_reference = as.vector(x[2, ]),
@@ -372,7 +372,7 @@ keyness_lr <- function(x, correction = c("default", "yates", "williams", "none")
     dt[, p := 1 - stats::pchisq(abs(G2), 1)]
 
     data.frame(feature = dt$feature,
-               G2 = dt[, G2],
+               stat = dt[, G2],
                p = dt[, p],
                n_target = as.vector(x[1, ]),
                n_reference = as.vector(x[2, ]),
@@ -406,7 +406,7 @@ keyness_pmi <- function(x) {
     dt[, p := 1 - stats::pchisq(abs(pmi), 1)]
 
     data.frame(feature = dt$feature,
-               pmi = dt[, pmi],
+               stat = dt[, pmi],
                p = dt[, p],
                n_target = as.vector(x[1, ]),
                n_reference = as.vector(x[2, ]),
