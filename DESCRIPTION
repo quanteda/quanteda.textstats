@@ -39,8 +39,6 @@ Suggests:
     svs,     
     testthat,
     knitr
-Remotes:
-    quanteda/nsyllable
 URL: https://quanteda.io
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/quanteda.textstats/issues
