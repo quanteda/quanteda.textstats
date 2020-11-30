@@ -11,7 +11,7 @@ nscrabble(x, FUN = sum)
 
 \item{FUN}{function to be applied to the character values in the text;
 default is \code{sum}, but could also be \code{mean} or a user-supplied
-function}
+function.  Missing values are automatically removed.}
 }
 \value{
 a (named) integer vector of Scrabble letter values, computed using

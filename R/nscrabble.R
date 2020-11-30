@@ -5,7 +5,7 @@
 #' @param x a character vector
 #' @param FUN function to be applied to the character values in the text;
 #'   default is `sum`, but could also be `mean` or a user-supplied
-#'   function
+#'   function.  Missing values are automatically removed.
 #' @author Kenneth Benoit
 #' @return a (named) integer vector of Scrabble letter values, computed using
 #'   `FUN`, corresponding to the input text(s)
@@ -29,38 +29,24 @@ nscrabble.default <- function(x, FUN = sum) {
 }
 
 #' @rdname nscrabble
-#' @importFrom data.table setkey
-#' @importFrom quanteda tokens_tolower
 #' @noRd
 #' @export
 nscrabble.character <- function(x, FUN = sum) {
   FUN <- match.fun(FUN)
-  letter <- Char <- docIndex <- values <- V1 <- NULL
-
-  letterVals <- data.table(letter = c(letters, LETTERS),
-                           values = as.integer(rep(c(1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10), 2)))
-  setkey(letterVals, letter)
-
-  textChars <- tokens(x, what = "character", remove_separators = TRUE,
-                      remove_punct = TRUE, remove_symbols = TRUE, remove_numbers = TRUE)
-  textChars <- tokens_tolower(textChars)
-  textDT <- data.table(docIndex = rep(seq_along(textChars), lengths(textChars)),
-                       Char = unlist(textChars, use.names = FALSE))
-  setkey(textDT, Char)
-
-  textDT <- letterVals[textDT]
-  textDT <- textDT[order(docIndex), FUN(values, na.rm = TRUE), by = docIndex]
-
-  result <- structure(rep(NA, length(x)), names = names(x))
-  result[textDT[, docIndex]] <- textDT[, V1]
-  result
+  points <- structure(as.integer(rep(c(1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3,
+                                       1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10), 2)),
+                      names = c(letters, LETTERS))
+  result <- sapply(stringi::stri_split_boundaries(x, type = "character"),
+                   function(y) FUN(na.omit(points[y])))
+  names(result) <- names(x)
+  ifelse(result == 0, NA, result)
 }
 
-#### English scrabble values -----
-# (1 point)-A, E, I, O, U, L, N, S, T, R.
-# (2 points)-D, G.
-# (3 points)-B, C, M, P.
-# (4 points)-F, H, V, W, Y.
-# (5 points)-K.
-# (8 points)- J, X.
-# (10 points)-Q, Z.
+## English scrabble values
+# (1 point)   A, E, I, O, U, L, N, S, T, R
+# (2 points)  D, G
+# (3 points)  B, C, M, P
+# (4 points)  F, H, V, W, Y
+# (5 points)  K
+# (8 points)  J, X
+# (10 points) Q, Z
