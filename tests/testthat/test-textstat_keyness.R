@@ -4,7 +4,7 @@ test_that("keyness_textstat chi2 computation is correct", {
     dfmt <- quanteda::dfm(c(d1 = "b b b b b b b a a a",
                    d2 = "a a a a a a a b b"))
     suppressWarnings(
-        result <- stats::chisq.test(quanteda::as.matrix(dfmt), correct = TRUE)
+        result <- stats::chisq.test(as.matrix(dfmt), correct = TRUE)
     )
     expect_equivalent(
         result$statistic,
