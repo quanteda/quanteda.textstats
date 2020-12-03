@@ -120,8 +120,8 @@
 #'   Assessment](https://doi.org/10.3758/BRM.42.2.381). *Behaviour Research
 #'   Methods*, 42(2), 381--392.
 #'
-#'   Michalke, M. (2014) *koRpus: An R Package for Text Analysis*. R package
-#'   version 0.05-5. <https://reaktanz.de/?c=hacking&s=koRpus>
+#'   Michalke, M. (2014). *koRpus: An R Package for Text Analysis (Version 0.05-4)*.
+#'   Available from <https://reaktanz.de/?c=hacking&s=koRpus>.
 #'
 #'   Simpson, E.H. (1949). [Measurement of
 #'   Diversity](https://doi.org/10.1038/163688a0). *Nature*, 163: 688.

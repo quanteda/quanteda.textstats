@@ -162,8 +162,8 @@ McCarthy, P.M. &  Jarvis, S. (2007). \href{https://doi.org/10.1177/0265532207080
 McCarthy, P.M. & Jarvis, S. (2010). \href{https://doi.org/10.3758/BRM.42.2.381}{MTLD, vocd-D, and HD-D: A Validation Study of Sophisticated Approaches to Lexical Diversity Assessment}. \emph{Behaviour Research
 Methods}, 42(2), 381--392.
 
-Michalke, M. (2014) \emph{koRpus: An R Package for Text Analysis}. R package
-version 0.05-5. \url{https://reaktanz.de/?c=hacking&s=koRpus}
+Michalke, M. (2014). \emph{koRpus: An R Package for Text Analysis (Version 0.05-4)}.
+Available from \url{https://reaktanz.de/?c=hacking&s=koRpus}.
 
 Simpson, E.H. (1949). \href{https://doi.org/10.1038/163688a0}{Measurement of Diversity}. \emph{Nature}, 163: 688.
 

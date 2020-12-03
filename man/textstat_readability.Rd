@@ -439,6 +439,9 @@ Kincaid, J. P., Fishburne Jr, R.P., Rogers, R.L., & Chissom, B.S. (1975).
 McLaughlin, G.H. (1969). \href{https://ogg.osu.edu/media/documents/health_lit/WRRSMOG_Readability_Formula_G._Harry_McLaughlin__1969_.pdf}{SMOG Grading: A New Readability Formula.}
 \emph{Journal of Reading}, 12(8), 639-646.
 
+Michalke, M. (2014). \emph{koRpus: An R Package for Text Analysis (Version 0.05-4)}.
+Available from \url{https://reaktanz.de/?c=hacking&s=koRpus}.
+
 Powers, R.D., Sumner, W.A., and Kearl, B.E. (1958). \href{https://psycnet.apa.org/record/1962-03617-001}{A Recalculation of Four Adult Readability Formulas.}. \emph{Journal of
 Educational Psychology}, 49(2), 99.
 

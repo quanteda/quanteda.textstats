@@ -431,6 +431,9 @@
 #'   Formula.](https://ogg.osu.edu/media/documents/health_lit/WRRSMOG_Readability_Formula_G._Harry_McLaughlin__1969_.pdf)
 #'   *Journal of Reading*, 12(8), 639-646.
 #'
+#'   Michalke, M. (2014). *koRpus: An R Package for Text Analysis (Version 0.05-4)*.
+#'   Available from <https://reaktanz.de/?c=hacking&s=koRpus>.
+#'
 #'   Powers, R.D., Sumner, W.A., and Kearl, B.E. (1958). [A Recalculation of
 #'   Four Adult Readability
 #'   Formulas.](https://psycnet.apa.org/record/1962-03617-001). *Journal of
