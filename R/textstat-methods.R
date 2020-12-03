@@ -20,10 +20,10 @@
 #' `textstat_keyness` or `textstat_frequency` based on
 #' `"glob"`, `"regex"` or `"fixed"` patterns using this method.
 #' @param x a `textstat` object
-#' @inheritParams quanteda::pattern
+#' @param pattern see [quanteda::pattern]
 #' @param selection whether to `"keep"` or `"remove"` the rows that
 #'   match the pattern
-#' @inheritParams quanteda::valuetype
+#' @param quanteda::valuetype
 #' @keywords textstat internal
 #' @export
 #' @examples
