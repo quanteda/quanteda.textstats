@@ -150,6 +150,7 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
                 warning("correction is always none for pmi")
             result <- keyness_pmi(temp)
         }
+        names(result)[2] <- "stat"
     } else {
         if (measure == "exact") {
             if (measure == "exact" && !correction %in% c("default", "none"))
