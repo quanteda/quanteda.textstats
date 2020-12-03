@@ -99,9 +99,7 @@ MWEstatistics <- function (counts, smooth=0.5) {
     # Estimated highest-order interaction parameter (lambda), obtained using a Poisson log-linear model
 
     counts.df$count <- counts.df$count+smooth
-    options(warn=-1) # Switch of the warning due to the non-integer counts
-    mod1 <- glm(formula,family=poisson,data=counts.df)
-    options(warn=0)
+    suppressWarnings(mod1 <- glm(formula,family=poisson,data=counts.df))
     tmp <- length(coef(mod1))
     results[,"lambda"] <- coef(mod1)[tmp]
     results[,"se.lambda"] <- sqrt(diag(vcov(mod1)))[tmp]
