@@ -23,7 +23,7 @@
 #' @param pattern see [quanteda::pattern]
 #' @param selection whether to `"keep"` or `"remove"` the rows that
 #'   match the pattern
-#' @param quanteda::valuetype
+#' @inheritParams quanteda::valuetype
 #' @keywords textstat internal
 #' @export
 #' @examples
