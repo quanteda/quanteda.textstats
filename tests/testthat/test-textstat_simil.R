@@ -1,7 +1,9 @@
 context("test textstat_simil")
 
-mt <- dfm(corpus_subset(data_corpus_inaugural, Year > 1980))
-mt <- dfm_trim(mt, min_termfreq = 10)
+data_dfm_lbgexample <- quanteda::data_dfm_lbgexample
+
+mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980))
+mt <- quanteda::dfm_trim(mt, min_termfreq = 10)
 
 test_that("y errors if not a dfm", {
     expect_error(
@@ -16,7 +18,7 @@ test_that("selection takes integer or logical vector", {
     suppressWarnings(expect_equivalent(textstat_simil(mt, y = mt[, c(2, 5)], margin = "features"),
                       textstat_simil(mt, y = mt[, c("mr", "president")], margin = "features")))
 
-    l1 <- featnames(mt) %in% c("mr", "president")
+    l1 <- quanteda::featnames(mt) %in% c("mr", "president")
     expect_equivalent(textstat_simil(mt, y = mt[, l1], margin = "features"),
                       textstat_simil(mt, y = mt[, c("mr", "president")], margin = "features"))
 
@@ -25,7 +27,7 @@ test_that("selection takes integer or logical vector", {
 
     expect_equivalent(textstat_simil(mt, y = mt[c(2, 4), ], margin = "documents"),
                       textstat_simil(mt, y = mt[c("1985-Reagan", "1993-Clinton"), ], margin = "documents"))
-    l2 <- docnames(mt) %in% c("1985-Reagan", "1993-Clinton")
+    l2 <- quanteda::docnames(mt) %in% c("1985-Reagan", "1993-Clinton")
     expect_equivalent(textstat_simil(mt, y = mt[l2, ], margin = "documents"),
                       textstat_simil(mt, y = mt[c("1985-Reagan", "1993-Clinton"), ], margin = "documents"))
 
@@ -76,10 +78,10 @@ test_that("textstat_simil() returns NA for empty dfm", {
 })
 
 test_that("textstat_simil() returns NA for zero-variance documents", {
-    mt <- data_dfm_lbgexample[1:5, 1:20]
+    mt <- quanteda::data_dfm_lbgexample[1:5, 1:20]
     mt[1:2, ] <- 0
     mt[3:4, ] <- 1
-    mt <- as.dfm(mt)
+    mt <- quanteda::as.dfm(mt)
     mt_na_all <- matrix(NA, nrow = 5, ncol = 5,
                         dimnames = list(paste0("R", 1:5), paste0("R", 1:5)))
     mt_na_some <- mt_na_all
@@ -126,7 +128,7 @@ test_that("textstat_simil() returns NA for zero-variance documents", {
 })
 
 test_that("selection is always on columns (#1549)", {
-    mt <- dfm(corpus_subset(data_corpus_inaugural, Year > 1980))
+    mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980))
     suppressWarnings(expect_equal(
         textstat_simil(mt, margin = "documents", selection = c("1985-Reagan", "1989-Bush")) %>%
             as.matrix() %>%
@@ -187,13 +189,13 @@ test_that("textstat_simil coercion methods work with options", {
         nrow(mt2) ^ 2
     )
     mat <- as.matrix(tstat)
-    expect_equal(dim(mat), c(ndoc(mt2), ndoc(mt2)))
+    expect_equal(dim(mat), c(quanteda::ndoc(mt2), quanteda::ndoc(mt2)))
     # in matrix, diagonal is 1.0
-    iden <- rep(1, ndoc(mt2)); names(iden) <- docnames(mt2)
+    iden <- rep(1, quanteda::ndoc(mt2)); names(iden) <- quanteda::docnames(mt2)
     expect_equal(diag(mat), iden)
     lis <- as.list(tstat, sort = TRUE, diag = TRUE)
-    lislen <- rep(ndoc(mt2), 5); names(lislen) <- docnames(mt2)
-    expect_equivalent(lengths(lis), rep(ndoc(mt2), ndoc(mt2)))
+    lislen <- rep(quanteda::ndoc(mt2), 5); names(lislen) <- quanteda::docnames(mt2)
+    expect_equivalent(lengths(lis), rep(quanteda::ndoc(mt2), quanteda::ndoc(mt2)))
     # in list, sorted first item is comparison to itself
     expect_identical(names(lis), names(sapply(lis, "[[", 1)))
     expect_equal(iden, sapply(lis, "[[", 1))
@@ -202,19 +204,19 @@ test_that("textstat_simil coercion methods work with options", {
     tstat <- textstat_simil(mt2, margin = "documents")
     expect_equal(
         nrow(as.data.frame(tstat, upper = TRUE, diag = FALSE)),
-        nrow(mt2) ^ 2 - ndoc(mt2)
+        nrow(mt2) ^ 2 - quanteda::ndoc(mt2)
     )
     mat <- as.matrix(tstat)
-    expect_equal(dim(mat), c(ndoc(mt2), ndoc(mt2)))
+    expect_equal(dim(mat), c(quanteda::ndoc(mt2), quanteda::ndoc(mt2)))
     # # in matrix, diagonal is NA
     # iden <- rep(as.numeric(NA), ndoc(mt2)); names(iden) <- docnames(mt2)
     # expect_equal(diag(as.matrix(tstat)), iden)
     # in matrix, diagonal is 1.0
-    iden <- rep(1, ndoc(mt2))
-    names(iden) <- docnames(mt2)
+    iden <- rep(1, quanteda::ndoc(mt2))
+    names(iden) <- quanteda::docnames(mt2)
     expect_equal(diag(mat), iden)
     lis <- as.list(tstat, sort = TRUE, diag = FALSE)
-    expect_equivalent(lengths(lis), rep(ndoc(mt2) - 1, ndoc(mt2)))
+    expect_equivalent(lengths(lis), rep(quanteda::ndoc(mt2) - 1, quanteda::ndoc(mt2)))
     expect_identical(names(lis), names(sapply(lis, "[[", 1)))
     # in list, item not compared to itself
     expect_true(all(sapply(seq_along(lis), function(y) ! names(lis[y]) %in% names(y))))
@@ -223,17 +225,18 @@ test_that("textstat_simil coercion methods work with options", {
     tstat <- textstat_simil(mt2, margin = "documents")
     expect_equal(
         nrow(as.data.frame(tstat, upper = FALSE, diag = TRUE)),
-        (nrow(mt2) ^ 2 - ndoc(mt2)) / 2 + ndoc(mt2)
+        (nrow(mt2) ^ 2 - quanteda::ndoc(mt2)) / 2 + quanteda::ndoc(mt2)
     )
     mat <- as.matrix(tstat)
     # expect_true(all(is.na(mat[upper.tri(mat)])))
     # in matrix, diagonal is 1.0
-    iden <- rep(1, ndoc(mt2)); names(iden) <- docnames(mt2)
+    iden <- rep(1, quanteda::ndoc(mt2)); names(iden) <- quanteda::docnames(mt2)
     expect_equal(diag(as.matrix(tstat)), iden)
     # in matrix, lower is NA
     lis <- as.list(tstat, sort = TRUE, diag = TRUE)
-    lislen <- rep(ndoc(mt2), ndoc(mt2)); names(lislen) <- docnames(mt2)
-    expect_equivalent(lengths(lis), rep(ndoc(mt2), ndoc(mt2)))
+    lislen <- rep(quanteda::ndoc(mt2), quanteda::ndoc(mt2))
+    names(lislen) <- quanteda::docnames(mt2)
+    expect_equivalent(lengths(lis), rep(quanteda::ndoc(mt2), quanteda::ndoc(mt2)))
     # in list, sorted first item is comparison to itself
     expect_identical(names(lis), names(sapply(lis, "[[", 1)))
     expect_equal(iden, sapply(lis, "[[", 1))
@@ -242,18 +245,18 @@ test_that("textstat_simil coercion methods work with options", {
     tstat <- textstat_simil(mt2, margin = "documents")
     expect_equal(
         nrow(as.data.frame(tstat, upper = FALSE, diag = FALSE)),
-        (nrow(mt2) ^ 2 - ndoc(mt2)) / 2
+        (nrow(mt2) ^ 2 - quanteda::ndoc(mt2)) / 2
     )
     mat <- as.matrix(tstat)
     loweranddiag <- upper.tri(mat)
     diag(loweranddiag) <- TRUE
     # expect_true(all(is.na(mat[upper.tri(mat)])))
     # in matrix, diagonal is 1.0
-    iden <- rep(1, ndoc(mt2))
-    names(iden) <- docnames(mt2)
+    iden <- rep(1, quanteda::ndoc(mt2))
+    names(iden) <- quanteda::docnames(mt2)
     expect_equal(diag(mat), iden)
     lis <- as.list(tstat, sort = TRUE, diag = FALSE)
-    expect_equivalent(lengths(lis), rep(ndoc(mt2) - 1, ndoc(mt2)))
+    expect_equivalent(lengths(lis), rep(quanteda::ndoc(mt2) - 1, quanteda::ndoc(mt2)))
     # in list, item not compared to itself
     expect_true(all(sapply(seq_along(lis), function(y) ! names(lis[y]) %in% names(y))))
 })
@@ -265,11 +268,11 @@ test_that("as.list.texstat_simil() is robust", {
     )
     expect_equivalent(
         lengths(as.list(textstat_simil(mt), n = 2)),
-        rep(2, ndoc(mt))
+        rep(2, quanteda::ndoc(mt))
     )
     expect_equivalent(
-        lengths(as.list(textstat_simil(mt), n = ndoc(mt) + 20, diag = TRUE)),
-        rep(ndoc(mt), ndoc(mt))
+        lengths(as.list(textstat_simil(mt), n = quanteda::ndoc(mt) + 20, diag = TRUE)),
+        rep(quanteda::ndoc(mt), quanteda::ndoc(mt))
     )
     expect_warning(
         as.list(textstat_simil(mt), n = 2, sort = FALSE),
@@ -338,12 +341,13 @@ test_that("as.data.frame.textstat_simildist works with selection", {
 
 test_that("textstat_simil validator works", {
     expect_error(
-        textstat_simil(data_dfm_lbgexample, min_simil = -1.1),
+        textstat_simil(quanteda::data_dfm_lbgexample, min_simil = -1.1),
         "min_simil must range from -1.0 to 1.0"
     )
 })
 
 test_that("textstat_simil show/head/tail methods work", {
+    # skip("until this is separate from quanteda")
     expect_output(
         show(textstat_simil(data_dfm_lbgexample, method = "cosine")),
         "textstat_simil object;"
@@ -394,14 +398,14 @@ test_that("min_simil argument works", {
     )
     expect_equal(
         sapply(as.list(tstat, diag = TRUE), "[", 1),
-        structure(rep(1, ndoc(mt)),
-                      names = paste(docnames(mt), docnames(mt), sep = "."))
+        structure(rep(1, quanteda::ndoc(mt)),
+                      names = paste(quanteda::docnames(mt), quanteda::docnames(mt), sep = "."))
     )
 })
 
 test_that("test that min_simil coercion to matrix works as expected", {
-    dfmat <- dfm(corpus_subset(data_corpus_inaugural, Year > 2000),
-                 remove_punct = TRUE, remove = stopwords("english"))
+    dfmat <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 2000),
+                 remove_punct = TRUE, remove = quanteda::stopwords("english"))
 
     tstat1 <- textstat_simil(dfmat, method = "cosine", margin = "documents", min_simil = 0.6)
     expect_equal(
@@ -529,7 +533,7 @@ test_that("make_na_matrix is working", {
 })
 
 test_that("symmetric class is correctly given", {
-
+    # skip("Until these classes are separate from quanteda")
     dist1 <- textstat_dist(mt)
     expect_identical(
         Matrix::tril(dist1),

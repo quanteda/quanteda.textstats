@@ -2,8 +2,8 @@ context("test textstat_entropy")
 
 test_that("test textstat_entropy is working", {
     skip_if_not_installed("entropy")
-    
-    mt <- data_dfm_lbgexample
+
+    mt <- quanteda::data_dfm_lbgexample
     expect_equal(unname(apply(mt, 1, entropy::entropy, unit = "log2")),
                  textstat_entropy(mt, "documents")[["entropy"]])
     expect_equal(unname(apply(mt, 2, entropy::entropy, unit = "log2")),
@@ -16,10 +16,10 @@ test_that("test textstat_entropy is working", {
 })
 
 test_that("test textstat_entropy works with empty documents or features", {
-    mt <- data_dfm_lbgexample
+    mt <- quanteda::data_dfm_lbgexample
     mt[3,] <- 0
     mt[5,] <- 0
-    mt <- as.dfm(mt)
+    mt <- quanteda::as.dfm(mt)
     expect_silent(textstat_entropy(mt, "documents"))
     expect_silent(textstat_entropy(mt, "features"))
 })

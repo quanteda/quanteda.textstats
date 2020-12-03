@@ -1,8 +1,9 @@
 context("test textstat_proxy.R")
 
-test_mt <- dfm(corpus_subset(data_corpus_inaugural, Year > 1980), remove = stopwords("english"),
-               stem = TRUE, verbose = FALSE)
-test_mt <- dfm_trim(test_mt, min_termfreq = 5)
+test_mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980),
+                         remove = quanteda::stopwords("english"),
+                         stem = TRUE, verbose = FALSE)
+test_mt <- quanteda::dfm_trim(test_mt, min_termfreq = 5)
 
 test_simil <- function(x, method, margin, ignore_upper = FALSE, ...) {
 
@@ -195,7 +196,7 @@ test_that("as.matrix works as expected", {
     txt <- c("Bacon ipsum dolor amet tenderloin hamburger bacon t-bone,",
              "Tenderloin turducken corned beef bacon.",
              "Burgdoggen venison tail, hamburger filet mignon capicola meatloaf pig pork belly.")
-    mt <- dfm(txt)
+    mt <- quanteda::dfm(txt)
     expect_equivalent(diag(as.matrix(textstat_proxy(mt))),
                       rep(1, 3))
 })
@@ -205,9 +206,9 @@ test_that("textstat_proxy stops as expected for methods not supported", {
 })
 
 test_that("textstat_proxy works on zero-frequency features", {
-    d1 <- dfm(c("a b c", "a b c d"))
-    d2 <- dfm(letters[1:6])
-    dtest <- dfm_match(d1, featnames(d2))
+    d1 <- quanteda::dfm(c("a b c", "a b c d"))
+    d2 <- quanteda::dfm(letters[1:6])
+    dtest <- quanteda::dfm_match(d1, quanteda::featnames(d2))
 
     expect_equal(
         textstat_proxy(dtest, method = "cosine")[2, 1], 0.866,
@@ -220,10 +221,10 @@ test_that("textstat_proxy works on zero-frequency features", {
 })
 
 test_that("textstat_proxy works on zero-feature documents (#952)", {
-    corp <- corpus(c("a b c c", "b c d", "a"),
+    corp <- quanteda::corpus(c("a b c c", "b c d", "a"),
                    docvars = data.frame(grp = factor(c("A", "A", "B"), levels = LETTERS[1:3])))
-    mt <- dfm(corp)
-    mt <- dfm_group(mt, groups = "grp", fill = TRUE)
+    mt <- quanteda::dfm(corp)
+    mt <- quanteda::dfm_group(mt, groups = "grp", fill = TRUE)
 
     expect_equal(
         as.numeric(textstat_proxy(mt, method = "cosine")[1, ]),
@@ -239,8 +240,8 @@ test_that("textstat_proxy works on zero-feature documents (#952)", {
 
 test_that("textstat_proxy works with non-intersecting documents or features", {
 
-    toks <- tokens(c(doc1 = "a b c d e", doc2 = "b c f e", doc3 = "c d f", doc4 = "f g h"), remove_punct = TRUE)
-    mt <- dfm(toks)
+    toks <- quanteda::tokens(c(doc1 = "a b c d e", doc2 = "b c f e", doc3 = "c d f", doc4 = "f g h"), remove_punct = TRUE)
+    mt <- quanteda::dfm(toks)
     sim1 <- textstat_proxy(mt, margin = "features")
     expect_equal(as.matrix(textstat_proxy(mt[, c("a", "b")], mt[, c("c", "d", "e")], margin = "features")),
                  as.matrix(sim1[c("a", "b"), c("c", "d", "e"), drop = FALSE]))
@@ -250,7 +251,7 @@ test_that("textstat_proxy works with non-intersecting documents or features", {
 })
 
 test_that("raises error when dfm is empty (#1419)", {
-    mt <- dfm_trim(data_dfm_lbgexample, 1000)
+    mt <- quanteda::dfm_trim(quanteda::data_dfm_lbgexample, 1000)
     expect_silent(textstat_proxy(mt))
     expect_silent(textstat_proxy(mt, mt))
 })
@@ -261,7 +262,6 @@ test_that("raises error when p is smaller than 1", {
 })
 
 test_that("sparse objects are of expected class and occur when expected", {
-
     expect_is(textstat_proxy(test_mt),
               "dsTMatrix")
     expect_is(textstat_proxy(test_mt, min_proxy = 10),
@@ -270,11 +270,9 @@ test_that("sparse objects are of expected class and occur when expected", {
               "dgTMatrix")
     expect_is(textstat_proxy(test_mt, method = "kullback"),
               "dgTMatrix")
-
 })
 
 test_that("rank argument is working", {
-
     expect_error(textstat_proxy(test_mt, rank = 0),
                  "rank must be great than or equal to 1")
 
@@ -284,12 +282,11 @@ test_that("rank argument is working", {
     expect_equal(as.matrix(textstat_proxy(test_mt, rank = 3)),
                  apply(as.matrix(textstat_proxy(test_mt)), 2,
                        function(x) ifelse(x >= sort(x, decreasing = TRUE)[3], x, 0)))
-
 })
 
 test_that("record zeros even in the sparse matrix", {
-    toks <- tokens(c(doc1 = "a b c", doc2 = "d e f"), remove_punct = TRUE)
-    mt <- dfm(toks)
+    toks <- quanteda::tokens(c(doc1 = "a b c", doc2 = "d e f"), remove_punct = TRUE)
+    mt <- quanteda::dfm(toks)
     expect_true(any(textstat_proxy(mt)@x == 0))
     expect_true(any(textstat_proxy(mt, method = "cosine")@x == 0))
     expect_true(any(textstat_proxy(mt, method = "cosine", min_proxy = -0.5)@x == 0))
@@ -311,7 +308,7 @@ test_that("textstat_proxy raises error when y is not a dfm", {
 })
 
 test_that("use_na is working", {
-    mt <- as.dfm(matrix(c(rep(0, 4),
+    mt <- quanteda::as.dfm(matrix(c(rep(0, 4),
                           rep(1, 4),
                           c(1, 3, 2, 0)), ncol = 3))
 

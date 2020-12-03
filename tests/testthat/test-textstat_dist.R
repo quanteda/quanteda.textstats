@@ -1,7 +1,8 @@
 context("test textstat_dist")
 
-mt <- dfm(corpus_subset(data_corpus_inaugural, Year > 1980))
-mt <- dfm_trim(mt, min_termfreq = 10)
+mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980))
+mt <- quanteda::dfm_trim(mt, min_termfreq = 10)
+`%>%` <- quanteda::`%>%`
 
 test_that("dist object has all the attributes", {
     d1 <- textstat_dist(mt) %>% as.matrix %>% as.dist()
@@ -23,7 +24,7 @@ test_that("selection takes integer or logical vector", {
     suppressWarnings({
     expect_equivalent(textstat_dist(mt, selection = c(2, 5), margin = "features"),
                       textstat_dist(mt, selection = c("mr", "president"), margin = "features"))
-    l3 <- featnames(mt) %in% c("mr", "president")
+    l3 <- quanteda::featnames(mt) %in% c("mr", "president")
     expect_equivalent(textstat_dist(mt, selection = l3, margin = "features"),
                       textstat_dist(mt, selection = c("mr", "president"), margin = "features"))
     })
@@ -33,7 +34,7 @@ test_that("selection takes integer or logical vector", {
 
     expect_equivalent(textstat_dist(mt, y = mt[c(2, 4), ], margin = "documents"),
                       textstat_dist(mt, y = mt[c("1985-Reagan", "1993-Clinton"), ], margin = "documents"))
-    l4 <- docnames(mt) %in% c("1985-Reagan", "1993-Clinton")
+    l4 <- quanteda::docnames(mt) %in% c("1985-Reagan", "1993-Clinton")
     expect_equivalent(textstat_dist(mt, y = mt[l4, ], margin = "documents"),
                       textstat_dist(mt, y = mt[c("1985-Reagan", "1993-Clinton"), ], margin = "documents"))
 
@@ -42,8 +43,7 @@ test_that("selection takes integer or logical vector", {
 })
 
 test_that("textstat_dist() returns NA for empty dfm", {
-    skip("until textstat_dist() works correctly for empty dfms")
-    mt <- dfm_trim(data_dfm_lbgexample, 1000)
+    mt <- quanteda::dfm_trim(quanteda::data_dfm_lbgexample, 1000)
     expect_equivalent(
         textstat_dist(mt, method = "euclidean") %>% as.matrix() %>% as.dist(),
         stats::dist(as.matrix(mt), method = "euclidean")
@@ -73,10 +73,10 @@ test_that("textstat_dist() returns NA for empty dfm", {
 
 test_that("textstat_dist() returns NA for zero-variance documents", {
     skip("skip until textstat_dist() works correctly for zero-variance documents")
-    mt <- data_dfm_lbgexample[1:5, 1:20]
+    mt <- quanteda::data_dfm_lbgexample[1:5, 1:20]
     mt[1:2, ] <- 0
     mt[3:4, ] <- 1
-    mt <- as.dfm(mt)
+    mt <- quanteda::as.dfm(mt)
 
     # fails
     expect_equivalent(
@@ -110,7 +110,7 @@ test_that("textstat_dist() returns NA for zero-variance documents", {
 })
 
 test_that("selection is always on columns (#1549)", {
-    mt <- dfm(corpus_subset(data_corpus_inaugural, Year > 1980))
+    mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980))
     suppressWarnings({
         expect_equal(
         colnames(textstat_dist(mt, margin = "documents",
@@ -146,18 +146,18 @@ test_that("textstat_dist coercion methods work with options", {
     tstat <- textstat_dist(mt2, margin = "documents")
     # expect_equal(nrow(tstat), nrow(mt2)^2)
     mat <- as.matrix(tstat)
-    expect_equal(dim(mat), c(ndoc(mt2), ndoc(mt2)))
+    expect_equal(dim(mat), c(quanteda::ndoc(mt2), quanteda::ndoc(mt2)))
     # in matrix, diagonal is 0
-    iden <- rep(0, ndoc(mt2)); names(iden) <- docnames(mt2)
+    iden <- rep(0, quanteda::ndoc(mt2)); names(iden) <- quanteda::docnames(mt2)
     expect_equal(diag(mat), iden)
 
     # upper = TRUE, diag = FALSE
     tstat <- textstat_dist(mt2, margin = "documents")
-    # expect_equal(nrow(tstat), nrow(mt2)^2 - ndoc(mt2))
+    # expect_equal(nrow(tstat), nrow(mt2)^2 - quanteda::ndoc(mt2))
     mat <- as.matrix(tstat)
-    expect_equal(dim(mat), c(ndoc(mt2), ndoc(mt2)))
-    iden <- rep(0, ndoc(mt2))
-    names(iden) <- docnames(mt2)
+    expect_equal(dim(mat), c(quanteda::ndoc(mt2), quanteda::ndoc(mt2)))
+    iden <- rep(0, quanteda::ndoc(mt2))
+    names(iden) <- quanteda::docnames(mt2)
     expect_equal(diag(mat), iden)
 
     # upper = FALSE, diag = TRUE
@@ -166,8 +166,8 @@ test_that("textstat_dist coercion methods work with options", {
     mat <- as.matrix(tstat)
     # expect_true(all(is.na(mat[upper.tri(mat)])))
     # in matrix, diagonal is 0
-    iden <- rep(0, ndoc(mt2))
-    names(iden) <- docnames(mt2)
+    iden <- rep(0, quanteda::ndoc(mt2))
+    names(iden) <- quanteda::docnames(mt2)
     expect_equal(diag(as.matrix(tstat)), iden)
 
     # upper = FALSE, diag = FALSE
@@ -178,6 +178,6 @@ test_that("textstat_dist coercion methods work with options", {
     diag(loweranddiag) <- TRUE
     # expect_true(all(is.na(mat[upper.tri(mat)])))
     # in matrix, diagonal is 0
-    iden <- rep(0, ndoc(mt2)); names(iden) <- docnames(mt2)
+    iden <- rep(0, quanteda::ndoc(mt2)); names(iden) <- quanteda::docnames(mt2)
     expect_equal(diag(mat), iden)
 })

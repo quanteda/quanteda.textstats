@@ -116,7 +116,7 @@ MWEstatistics <- function (counts, smooth=0.5) {
 }
 
 test_that("test that collocations do not span texts", {
-    toks <- tokens(c('this is a test', 'this also a test'))
+    toks <- quanteda::tokens(c('this is a test', 'this also a test'))
     cols <- rbind(textstat_collocations(toks, size = 2, min_count = 1),
                   textstat_collocations(toks, size = 3, min_count = 1))
 
@@ -126,8 +126,8 @@ test_that("test that collocations do not span texts", {
 })
 
 test_that("test that collocations only include selected features", {
-    toks <- tokens(c('This is a Twitter post to @someone on #something.'), what = 'fastest')
-    toks <- tokens_select(toks, "^([a-z]+)$", valuetype = "regex")
+    toks <- quanteda::tokens(c('This is a Twitter post to @someone on #something.'), what = 'fastest')
+    toks <- quanteda::tokens_select(toks, "^([a-z]+)$", valuetype = "regex")
     cols <- textstat_collocations(toks, min_count = 1, size = 2, tolower = FALSE)
 
     expect_true('This is' %in% cols$collocation)
@@ -147,25 +147,23 @@ test_that("test that collocations only include selected features", {
 # })
 
 test_that("test that extractor works with collocation", {
-
-    toks <- tokens(data_corpus_inaugural[2], remove_punct = TRUE)
-    toks <- tokens_remove(toks, stopwords(), padding = TRUE)
+    toks <- quanteda::tokens(quanteda::data_corpus_inaugural[2], remove_punct = TRUE)
+    toks <- quanteda::tokens_remove(toks, quanteda::stopwords(), padding = TRUE)
     cols <- textstat_collocations(toks, size = 2)
-    cols <- cols[1:5,]
+    cols <- cols[1:5, ]
     expect_equal(nrow(cols), 5)
-    expect_true(is.collocations(cols))
-
+    expect_true(quanteda::is.collocations(cols))
 })
 
 test_that("bigrams and trigrams are all sorted correctly, issue #385", {
-    toks <- tokens(data_corpus_inaugural[2], remove_punct = TRUE)
-    toks <- tokens_remove(toks, stopwords("english"), padding = TRUE)
+    toks <- quanteda::tokens(quanteda::data_corpus_inaugural[2], remove_punct = TRUE)
+    toks <- quanteda::tokens_remove(toks, quanteda::stopwords("english"), padding = TRUE)
     cols <- textstat_collocations(toks, method = 'lambda', min_count = 1, size = 2:3)
     expect_equal(order(cols$z, decreasing = TRUE), seq_len(nrow(cols)))
 })
 
 test_that("test the correctness of significant with smoothing", {
-    toks <- tokens('capital other capital gains other capital word2 other gains capital')
+    toks <- quanteda::tokens('capital other capital gains other capital word2 other gains capital')
     seqs <- textstat_collocations(toks, min_count=1, size = 2)
     # smoothing is applied when calculating the dice, so the dice coefficient
     #is only tested against manually calculated result.
@@ -180,7 +178,7 @@ test_that("test the correctness of significant with smoothing", {
 })
 
 test_that("test the correctness of significant", {
-    toks <- tokens('capital other capital gains other capital word2 other gains capital')
+    toks <- quanteda::tokens('capital other capital gains other capital word2 other gains capital')
     seqs <- textstat_collocations(toks, min_count=1, size = 2, smoothing = 0)
 
     expect_equal(seqs$collocation[1], 'other capital')
@@ -198,18 +196,15 @@ test_that("test the correctness of significant", {
     # expect_equal(seqs$G2[1], 2.231, tolerance = 1e-3)
 })
 
-
 test_that("collocation is counted correctly in racing conditions, issue #381", {
-
     n <- 100 # NOTE: n must be large number to create racing conditionc
-    txt <- unname(rep(texts(data_corpus_inaugural)[1], n))
-    toks <- tokens(txt)
+    txt <- unname(rep(quanteda::texts(quanteda::data_corpus_inaugural)[1], n))
+    toks <- quanteda::tokens(txt)
     out1 <- textstat_collocations(toks[1], size = 2, min_count = 1)
     out100 <- textstat_collocations(toks, size = 2, min_count = 1)
     out1 <- out1[order(out1$collocation),]
     out100 <- out100[order(out100$collocation),]
     expect_true(all(out1$count * n == out100$count))
-
 })
 
 # Broken
@@ -239,8 +234,8 @@ test_that("collocation is counted correctly in racing conditions, issue #381", {
 # })
 
 test_that("lambda & [ function",{
-    toks <- tokens('E E G F a b c E E G G f E E f f G G')
-    toks_capital <- tokens_select(toks, "^[A-Z]$", valuetype="regex",
+    toks <- quanteda::tokens('E E G F a b c E E G G f E E f f G G')
+    toks_capital <- quanteda::tokens_select(toks, "^[A-Z]$", valuetype="regex",
                                   case_insensitive = FALSE, padding = TRUE)
     seqs <- textstat_collocations(toks_capital, min_count = 1)
     a_seq <- seqs[1, ]
@@ -255,10 +250,9 @@ test_that("lambda & [ function",{
     expect_equal(class(a_seq), c("collocations", "textstat", "data.frame"))
 })
 
-
 test_that("textstat_collocations.tokens works ok with zero-length documents (#940)", {
     txt <- c('I like good ice cream.', 'Me too!  I like good ice cream.', '')
-    toks <- tokens(tolower(txt), remove_punct = TRUE, remove_symbols = TRUE)
+    toks <- quanteda::tokens(tolower(txt), remove_punct = TRUE, remove_symbols = TRUE)
 
     expect_equal(
         textstat_collocations(txt, size = 2, min_count = 2, tolower = TRUE)$collocation,
@@ -277,7 +271,7 @@ test_that("textstat_collocations.tokens works ok with zero-length documents (#94
 })
 
 test_that("textstat_collocations works when texts are shorter than size", {
-    toks <- tokens(c('a', 'bb', ''))
+    toks <- quanteda::tokens(c('a', 'bb', ''))
     expect_equivalent(
         textstat_collocations(toks, size = 2:3, min_count = 1, tolower = TRUE),
         data.frame(collocation = character(0),
@@ -290,21 +284,18 @@ test_that("textstat_collocations works when texts are shorter than size", {
 })
 
 test_that("textstat_collocations error when size = 1 and warn when size > 5", {
-
-    toks <- tokens('a b c d e f g h a b c d e f')
+    toks <- quanteda::tokens('a b c d e f g h a b c d e f')
     expect_silent(textstat_collocations(toks, size = 2:5))
     expect_error(textstat_collocations(toks, size = 1:5),
                  "Collocation sizes must be larger than 1")
     expect_warning(textstat_collocations(toks, size = 2:6),
                  "Computation for large collocations may take long time")
-
 })
 
 test_that("textstat_collocations counts sequences correctly when recursive = FALSE", {
-
     txt <- c("a b c . . a b c . . a b c . . . a b c",
              "a b . . a b . . a b . . a b . a b")
-    toks <- tokens_keep(tokens(txt), c("a", "b", "c"), padding = TRUE)
+    toks <- quanteda::tokens_keep(quanteda::tokens(txt), c("a", "b", "c"), padding = TRUE)
 
     col1 <- textstat_collocations(toks, size = 2:3)
     expect_equal(col1$collocation, c('a b', 'b c', 'a b c'))
@@ -314,7 +305,7 @@ test_that("textstat_collocations counts sequences correctly when recursive = FAL
     txt2 <- c(". . . . a b c . . a b c . . .",
               "a b . . a b . . a b . . a b . a b",
               "b c . . b c . b c . . . b c")
-    toks2 <- tokens_keep(tokens(txt2), c("a", "b", "c"), padding = TRUE)
+    toks2 <- quanteda::tokens_keep(quanteda::tokens(txt2), c("a", "b", "c"), padding = TRUE)
 
     col2 <- textstat_collocations(toks2, size = 2:3, min_count = 1)
     expect_equal(col2$collocation, c('a b', 'b c', 'a b c'))
@@ -324,7 +315,7 @@ test_that("textstat_collocations counts sequences correctly when recursive = FAL
     txt3 <- c(". . . . a b c d . . a b c d . . .",
               "a b . . a b . . a b . . a b . a b",
               "b c . . b c . b c . . . b c")
-    toks3 <- tokens_keep(tokens(txt3), c("a", "b", "c", "d"), padding = TRUE)
+    toks3 <- quanteda::tokens_keep(quanteda::tokens(txt3), c("a", "b", "c", "d"), padding = TRUE)
 
     col3 <- textstat_collocations(toks3, size = c(2, 4), min_count = 1)
     expect_equal(col3$collocation, c('a b', 'b c', 'c d', 'a b c d'))
@@ -332,11 +323,10 @@ test_that("textstat_collocations counts sequences correctly when recursive = FAL
     expect_equal(col3$count_nested, c(2, 2, 2, 0))
 
     txt4 <- c(". . . . a b c d . . a b c . . .")
-    toks4 <- tokens_keep(tokens(txt4), c("a", "b", "c", "d"), padding = TRUE)
+    toks4 <- quanteda::tokens_keep(quanteda::tokens(txt4), c("a", "b", "c", "d"), padding = TRUE)
 
     col4 <- textstat_collocations(toks4, size = c(2:4), min_count = 1)
     expect_equal(col4$collocation, c('a b', 'b c', 'c d', 'a b c d', 'a b c', 'b c d'))
     expect_equal(col4$count, c(2, 2, 1, 1, 2, 1))
     expect_equal(col4$count_nested, c(2, 2, 1, 0, 1, 1))
-
 })

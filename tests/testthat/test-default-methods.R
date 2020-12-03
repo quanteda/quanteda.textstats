@@ -26,11 +26,11 @@ test_that("test default textstat methods", {
         "textstat_collocations\\(\\) only works on.*tokens objects"
     )
     expect_error(
-        textstat_entropy(tokens(data_char_sampletext)),
+        textstat_entropy(quanteda::tokens("one two three")),
         "textstat_entropy() only works on dfm objects.", fixed = TRUE
     )
     expect_error(
-        textstat_summary(data_char_sampletext),
+        textstat_summary(LETTERS),
         "textstat_summary() only works on corpus, dfm, tokens objects",
         fixed = TRUE
     )
@@ -40,7 +40,7 @@ test_that("test default textstat methods", {
         fixed = TRUE
     )
     expect_error(
-        textstat_frequency(data_char_sampletext),
+        textstat_frequency(LETTERS),
         "textstat_frequency() only works on dfm objects",
         fixed = TRUE
     )

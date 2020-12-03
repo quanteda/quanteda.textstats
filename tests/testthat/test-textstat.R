@@ -50,9 +50,8 @@ test_that("test textstat_* keeps the class after extraction", {
 
 
 test_that("test textstat_* keeps the class after extraction", {
-
-    toks <- tokens(data_char_ukimmig2010[1:2])
-    mt <- dfm(toks)
+    toks <- quanteda::tokens(quanteda::data_char_ukimmig2010[1:2])
+    mt <- quanteda::dfm(toks)
     col <- textstat_collocations(toks)
     key <- textstat_keyness(mt)
     frq <- textstat_frequency(mt)
