@@ -57,16 +57,6 @@ using vectorized computation
 \code{keyness_pmi} computes the Pointwise Mutual Information stat
 using vectorized computation
 }
-\examples{
-library("quanteda")
-dfmat <- dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-               d2 = "a a b c c d d d d e f h"))
-quanteda.textstats:::keyness_chi2_dt(dfmat)
-quanteda.textstats:::keyness_chi2_stats(dfmat)
-quanteda.textstats:::keyness_exact(dfmat)
-quanteda.textstats:::keyness_lr(dfmat)
-quanteda.textstats:::keyness_pmi(dfmat)
-}
 \references{
 \url{https://en.wikipedia.org/wiki/Yates's_correction_for_continuity}
 

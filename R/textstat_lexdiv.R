@@ -467,9 +467,6 @@ compute_msttr <- function(x, MSTTR_segment) {
 #' @param x input [dfm]
 #' @keywords internal dfm
 #' @importFrom quanteda featnames tokens dfm_compress
-#' @examples
-#' (dfmat <- quanteda::dfm("One-two one two three."))
-#' quanteda.textstats:::dfm_split_hyphenated_features(dfmat)
 dfm_split_hyphenated_features <- function(x) {
     # the global for matching the hyphens and similar characters
     hyphen_regex <- "^.+\\p{Pd}.+$"

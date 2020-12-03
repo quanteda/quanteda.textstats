@@ -188,19 +188,12 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
 #' @details `keyness_chi2_dt` uses vectorized computation from data.table
 #' objects.
 #' @return a data.frame of chi2 and p-values with rows named for each feature
-#' @examples
-#' library("quanteda")
-#' dfmat <- dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-#'                d2 = "a a b c c d d d d e f h"))
-#' quanteda.textstats:::keyness_chi2_dt(dfmat)
 #' @keywords textstat internal
 #' @importFrom data.table data.table :=
 #' @importFrom stats dchisq
 #' @importFrom quanteda ndoc featnames
 #' @references
 #'   <https://en.wikipedia.org/wiki/Yates's_correction_for_continuity>
-#'
-#'
 keyness_chi2_dt <- function(x, correction = c("default", "yates", "williams", "none")) {
 
     correction <- match.arg(correction)
@@ -252,8 +245,6 @@ keyness_chi2_dt <- function(x, correction = c("default", "yates", "williams", "n
 #' @details
 #' `keyness_chi2_stats` uses element-by-element application of
 #' [chisq.test][stats::chisq.test].
-#' @examples
-#' quanteda.textstats:::keyness_chi2_stats(dfmat)
 keyness_chi2_stats <- function(x) {
 
     sums <- rowSums(x)
@@ -291,8 +282,6 @@ keyness <- function(t, f, sum_t, sum_f) {
 #' `keyness_exact` computes Fisher's exact using element-by-element
 #' application of [fisher.test][stats::fisher.test], returning the odds ratio.
 #' @importFrom stats fisher.test
-#' @examples
-#' quanteda.textstats:::keyness_exact(dfmat)
 keyness_exact <- function(x) {
     sums <- rowSums(x)
     temp <- as.data.frame(
@@ -318,8 +307,6 @@ keyness_exact <- function(x) {
 #' @details `keyness_lr` computes the \eqn{G^2} likelihood ratio statistic
 #'   using vectorized computation
 #' @importFrom quanteda ndoc featnames
-#' @examples
-#' quanteda.textstats:::keyness_lr(dfmat)
 #' @references
 #' <https://influentialpoints.com/Training/g-likelihood_ratio_test.htm>
 keyness_lr <- function(x, correction = c("default", "yates", "williams", "none")) {
@@ -383,8 +370,6 @@ keyness_lr <- function(x, correction = c("default", "yates", "williams", "none")
 #' @details `keyness_pmi` computes the Pointwise Mutual Information stat
 #'   using vectorized computation
 #' @importFrom quanteda ndoc featnames
-#' @examples
-#' quanteda.textstats:::keyness_pmi(dfmat)
 keyness_pmi <- function(x) {
 
     a <- b <- c <- d <- N <- E11 <- pmi <- p <- NULL

@@ -400,3 +400,11 @@ test_that("textstat_lexdiv works with measure = 'all'", {
                  c("document", "TTR", "C", "R", "CTTR", "U", "S", "K", "I", "D", "Vm", "Maas", "lgV0", "lgeV0"))
     )
 })
+
+test_that("dfm_split_hyphenated_features works as expected", {
+    dfmat <- quanteda::dfm("One-two one two three.")
+    expect_identical(
+        featnames(quanteda.textstats:::dfm_split_hyphenated_features(dfmat)),
+        c("one", "two", "three", ".", "-")
+    )
+})
