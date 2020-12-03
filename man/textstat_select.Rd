@@ -15,8 +15,9 @@ textstat_select(
 \arguments{
 \item{x}{a \code{textstat} object}
 
-\item{pattern}{a character vector, list of character vectors, \link[quanteda]{dictionary},
-or collocations object.  See \link[quanteda]{pattern} for details.}
+\item{pattern}{a character vector, list of character vectors,
+\link[quanteda]{dictionary}, or \link[quanteda]{collocations} object.  See \link[quanteda]{pattern} for
+details.}
 
 \item{selection}{whether to \code{"keep"} or \code{"remove"} the rows that
 match the pattern}

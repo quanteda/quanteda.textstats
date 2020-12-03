@@ -143,12 +143,17 @@ setMethod("tail", signature(x = "textstat_proxy"), function(x, n = 6L, ...) {
 #' @return A sparse matrix from the \pkg{Matrix} package that will be symmetric
 #'   unless `y` is specified.
 #'
-#'   These can be transformed easily into a list format using `as.list()`, which
-#'   returns a list for each unique element of the second of the pairs,
-#'   `as.dist()` to be transformed into a \link[stats:dist]{dist} object, or
-#'   `as.matrix()` to convert it into an ordinary matrix.
+#' @section Conversion to other data types:
+#'   The output objects from `textstat_simil()` and `textstat_dist()` can be
+#'   transformed easily into a list format using
+#'   [`as.list()`][as.list.textstat_proxy], which returns a list for each unique
+#'   element of the second of the pairs, a data.frame using
+#'   [`as.data.frame()`][as.data.frame.textstat_proxy], which returns pairwise
+#'   scores, `as.dist()`for a \link[stats:dist]{dist} object,
+#'   or `as.matrix()` to convert it into an ordinary matrix.
 #' @export
-#' @seealso \code{\link[stats:dist]{stats::as.dist()}}
+#' @seealso [as.list.textstat_proxy()], [as.data.frame.textstat_proxy()],
+#'   \code{\link[stats:dist]{stats::as.dist()}}
 #' @examples
 #' # similarities for documents
 #' library("quanteda")
@@ -370,7 +375,15 @@ textstat_dist.dfm <- function(x, y = NULL, selection = NULL,
 
 # coercion methods ----------
 
-#' @rdname textstat_simil
+#' textstat_simil/dist coercion methods
+#'
+#' Coercion methods for objects created by [textstat_simil()] and
+#' [textstat_dist()].
+#' @name as.list.textstat_proxy
+#' @keywords internal
+NULL
+
+#' @rdname as.list.textstat_proxy
 #' @method as.list textstat_proxy
 #' @param sorted sort results in descending order if `TRUE`
 #' @param n the top `n` highest-ranking items will be returned.  If n is
@@ -408,7 +421,8 @@ as.list.textstat_proxy <- function(x, sorted = TRUE, n = NULL, diag = FALSE, ...
     return(result)
 }
 
-#' @rdname textstat_simil
+#' @rdname as.list.textstat_proxy
+#' @aliases as.data.frame.textstat_proxy
 #' @method as.data.frame textstat_proxy
 #' @inheritParams base::as.data.frame
 #' @param upper logical; if `TRUE`, return pairs as both (A, B) and (B, A)
@@ -417,7 +431,7 @@ as.list.textstat_proxy <- function(x, sorted = TRUE, n = NULL, diag = FALSE, ...
 #'   and the and their similarity or distance value.
 #' @export
 as.data.frame.textstat_proxy <- function(x, row.names = NULL, optional = FALSE,
-                                            diag = FALSE, upper = FALSE,  ...) {
+                                         diag = FALSE, upper = FALSE,  ...) {
     method <- x@method
     margin <- x@margin
     stat <- NULL

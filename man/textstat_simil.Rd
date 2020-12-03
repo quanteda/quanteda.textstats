@@ -3,8 +3,6 @@
 \name{textstat_simil}
 \alias{textstat_simil}
 \alias{textstat_dist}
-\alias{as.list.textstat_proxy}
-\alias{as.data.frame.textstat_proxy}
 \title{Similarity and distance computation between documents or features}
 \usage{
 textstat_simil(
@@ -27,17 +25,6 @@ textstat_dist(
   p = 2,
   ...
 )
-
-\method{as.list}{textstat_proxy}(x, sorted = TRUE, n = NULL, diag = FALSE, ...)
-
-\method{as.data.frame}{textstat_proxy}(
-  x,
-  row.names = NULL,
-  optional = FALSE,
-  diag = FALSE,
-  upper = FALSE,
-  ...
-)
 }
 \arguments{
 \item{x, y}{a \link{dfm} objects; \code{y} is an optional target matrix matching
@@ -58,45 +45,10 @@ values will not be returned}
 \item{...}{unused}
 
 \item{p}{The power of the Minkowski distance.}
-
-\item{sorted}{sort results in descending order if \code{TRUE}}
-
-\item{n}{the top \code{n} highest-ranking items will be returned.  If n is
-\code{NULL}, return all items.}
-
-\item{diag}{logical; if \code{FALSE}, exclude the item's comparison with itself}
-
-\item{row.names}{\code{NULL} or a character vector giving the row
-    names for the data frame.  Missing values are not allowed.}
-
-\item{optional}{logical. If \code{TRUE}, setting row names and
-    converting column names (to syntactic names: see
-    \code{\link[base]{make.names}}) is optional.  Note that all of \R's
-    \pkg{base} package \code{as.data.frame()} methods use
-    \code{optional} only for column names treatment, basically with the
-    meaning of \code{\link[base]{data.frame}(*, check.names = !optional)}.
-    See also the \code{make.names} argument of the \code{matrix} method.}
-
-\item{upper}{logical; if \code{TRUE}, return pairs as both (A, B) and (B, A)}
 }
 \value{
 A sparse matrix from the \pkg{Matrix} package that will be symmetric
 unless \code{y} is specified.
-
-These can be transformed easily into a list format using \code{as.list()}, which
-returns a list for each unique element of the second of the pairs,
-\code{as.dist()} to be transformed into a \link[stats:dist]{dist} object, or
-\code{as.matrix()} to convert it into an ordinary matrix.
-
-\code{as.data.list} for a \code{textstat_simil} or
-\code{textstat_dist} object returns a list equal in length to the columns of the
-simil or dist object, with the rows and their values as named  elements.  By default,
-this list excludes same-time pairs (when \code{diag = FALSE}) and sorts the values
-in descending order (when \code{sorted = TRUE}).
-
-\code{as.data.frame} for a \code{textstat_simil} or
-\code{textstat_dist} object returns a data.frame of pairwise combinations
-and the and their similarity or distance value.
 }
 \description{
 These functions compute matrixes of distances and similarities between
@@ -121,6 +73,17 @@ If you want to compute similarity on a "normalized" dfm object
 for which different document lengths matter), then wrap the input dfm in
 \verb{[dfm_weight](x, "prop")}.
 }
+\section{Conversion to other data types}{
+
+The output objects from \code{textstat_simil()} and \code{textstat_dist()} can be
+transformed easily into a list format using
+\code{\link[=as.list.textstat_proxy]{as.list()}}, which returns a list for each unique
+element of the second of the pairs, a data.frame using
+\code{\link[=as.data.frame.textstat_proxy]{as.data.frame()}}, which returns pairwise
+scores, \code{as.dist()}for a \link[stats:dist]{dist} object,
+or \code{as.matrix()} to convert it into an ordinary matrix.
+}
+
 \examples{
 # similarities for documents
 library("quanteda")
@@ -165,6 +128,6 @@ plot(hclust(as.dist(tstat4)))
 }
 }
 \seealso{
+\code{\link[=as.list.textstat_proxy]{as.list.textstat_proxy()}}, \code{\link[=as.data.frame.textstat_proxy]{as.data.frame.textstat_proxy()}},
 \code{\link[stats:dist]{stats::as.dist()}}
 }
-\keyword{textstat}
