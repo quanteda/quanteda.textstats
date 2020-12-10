@@ -398,11 +398,11 @@ test_that("comparisons with old measures work", {
     textstat_keyness(dfmat, measure = "chi2", old = TRUE),
     textstat_keyness(dfmat, measure = "chi2", old = FALSE)
   )
-  expect_identical(
+  expect_equal(
     textstat_keyness(dfmat, measure = "lr", old = TRUE),
     textstat_keyness(dfmat, measure = "lr", old = FALSE)
   )
-  expect_identical(
+  expect_equal(
     textstat_keyness(dfmat, measure = "pmi", old = TRUE),
     textstat_keyness(dfmat, measure = "pmi", old = FALSE)
   )
