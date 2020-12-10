@@ -4,12 +4,10 @@
 \alias{textstat_summary}
 \title{Summarize documents}
 \usage{
-textstat_summary(x, cache = TRUE, ...)
+textstat_summary(x, ...)
 }
 \arguments{
 \item{x}{corpus to be summarized}
-
-\item{cache}{if \code{TRUE}, use internal cache from the second time.}
 
 \item{...}{additional arguments passed through to \code{\link[=dfm]{dfm()}}}
 }
@@ -38,10 +36,10 @@ in \code{\link[quanteda:quanteda_options]{quanteda::quanteda_options()}}
 \examples{
 library("quanteda")
 corp <- data_corpus_inaugural
-textstat_summary(corp, cache = TRUE)
+textstat_summary(corp)
 toks <- tokens(corp)
-textstat_summary(toks, cache = TRUE)
+textstat_summary(toks)
 dfmat <- dfm(toks)
-textstat_summary(dfmat, cache = TRUE)
+textstat_summary(dfmat)
 }
 \keyword{textstat}
