@@ -1,5 +1,5 @@
 Package: quanteda.textstats
-Version: 0.91
+Version: 0.91.9000
 Title: Textual Statistics for the Quantitative Analysis of Textual Data
 Description: Textual statistics functions formerly in the 'quanteda' package.
     Textual statistics for characterizing and comparing textual data. Includes 
@@ -21,7 +21,6 @@ Depends:
 Imports:
     quanteda,
     data.table (>= 1.9.6),
-    digest,
     Matrix (>= 1.2),
     methods,
     nsyllable,
