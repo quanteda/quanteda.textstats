@@ -1,4 +1,5 @@
 test_that("textstat_summary method works", {
+    skip_on_os("solaris")
     corp <- quanteda::data_corpus_inaugural[10:15]
     toks <- quanteda::tokens_tolower(quanteda::tokens(corp))
     dfmt <- quanteda::dfm(toks)

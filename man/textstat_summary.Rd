@@ -2,7 +2,7 @@
 % Please edit documentation in R/textstat_summary.R
 \name{textstat_summary}
 \alias{textstat_summary}
-\title{Summarize documents}
+\title{Summarize documents as syntactic and lexical feature counts}
 \usage{
 textstat_summary(x, ...)
 }
@@ -12,7 +12,8 @@ textstat_summary(x, ...)
 \item{...}{additional arguments passed through to \code{\link[=dfm]{dfm()}}}
 }
 \description{
-Count the total number of number tokens and sentences.
+Count syntactic and lexical features of documents such as tokens, types,
+sentences, and character categories.
 }
 \details{
 Count the total number of characters, tokens and sentences as well as special
@@ -34,12 +35,14 @@ in \code{\link[quanteda:quanteda_options]{quanteda::quanteda_options()}}
 }
 }
 \examples{
+if (Sys.info()["sysname"] != "SunOS") {
 library("quanteda")
-corp <- data_corpus_inaugural
+corp <- data_corpus_inaugural[1:5]
 textstat_summary(corp)
 toks <- tokens(corp)
 textstat_summary(toks)
 dfmat <- dfm(toks)
 textstat_summary(dfmat)
+}
 }
 \keyword{textstat}

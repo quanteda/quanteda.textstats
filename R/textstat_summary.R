@@ -1,6 +1,7 @@
-#' Summarize documents
+#' Summarize documents as syntactic and lexical feature counts
 #'
-#' Count the total number of number tokens and sentences.
+#' Count syntactic and lexical features of documents such as tokens, types,
+#' sentences, and character categories.
 #'
 #' Count the total number of characters, tokens and sentences as well as special
 #' tokens such as numbers, punctuation marks, symbols, tags and emojis.
@@ -24,13 +25,15 @@
 #' @export
 #' @keywords textstat
 #' @examples
+#' if (Sys.info()["sysname"] != "SunOS") {
 #' library("quanteda")
-#' corp <- data_corpus_inaugural
+#' corp <- data_corpus_inaugural[1:5]
 #' textstat_summary(corp)
 #' toks <- tokens(corp)
 #' textstat_summary(toks)
 #' dfmat <- dfm(toks)
 #' textstat_summary(dfmat)
+#' }
 textstat_summary <- function(x, ...) {
     UseMethod("textstat_summary")
 }
