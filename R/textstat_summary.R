@@ -20,54 +20,45 @@
 #' \item emojis = number of emojis (`^\p{Emoji_Presentation}+$`)
 #' }
 #' @param x corpus to be summarized
-#' @param cache if `TRUE`, use internal cache from the second time.
 #' @param ... additional arguments passed through to [dfm()]
 #' @export
 #' @keywords textstat
 #' @examples
 #' library("quanteda")
 #' corp <- data_corpus_inaugural
-#' textstat_summary(corp, cache = TRUE)
+#' textstat_summary(corp)
 #' toks <- tokens(corp)
-#' textstat_summary(toks, cache = TRUE)
+#' textstat_summary(toks)
 #' dfmat <- dfm(toks)
-#' textstat_summary(dfmat, cache = TRUE)
-textstat_summary <- function(x, cache = TRUE, ...) {
+#' textstat_summary(dfmat)
+textstat_summary <- function(x, ...) {
     UseMethod("textstat_summary")
 }
 
 #' @export
-textstat_summary.default <- function(x, cache = TRUE, ...) {
+textstat_summary.default <- function(x, ...) {
     stop(friendly_class_undefined_message(class(x), "textstat_summary"))
 }
 
 #' @method textstat_summary corpus
 #' @export
-textstat_summary.corpus <- function(x, cache = TRUE, ...) {
-    summarize(as.corpus(x), cache, ...)
+textstat_summary.corpus <- function(x, ...) {
+    summarize(as.corpus(x), ...)
 }
 
 #' @method textstat_summary tokens
 #' @export
-textstat_summary.tokens <- function(x, cache = TRUE, ...) {
-    summarize(as.tokens(x), cache, ...)
+textstat_summary.tokens <- function(x, ...) {
+    summarize(as.tokens(x), ...)
 }
 
 #' @method textstat_summary dfm
 #' @export
-textstat_summary.dfm <- function(x, cache = TRUE, ...) {
-    summarize(as.dfm(x), cache, ...)
+textstat_summary.dfm <- function(x, ...) {
+    summarize(as.dfm(x), ...)
 }
 
-summarize <- function(x, cache = TRUE, ...) {
-
-    if (cache) {
-        result <- get_cache(x, "summary", ...)
-        if (!is.null(result))
-            return(result)
-    } else {
-        clear_cache(x, "summary")
-    }
+summarize <- function(x, ...) {
 
     patterns <- removals_regex(punct = TRUE, symbols = TRUE,
                                numbers = TRUE, url = TRUE)
@@ -104,7 +95,5 @@ summarize <- function(x, cache = TRUE, ...) {
         result$sents <- ntoken(tokens(x, what = "sentence"))
     }
 
-    if (cache)
-        set_cache(x, "summary", result, ...)
     return(result)
 }

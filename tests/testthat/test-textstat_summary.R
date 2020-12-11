@@ -8,7 +8,7 @@ test_that("textstat_summary method works", {
                   "tags", "emojis")
 
     # corpus
-    summ_corp <- textstat_summary(corp, cache = FALSE)
+    summ_corp <- textstat_summary(corp)
     expect_equal(
         summ_corp$sents,
         unname(quanteda::ntoken(quanteda::tokens(corp, what = "sentence")))
@@ -19,7 +19,7 @@ test_that("textstat_summary method works", {
     )
 
     # tokens
-    summ_toks <- textstat_summary(toks, cache = FALSE)
+    summ_toks <- textstat_summary(toks)
     expect_equal(
         summ_toks$puncts,
         unname(quanteda::ntoken(quanteda::tokens_select(toks, quanteda:::removals_regex(punct = TRUE)[[1]],
@@ -48,7 +48,7 @@ test_that("textstat_summary method works", {
     )
 
     # dfm
-    summ_dfm <- textstat_summary(dfmt, cache = FALSE)
+    summ_dfm <- textstat_summary(dfmt)
     expect_equal(
         summ_dfm$puncts,
         unname(quanteda::ntoken(quanteda::dfm_select(dfmt, quanteda:::removals_regex(punct = TRUE)[[1]],
@@ -77,72 +77,14 @@ test_that("textstat_summary method works", {
     )
 })
 
-test_that("summary chache counts hashtag and emoji correctly", {
+test_that("textstat_summary counts hashtag and emoji correctly", {
     skip_on_os("solaris")
     txt <- c("£ € 👏 Rock on❗ 💪️🎸",
              "Hi @qi #quanteda https://quanteda.io")
     toks <- quanteda::tokens(txt)
-    summ <- textstat_summary(toks, cache = FALSE)
+    summ <- textstat_summary(toks)
     expect_identical(summ$tokens, c(8L, 4L))
     expect_identical(summ$tags, c(0L, 2L))
     expect_identical(summ$emojis, c(4L, 0L))
     expect_identical(summ$urls, c(0L, 1L))
-})
-
-test_that("textstat_summary chaching is working", {
-    skip_on_os("solaris")
-    corp <- quanteda::data_corpus_inaugural[10:15]
-    summ_corp <- textstat_summary(corp, cache = TRUE)
-    expect_identical(quanteda::meta(corp, type = "object")$summary$data, summ_corp)
-    summ_corp <- textstat_summary(corp, cache = FALSE)
-    quanteda.textstats:::clear_cache(corp, "summary")
-    expect_identical(quanteda::meta(corp, type = "object")$summary, list())
-    expect_equal(nrow(textstat_summary(head(corp, 3), cache = TRUE)), 3)
-
-    toks <- quanteda::tokens(corp)
-    summ_toks <- textstat_summary(toks, cache = TRUE)
-    expect_identical(quanteda::meta(toks, type = "object")$summary$data, summ_toks)
-    summ_toks <- textstat_summary(toks, cache = FALSE)
-    expect_identical(quanteda::meta(toks, type = "object")$summary, list())
-    expect_equal(nrow(textstat_summary(head(toks, 3), cache = TRUE)), 3)
-
-    dfmt <- quanteda::dfm(toks)
-    summ_dfm <- textstat_summary(dfmt, cache = TRUE)
-    expect_identical(quanteda::meta(dfmt, type = "object")$summary$data, summ_dfm)
-    summ_dfm <- textstat_summary(dfmt, cache = FALSE)
-    expect_identical(quanteda::meta(dfmt, type = "object")$summary, list())
-    expect_equal(nrow(textstat_summary(head(dfmt, 3), cache = TRUE)), 3)
-})
-
-
-test_that("summary cache is updated", {
-    skip_on_os("solaris")
-    corp <- quanteda::data_corpus_inaugural[10:15]
-    summ_corp1 <- textstat_summary(corp, cache = TRUE, tolower = FALSE, remove_punct = FALSE)
-    summ_corp2 <- textstat_summary(corp, cache = TRUE, tolower = TRUE, remove_punct = FALSE)
-    summ_corp3 <- textstat_summary(corp, cache = TRUE, tolower = TRUE, remove_punct = TRUE)
-    expect_true(all(summ_corp1$types > summ_corp2$types))
-    expect_true(all(summ_corp2$types > summ_corp3$types))
-
-    toks <- quanteda::tokens(corp)
-    expect_identical(attr(toks, "meta")$object$summary$data, summ_corp3)
-    summ_toks1 <- textstat_summary(toks, cache = TRUE, tolower = FALSE, remove_punct = FALSE)
-    summ_toks2 <- textstat_summary(toks, cache = TRUE, tolower = TRUE, remove_punct = FALSE)
-    summ_toks3 <- textstat_summary(toks, cache = TRUE, tolower = TRUE, remove_punct = TRUE)
-    expect_true(all(summ_toks1$types > summ_toks2$types))
-    expect_true(all(summ_toks2$types > summ_toks3$types))
-    toks <- quanteda::tokens_remove(toks, quanteda::stopwords("en"))
-    summ_toks4 <- textstat_summary(toks, cache = TRUE)
-    expect_true(all(summ_toks3$types > summ_toks4$types))
-
-    dfmt <- quanteda::dfm(toks, tolower = FALSE)
-    expect_identical(dfmt@meta$object$summary$data, summ_toks4)
-    summ_dfm1 <- textstat_summary(dfmt, cache = TRUE, tolower = FALSE, stem = FALSE)
-    summ_dfm2 <- textstat_summary(dfmt, cache = TRUE, tolower = TRUE, stem = FALSE)
-    summ_dfm3 <- textstat_summary(dfmt, cache = TRUE, tolower = TRUE, stem = TRUE)
-    expect_true(all(summ_dfm1$types > summ_dfm2$types))
-    expect_true(all(summ_dfm2$types > summ_dfm3$types))
-    dfmt <- quanteda::dfm_remove(dfmt, "^[A-Z]", valuetype = "regex")
-    summ_dfm4 <- textstat_summary(dfmt, cache = TRUE)
-    expect_true(all(summ_dfm3$types > summ_dfm4$types))
 })
