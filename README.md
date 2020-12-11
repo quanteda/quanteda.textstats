@@ -5,7 +5,7 @@
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
-[![](https://img.shields.io/badge/devel%20version-0.90-royalblue.svg)](https://github.com/quanteda/quanteda.textstats)
+[![](https://img.shields.io/badge/devel%20version-0.91.9000-royalblue.svg)](https://github.com/quanteda/quanteda.textstats)
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textstats?color=orange)](https://CRAN.R-project.org/package=quanteda.textstats)
