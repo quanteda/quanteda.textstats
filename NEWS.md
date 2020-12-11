@@ -1,3 +1,8 @@
+# quanteda.textstats 0.91
+
+* Fixes some issues causing errors on Solaris and on tests for the older R release on Windows.
+* Removes problematic cacheing of results from `textstat_summary()` and associated functions and tests.
+
 # quanteda.textstats 0.90
 
 First version, split from **quanteda** 2.2.  This is a transitional version

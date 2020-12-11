@@ -104,7 +104,7 @@
 #'   Quantitative Linguistics*, 17(2), 94--100.
 #'
 #'   Herdan, G. (1955). [A New Derivation and Interpretation of Yule's
-#'   'Characteristic' *K*](https://doi.org/10.1007/BF01587632). *Zeitschrift für
+#'   'Characteristic' *K*](https://link.springer.com/article/10.1007/BF01587632). *Zeitschrift für
 #'   angewandte Mathematik und Physik*, 6(4): 332--334.
 #'
 #'   Maas, H.D. (1972). Über den Zusammenhang zwischen Wortschatzumfang und
@@ -117,7 +117,7 @@
 #'
 #'   McCarthy, P.M. & Jarvis, S. (2010). [MTLD, vocd-D, and HD-D: A Validation
 #'   Study of Sophisticated Approaches to Lexical Diversity
-#'   Assessment](https://doi.org/10.3758/BRM.42.2.381). *Behaviour Research
+#'   Assessment](https://link.springer.com/article/10.3758/BRM.42.2.381). *Behaviour Research
 #'   Methods*, 42(2), 381--392.
 #'
 #'   Michalke, M. (2014). *koRpus: An R Package for Text Analysis (Version 0.05-4)*.

@@ -149,7 +149,7 @@ textstat_lexdiv(toks, c("CTTR", "TTR", "MATTR"), MATTR_window = 100)
 Covington, M.A. & McFall, J.D. (2010). \href{https://doi.org/10.1080/09296171003643098}{Cutting the Gordian Knot: The Moving-Average Type-Token Ratio (MATTR)}. \emph{Journal of
 Quantitative Linguistics}, 17(2), 94--100.
 
-Herdan, G. (1955). \href{https://doi.org/10.1007/BF01587632}{A New Derivation and Interpretation of Yule's 'Characteristic' \emph{K}}. \emph{Zeitschrift für
+Herdan, G. (1955). \href{https://link.springer.com/article/10.1007/BF01587632}{A New Derivation and Interpretation of Yule's 'Characteristic' \emph{K}}. \emph{Zeitschrift für
 angewandte Mathematik und Physik}, 6(4): 332--334.
 
 Maas, H.D. (1972). Über den Zusammenhang zwischen Wortschatzumfang und
@@ -159,7 +159,7 @@ Länge eines Textes. \emph{Zeitschrift für Literaturwissenschaft und Linguistik
 McCarthy, P.M. &  Jarvis, S. (2007). \href{https://doi.org/10.1177/0265532207080767}{vocd: A Theoretical and Empirical Evaluation}. \emph{Language Testing},
 24(4), 459--488.
 
-McCarthy, P.M. & Jarvis, S. (2010). \href{https://doi.org/10.3758/BRM.42.2.381}{MTLD, vocd-D, and HD-D: A Validation Study of Sophisticated Approaches to Lexical Diversity Assessment}. \emph{Behaviour Research
+McCarthy, P.M. & Jarvis, S. (2010). \href{https://link.springer.com/article/10.3758/BRM.42.2.381}{MTLD, vocd-D, and HD-D: A Validation Study of Sophisticated Approaches to Lexical Diversity Assessment}. \emph{Behaviour Research
 Methods}, 42(2), 381--392.
 
 Michalke, M. (2014). \emph{koRpus: An R Package for Text Analysis (Version 0.05-4)}.
