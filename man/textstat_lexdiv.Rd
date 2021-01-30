@@ -47,7 +47,7 @@ for computation of the Moving-Average Type-Token Ratio (Covington & McFall, 2010
 \item{MSTTR_segment}{a numeric value defining the size of the each segment
 for the computation of the the Mean Segmental Type-Token Ratio (Johnson, 1944)}
 
-\item{...}{for passing arguments to other methods}
+\item{...}{not used directly}
 }
 \value{
 A data.frame of documents and their lexical diversity scores.

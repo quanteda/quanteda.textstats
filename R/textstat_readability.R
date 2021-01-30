@@ -488,7 +488,7 @@ textstat_readability.corpus <- function(x,
                                         max_sentence_length = 10000,
                                         intermediate = FALSE, ...) {
 
-    unused_dots(...)
+    check_dots(...)
 
     measure_option <- c("ARI", "ARI.simple", "ARI.NRI",
                         "Bormuth", "Bormuth.MC", "Bormuth.GP",

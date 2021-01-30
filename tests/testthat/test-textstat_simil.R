@@ -2,7 +2,7 @@ context("test textstat_simil")
 
 data_dfm_lbgexample <- quanteda::data_dfm_lbgexample
 
-mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980))
+mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980 & Year < 2021))
 mt <- quanteda::dfm_trim(mt, min_termfreq = 10)
 
 test_that("y errors if not a dfm", {

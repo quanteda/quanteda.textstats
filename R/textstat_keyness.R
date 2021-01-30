@@ -92,6 +92,7 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
                                  sort = TRUE,
                                  correction = c("default", "yates", "williams", "none"),
                                  ..., old = FALSE) {
+    check_dots(...)
     x <- as.dfm(x)
     if (!sum(x)) stop(message_error("dfm_empty"))
 

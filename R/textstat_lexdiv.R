@@ -93,7 +93,7 @@
 #'   for computation of the Moving-Average Type-Token Ratio (Covington & McFall, 2010)
 #' @param MSTTR_segment a numeric value defining the size of the each segment
 #'   for the computation of the the Mean Segmental Type-Token Ratio (Johnson, 1944)
-#' @param ... for passing arguments to other methods
+#' @param ... not used directly
 #' @author Kenneth Benoit and Jiong Wei Lua. Many of the formulas have been
 #'   reimplemented from functions written by Meik Michalke in the \pkg{koRpus}
 #'   package.
@@ -180,7 +180,7 @@ textstat_lexdiv.dfm <- function(x,
                                 log.base = 10,
                                 ...) {
 
-    unused_dots(...)
+    check_dots(...)
     tokens_only_measures <-  c("MATTR", "MSTTR")
 
     x <- as.dfm(x)
@@ -232,7 +232,7 @@ textstat_lexdiv.tokens <-
              MSTTR_segment = 100L,
              ...) {
 
-    unused_dots(...)
+    check_dots(...)
     tokens_only_measures <-  c("MATTR", "MSTTR")
 
     # additional token handling

@@ -1,4 +1,4 @@
-unused_dots <- quanteda:::unused_dots
+check_dots <- quanteda:::check_dots
 
 friendly_class_undefined_message <- quanteda:::friendly_class_undefined_message
 

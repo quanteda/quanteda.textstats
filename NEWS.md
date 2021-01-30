@@ -1,3 +1,7 @@
+# quanteda.textstats 0.92
+
+
+
 # quanteda.textstats 0.91
 
 * Fixes some issues causing errors on Solaris and on tests for the older R release on Windows.

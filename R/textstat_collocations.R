@@ -24,8 +24,7 @@
 #'   (default is 0.5)
 #' @param tolower logical; if `TRUE`, form collocations as lower-cased
 #'   combinations
-#' @param ... additional arguments passed to [tokens()], if `x`
-#'   is not a [tokens] object already
+#' @param ... additional arguments passed to [tokens()]
 #' @references Blaheta, D. & Johnson, M. (2001). [Unsupervised learning of
 #'   multi-word
 #'   verbs](http://web.science.mq.edu.au/~mjohnson/papers/2001/dpb-colloc01.pdf).
@@ -141,6 +140,7 @@ textstat_collocations.tokens <- function(x, method = "lambda",
     x <- as.tokens(x)
     method <- match.arg(method, c("lambda"))
 
+
     if (any(size == 1))
         stop("Collocation sizes must be larger than 1")
     if (any(size > 5))
@@ -148,6 +148,12 @@ textstat_collocations.tokens <- function(x, method = "lambda",
 
     # lower case if requested
     if (tolower) x <- tokens_tolower(x, keep_acronyms = TRUE)
+
+    if (length(list(...))) {
+        x <- tokens(x, ...)
+    } else {
+        check_dots(..., method = "tokens")
+    }
 
     # attrs <- attributes(x)
     types <- types(x)

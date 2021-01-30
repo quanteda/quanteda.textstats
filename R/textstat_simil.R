@@ -205,7 +205,7 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
 
     if (!is.null(selection))
         .Deprecated(msg = "'selection' is deprecated. Use 'y' instead.")
-    unused_dots(...)
+    check_dots(...)
 
     x <- as.dfm(x)
     margin <- match.arg(margin)
@@ -322,7 +322,7 @@ textstat_dist.dfm <- function(x, y = NULL, selection = NULL,
     if (!is.null(selection))
         .Deprecated(msg = "'selection' is deprecated. Use 'y' instead.")
 
-    unused_dots(...)
+    check_dots(...)
     x <- as.dfm(x)
 
     margin <- match.arg(margin)
@@ -605,6 +605,6 @@ make_na_matrix <- function(dims, row = NULL, col = NULL) {
     }
     Matrix::sparseMatrix(
         i = i, j = j, x = as.double(NA),
-        dims = dims, giveCsparse = FALSE
+        dims = dims, repr = "T"
     )
 }
