@@ -98,38 +98,38 @@
 #'   reimplemented from functions written by Meik Michalke in the \pkg{koRpus}
 #'   package.
 #' @references
-#'   Covington, M.A. & McFall, J.D. (2010). [Cutting the Gordian Knot: The
-#'   Moving-Average Type-Token Ratio
-#'   (MATTR)](https://doi.org/10.1080/09296171003643098). *Journal of
-#'   Quantitative Linguistics*, 17(2), 94--100.
+#'   Covington, M.A. & McFall, J.D. (2010). Cutting the Gordian Knot: The
+#'   Moving-Average Type-Token Ratio (MATTR) *Journal of Quantitative
+#'   Linguistics*, 17(2), 94--100.
+#'   \doi{10.1080/09296171003643098}
 #'
 #'   Herdan, G. (1955). [A New Derivation and Interpretation of Yule's
-#'   'Characteristic' *K*](https://link.springer.com/article/10.1007/BF01587632). *Zeitschrift für
-#'   angewandte Mathematik und Physik*, 6(4): 332--334.
+#'   'Characteristic'
+#'   *K*](https://link.springer.com/article/10.1007/BF01587632). *Zeitschrift
+#'   für angewandte Mathematik und Physik*, 6(4): 332--334.
 #'
 #'   Maas, H.D. (1972). Über den Zusammenhang zwischen Wortschatzumfang und
 #'   Länge eines Textes. *Zeitschrift für Literaturwissenschaft und Linguistik*,
 #'   2(8), 73--96.
 #'
-#'   McCarthy, P.M. &  Jarvis, S. (2007). [vocd: A Theoretical and Empirical
-#'   Evaluation](https://doi.org/10.1177/0265532207080767). *Language Testing*,
-#'   24(4), 459--488.
+#'   McCarthy, P.M. &  Jarvis, S. (2007). vocd: A Theoretical and Empirical
+#'   Evaluation. *Language Testing*, 24(4), 459--488.
+#'   \doi{10.1177/0265532207080767}
 #'
 #'   McCarthy, P.M. & Jarvis, S. (2010). [MTLD, vocd-D, and HD-D: A Validation
 #'   Study of Sophisticated Approaches to Lexical Diversity
-#'   Assessment](https://link.springer.com/article/10.3758/BRM.42.2.381). *Behaviour Research
-#'   Methods*, 42(2), 381--392.
+#'   Assessment](https://link.springer.com/article/10.3758/BRM.42.2.381).
+#'   *Behaviour Research Methods*, 42(2), 381--392.
 #'
-#'   Michalke, M. (2014). *koRpus: An R Package for Text Analysis (Version 0.05-4)*.
-#'   Available from <https://reaktanz.de/?c=hacking&s=koRpus>.
+#'   Michalke, M. (2014). *koRpus: An R Package for Text Analysis (Version
+#'   0.05-4)*. Available from <https://reaktanz.de/?c=hacking&s=koRpus>.
 #'
-#'   Simpson, E.H. (1949). [Measurement of
-#'   Diversity](https://doi.org/10.1038/163688a0). *Nature*, 163: 688.
+#'   Simpson, E.H. (1949). Measurement of Diversity. *Nature*, 163: 688.
+#'   \doi{doi.org/10.1038/163688a0}
 #'
-#'   Tweedie. F.J. and Baayen, R.H. (1998). [How Variable May a Constant Be?
-#'   Measures of Lexical Richness in
-#'   Perspective](https://doi.org/10.1023/A:1001749303137). *Computers and the
-#'   Humanities*, 32(5), 323--352.
+#'   Tweedie. F.J. and Baayen, R.H. (1998). How Variable May a Constant Be?
+#'   Measures of Lexical Richness in Perspective. *Computers and the
+#'   Humanities*, 32(5), 323--352.  \doi{10.1023/A:1001749303137}
 #'
 #'   Yule, G. U. (1944)  *The Statistical Study of Literary Vocabulary.*
 #'   Cambridge: Cambridge University Press.
