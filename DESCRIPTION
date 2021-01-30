@@ -19,7 +19,7 @@ License: GPL-3
 Depends:
     R (>= 3.2.0)
 Imports:
-    quanteda,
+    quanteda (>= 2.9.0),
     data.table (>= 1.9.6),
     Matrix (>= 1.2),
     methods,
@@ -38,6 +38,8 @@ Suggests:
     svs,     
     testthat,
     knitr
+Remotes:
+    quanteda/quanteda
 URL: https://quanteda.io
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/quanteda.textstats/issues
