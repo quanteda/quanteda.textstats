@@ -162,6 +162,9 @@ textstat_lexdiv <- function(x,
                             MATTR_window = 100L,
                             MSTTR_segment = 100L,
                             ...) {
+    measure <- match.arg(measure, c("TTR", "C", "R", "CTTR", "U", "S", "K", "I", "D",
+                                    "Vm", "Maas", "MATTR", "MSTTR", "all"),
+                         several.ok = TRUE)
     UseMethod("textstat_lexdiv")
 }
 
@@ -180,7 +183,7 @@ textstat_lexdiv.dfm <- function(x,
                                 log.base = 10,
                                 ...) {
 
-    check_dots(...)
+    # check_dots(...)
     tokens_only_measures <-  c("MATTR", "MSTTR")
 
     x <- as.dfm(x)
@@ -268,7 +271,6 @@ textstat_lexdiv.tokens <-
     }
 
     return(result)
-
 }
 
 # internal functions to handle lexdiv statistics for dfm and tokens -------
@@ -292,33 +294,34 @@ NULL
 #'   measures using logs)
 #' @details `compute_lexdiv_dfm_stats` in an internal function that
 #'   computes the lexical diversity measures from a [dfm] input.
-#' @importFrom data.table :=
 #' @importFrom quanteda ntoken ntype docnames
 compute_lexdiv_dfm_stats <- function(x, measure = NULL, log.base = 10) {
 
-    n_tokens <- n_types <- TTR <- C <- R <- CTTR <- U <- S <- Maas <-
-        lgV0 <- lgeV0 <- K <- D <- Vm <- I <- NULL
-    temp <- data.table(n_tokens = ntoken(x), n_types = ntype(x))
+    n_tokens <- ntoken(x)
+    n_types <- ntype(x)
+
+    result <- data.frame(document = docnames(x), n_tokens, n_types,
+                         stringsAsFactors = FALSE, row.names = NULL)
 
     if ("TTR" %in% measure)
-        temp[, TTR := n_types / n_tokens]
+        result[["TTR"]] <- n_types / n_tokens
 
     if ("C" %in% measure)
-        temp[, C := log(n_types, base = log.base) / log(n_tokens, base = log.base)]
+        result[["C"]] <- log(n_types, base = log.base) / log(n_tokens, base = log.base)
 
     if ("R" %in% measure)
-        temp[, R := n_types / sqrt(n_tokens)]
+        result[["R"]] <- n_types / sqrt(n_tokens)
 
     if ("CTTR" %in% measure)
-        temp[, CTTR := n_types / sqrt(2 * n_tokens)]
+        result[["CTTR"]] <- n_types / sqrt(2 * n_tokens)
 
     if ("U" %in% measure)
-        temp[, U := log(n_tokens, base = log.base) ^ 2 /
-                    (log(n_tokens, base = log.base) - log(n_types, base = log.base))]
+        result[["U"]] <- log(n_tokens, base = log.base) ^ 2 /
+                    (log(n_tokens, base = log.base) - log(n_types, base = log.base))
 
     if ("S" %in% measure)
-        temp[, S := log(log(n_types, base = log.base), base = log.base) /
-                    log(log(n_tokens, base = log.base), base = log.base)]
+        result[["S"]] <- log(log(n_types, base = log.base), base = log.base) /
+                    log(log(n_tokens, base = log.base), base = log.base)
 
     # computations for K, D, Vm, I
     # produces a list of data.frames that will be used for computing the measures
@@ -334,41 +337,39 @@ compute_lexdiv_dfm_stats <- function(x, measure = NULL, log.base = 10) {
     }
 
     if ("K" %in% measure)
-        temp[, K := 10 ^ 4 * vapply(ViN, function(y) sum(y$ViN * (y$i / y$n_tokens) ^ 2), numeric(1))]
+        result[["K"]] <- 10 ^ 4 * vapply(ViN, function(y) sum(y$ViN * (y$i / y$n_tokens) ^ 2), numeric(1))
     if ("I" %in% measure) {
         M_2 <- vapply(ViN, function(y) sum(y$ViN * y$i^2), numeric(1))
-        M_1 <- temp$n_types
+        M_1 <- n_types
         yule_i <- (M_1 ^ 2) / (M_2 - M_1)
         yule_i[is.infinite(yule_i)] <- 0
-        temp[, I := yule_i]
+        result[["I"]] <- yule_i
     }
 
     if ("D" %in% measure)
-        temp[, D := vapply(ViN,
+        result[["D"]] <- vapply(ViN,
                            function(y) sum(y$ViN * (y$i / y$n_tokens) * ((y$i - 1) / (y$n_tokens - 1))),
-                           numeric(1))]
+                           numeric(1))
 
     if ("Vm" %in% measure)
-        temp[, Vm := vapply(ViN,
+        result[["Vm"]] <- vapply(ViN,
                             function(y) sqrt(sum(y$ViN * (y$i / y$n_tokens) ^ 2) - 1 / y$n_types[1]),
-                            numeric(1))]
+                            numeric(1))
 
     if ("Maas" %in% measure) {
         measure <- c(measure, "lgV0", "lgeV0")
-        temp[, Maas := sqrt((log(n_tokens, base = log.base) - log(n_types, base = log.base)) /
-                             log(n_tokens, base = log.base) ^ 2)]
-        temp[, lgV0 := log10(n_types) / sqrt(1 - (log10(n_types) / (log10(n_tokens) + 0)) ^ 2)]
-        temp[, lgeV0 := log(n_types) / sqrt(1 - (log(n_types) / (log(n_tokens) + 0)) ^ 2)]
+        result[["Maas"]] <- sqrt((log(n_tokens, base = log.base) - log(n_types, base = log.base)) /
+                             log(n_tokens, base = log.base) ^ 2)
+        result[["lgV0"]] <- log10(n_types) / sqrt(1 - (log10(n_types) / (log10(n_tokens) + 0)) ^ 2)
+        result[["lgeV0"]] <- log(n_types) / sqrt(1 - (log(n_types) / (log(n_tokens) + 0)) ^ 2)
     }
 
     # return missings for tokens-only measures
     MATTR <- MSTTR <- NULL
-    if ("MATTR" %in% measure) temp[, MATTR := NA]
-    if ("MSTTR" %in% measure) temp[, MSTTR := NA]
+    if ("MATTR" %in% measure) result[["MATTR"]] <- NA
+    if ("MSTTR" %in% measure) result[["MSTTR"]] <- NA
 
-    result <- data.frame(document = docnames(x), stringsAsFactors = FALSE)
-    if (length(measure))
-        result <- cbind(result, as.data.frame(temp[, measure, with = FALSE]))
+    if (length(measure)) result <- result[, c("document", measure)]
     result[is.na(result)] <- NA
     class(result) <- c("lexdiv", "textstat", "data.frame")
     return(result)
