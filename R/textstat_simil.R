@@ -605,6 +605,8 @@ make_na_matrix <- function(dims, row = NULL, col = NULL) {
     }
     Matrix::sparseMatrix(
         i = i, j = j, x = as.double(NA),
-        dims = dims, repr = "T"
+        dims = dims,
+        giveCsparse = FALSE
+        # repr = "T"
     )
 }
