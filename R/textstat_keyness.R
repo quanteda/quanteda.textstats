@@ -86,12 +86,12 @@ textstat_keyness.default <- function(x, target = 1L,
     stop(friendly_class_undefined_message(class(x), "textstat_keyness"))
 }
 
-#' @importFrom quanteda dfm_group
+#' @importFrom quanteda dfm_group ndoc
 #' @export
 textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "lr", "pmi"),
                                  sort = TRUE,
                                  correction = c("default", "yates", "williams", "none"),
-                                 ..., old = FALSE) {
+                                 ...) {
     check_dots(...)
     x <- as.dfm(x)
     if (!sum(x)) stop(message_error("dfm_empty"))
@@ -137,40 +137,24 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
     grouping <- factor(target, levels = c(TRUE, FALSE), labels = label)
     temp <- dfm_group(x, groups = grouping)
 
-    if (old) {
-        if (measure == "chi2") {
-            result <- keyness_chi2_dt(temp, correction)
-        } else if (measure == "lr") {
-            result <- keyness_lr(temp, correction)
-        } else if (measure == "exact") {
-            if (!correction %in% c("default", "none"))
-                warning("correction is always none for exact")
-            result <- keyness_exact(temp)
-        } else if (measure == "pmi") {
-            if (!correction %in% c("default", "none"))
-                warning("correction is always none for pmi")
-            result <- keyness_pmi(temp)
-        }
-        names(result)[2] <- "stat"
+    if (measure == "exact") {
+        if (measure == "exact" && !correction %in% c("default", "none"))
+            warning("correction is always none for exact")
+        result <- keyness_exact(temp)
     } else {
-        if (measure == "exact") {
-            if (measure == "exact" && !correction %in% c("default", "none"))
-                warning("correction is always none for exact")
-            result <- keyness_exact(temp)
-        } else {
-            if (measure == "pmi" && !correction %in% c("default", "none"))
-                warning("correction is always none for pmi")
-            result <- data.frame(
-                feature = featnames(temp),
-                stat = qatd_cpp_keyness(temp, measure, correction),
-                p = NA,
-                n_target = as.vector(temp[1, ]),
-                n_reference = as.vector(temp[2, ]),
-                stringsAsFactors = FALSE
-            )
-            result$p <- 1 - stats::pchisq(abs(result$stat), 1) # abs() for pmi
-        }
+        if (measure == "pmi" && !correction %in% c("default", "none"))
+            warning("correction is always none for pmi")
+        result <- data.frame(
+            feature = featnames(temp),
+            stat = qatd_cpp_keyness(temp, measure, correction),
+            p = NA,
+            n_target = as.vector(temp[1, ]),
+            n_reference = as.vector(temp[2, ]),
+            stringsAsFactors = FALSE
+        )
+        result$p <- 1 - stats::pchisq(abs(result$stat), 1) # abs() for pmi
     }
+
     if (sort)
         result <- result[order(result$stat, result$feature,
                                decreasing = c(TRUE, FALSE), method = "radix"), ]
@@ -181,109 +165,6 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
     return(result)
 }
 
-#' Compute keyness (internal functions)
-#'
-#' Internal function used in textstat_keyness.  Computes \eqn{chi^2} with Yates'
-#' continuity correction for 2x2 tables.
-#' @name keyness
-#' @param x a [dfm] object
-#' @details `keyness_chi2_dt` uses vectorized computation from data.table
-#' objects.
-#' @return a data.frame of chi2 and p-values with rows named for each feature
-#' @keywords textstat internal
-#' @importFrom data.table data.table :=
-#' @importFrom stats dchisq
-#' @importFrom quanteda ndoc featnames
-#' @references
-#'   <https://en.wikipedia.org/wiki/Yates's_correction_for_continuity>
-keyness_chi2_dt <- function(x, correction = c("default", "yates", "williams", "none")) {
-
-    correction <- match.arg(correction)
-    a <- b <- c <- d <- N <- E <- chi2 <- p <- cor_app <- q <- NULL
-    if (ndoc(x) > 2) stop("x can only have 2 rows")
-    dt <- data.table(feature = featnames(x),
-                     a = as.numeric(x[1, ]),
-                     b = as.numeric(x[2, ]))
-    dt[, c("c", "d") := list(sum(x[1, ]) - a, sum(x[2, ]) - b)]
-    dt[, N := (a + b + c + d)]
-    dt[, E := (a + b) * (a + c) / N]
-
-    if (correction == "default" | correction == "yates") {
-        dt[, cor_app := (((a + b) * (a + c) / N < 5 | (a + b) * (b + d) / N < 5 |
-                              (a + c) * (c + d) / N < 5 | (c + d) * (b + d) / N < 5)
-                         & abs(a * d - b * c) >= N / 2)]
-        # the correction is usually only recommended if the smallest expected frequency is less than 5
-        # the correction should not be applied if |ad - bc| is less than N/2.
-        # compute using the direct formula - see link above (adds sign)
-        dt[, chi2 := ifelse(cor_app,
-                            (N * (abs(a * d - b * c) - N * 0.5) ^ 2) /
-                                ((a + b) * (c + d) * (a + c) * (b + d)) * ifelse(a > E, 1, -1),
-                            (N * abs(a * d - b * c) ^ 2) /
-                                ((a + b) * (c + d) * (a + c) * (b + d)) * ifelse(a > E, 1, -1))]
-    } else if (correction == "williams") {
-        # William's correction cannot be used if there are any zeros in the table
-        # \url{http://influentialpoints.com/Training/g-likelihood_ratio_test.htm}
-        dt[, q := ifelse(a * b * c * d == 0, 1,
-                         1 + (N / (a + b) + N / (c + d) - 1) * (N / (a + c) + N / (b + d) - 1) / (6 * N))]
-        dt[, chi2 := (N * abs(a * d - b * c) ^ 2) / ((a + b) * (c + d) * (a + c) * (b + d)) * ifelse(a > E, 1, -1) / q]
-    } else {
-        dt[, chi2 := (N * abs(a * d - b * c) ^ 2) / ((a + b) * (c + d) * (a + c) * (b + d)) * ifelse(a > E, 1, -1)]
-    }
-
-    # compute p-values
-    dt[, p := 1 - stats::pchisq(abs(chi2), 1)]
-
-    data.frame(feature = dt$feature,
-               stat = dt[, chi2],
-               p = dt[, p],
-               n_target = as.vector(x[1, ]),
-               n_reference = as.vector(x[2, ]),
-               stringsAsFactors = FALSE)
-}
-
-#' @rdname keyness
-#' @importFrom stats chisq.test
-#' @importFrom data.table data.table :=
-#' @details
-#' `keyness_chi2_stats` uses element-by-element application of
-#' [chisq.test][stats::chisq.test].
-keyness_chi2_stats <- function(x) {
-
-    sums <- rowSums(x)
-    result <- as.data.frame(
-        do.call(rbind, apply(x, 2, function(y) keyness(as.numeric(y[1]),
-                                                       as.numeric(y[2]),
-                                                       sums[1], sums[2])))
-    )
-
-    data.frame(feature = colnames(x),
-               stat = result$chi2,
-               p = result$p,
-               n_target = as.vector(x[1, ]),
-               n_reference = as.vector(x[2, ]),
-               stringsAsFactors = FALSE)
-}
-
-#' @rdname keyness
-#' @param t (scalar) frequency of target
-#' @param f (scalar) frequency of reference
-#' @param sum_t total of all target words
-#' @param sum_f total of all reference words
-#' @keywords internal
-keyness <- function(t, f, sum_t, sum_f) {
-
-    tb <- as.table(rbind(c(t, f), c(sum_t - t, sum_f - f)))
-    suppressWarnings(chi <- stats::chisq.test(tb))
-    t_exp <- chi$expected[1, 1]
-    list(chi2 = unname(chi$statistic) * ifelse(t > t_exp, 1, -1),
-         p = unname(chi$p.value))
-}
-
-#' @rdname keyness
-#' @details
-#' `keyness_exact` computes Fisher's exact using element-by-element
-#' application of [fisher.test][stats::fisher.test], returning the odds ratio.
-#' @importFrom stats fisher.test
 keyness_exact <- function(x) {
     sums <- rowSums(x)
     temp <- as.data.frame(
@@ -299,102 +180,6 @@ keyness_exact <- function(x) {
     data.frame(feature = colnames(x),
                stat = temp$or,
                p = temp$p,
-               n_target = as.vector(x[1, ]),
-               n_reference = as.vector(x[2, ]),
-               stringsAsFactors = FALSE)
-}
-
-#' @rdname keyness
-#' @param correction implement the Yates correction for 2x2 tables
-#' @details `keyness_lr` computes the \eqn{G^2} likelihood ratio statistic
-#'   using vectorized computation
-#' @importFrom quanteda ndoc featnames
-#' @references
-#' <https://influentialpoints.com/Training/g-likelihood_ratio_test.htm>
-keyness_lr <- function(x, correction = c("default", "yates", "williams", "none")) {
-
-    correction <- match.arg(correction)
-    epsilon <- 0.000000001; # to offset zero cell counts
-    a <- b <- c <- d <- N <- E11 <- G2 <- p <- cor_app <- correction_sign <- q <- NULL
-    if (ndoc(x) > 2)
-        stop("x can only have 2 rows")
-    dt <- data.table(feature = featnames(x),
-                     a = as.numeric(x[1, ]),
-                     b = as.numeric(x[2, ]))
-    dt[, c("c", "d") := list(sum(x[1, ]) - a, sum(x[2, ]) - b)]
-    dt[, N := (a + b + c + d)]
-    dt[, E11 := (a + b) * (a + c) / N]
-
-    if (correction == "default" | correction == "yates") {
-
-        dt[, cor_app := (((a + b) * (a + c) / N < 5 | (a + b) * (b + d) / N < 5 |
-                              (a + c) * (c + d) / N < 5 | (c + d) * (b + d) / N < 5)
-                         & abs(a * d - b * c) > N / 2)]
-        # the correction is usually only recommended if the smallest expected frequency is less than 5
-        # the correction should not be applied if |ad - bc| is less than N/2.
-        # implement Yates continuity correction
-        # If (ad-bc) is positive, subtract 0.5 from a and d and add 0.5 to b and c.
-        # If (ad-bc) is negative, add 0.5 to a and d and subtract 0.5 from b and c.
-        dt[, correction_sign := a * d - b * c > 0]
-        dt[, c("a", "d", "b", "c") := list(a + ifelse(cor_app, ifelse(correction_sign, -0.5, 0.5), 0),
-                                           d + ifelse(cor_app, ifelse(correction_sign, -0.5, 0.5), 0),
-                                           b + ifelse(cor_app, ifelse(correction_sign, 0.5, -0.5), 0),
-                                           c + ifelse(cor_app, ifelse(correction_sign, 0.5, -0.5), 0))]
-    }
-
-    dt[, G2 := (2 * (a * log(a / E11 + epsilon) +
-                         b * log(b / ((a + b) * (b + d) / N) + epsilon) +
-                         c * log(c / ((a + c) * (c + d) / N) + epsilon) +
-                         d * log(d / ((b + d) * (c + d) / N) + epsilon))) *
-           ifelse(a > E11, 1, -1)]
-
-    if (correction == "williams") {
-        # William's correction cannot be used if there are any zeros in the table
-        # \url{http://influentialpoints.com/Training/g-likelihood_ratio_test.htm}
-        dt[, q := ifelse(a * b * c * d == 0,
-                         1,
-                         1 + (N / (a + b) + N / (c + d) - 1) * (N / (a + c) + N / (b + d) - 1) / (6 * N))]
-        dt[, G2 := G2 / q]
-    }
-
-    # compute p-values
-    dt[, p := 1 - stats::pchisq(abs(G2), 1)]
-
-    data.frame(feature = dt$feature,
-               stat = dt[, G2],
-               p = dt[, p],
-               n_target = as.vector(x[1, ]),
-               n_reference = as.vector(x[2, ]),
-               stringsAsFactors = FALSE)
-}
-
-#' @rdname keyness
-#' @details `keyness_pmi` computes the Pointwise Mutual Information stat
-#'   using vectorized computation
-#' @importFrom quanteda ndoc featnames
-keyness_pmi <- function(x) {
-
-    a <- b <- c <- d <- N <- E11 <- pmi <- p <- NULL
-    if (ndoc(x) > 2)
-        stop("x can only have 2 rows")
-    dt <- data.table(feature = featnames(x),
-                     a = as.numeric(x[1, ]),
-                     b = as.numeric(x[2, ]))
-    dt[, c("c", "d") := list(sum(x[1, ]) - a, sum(x[2, ]) - b)]
-    dt[, N := (a + b + c + d)]
-    dt[, E11 := (a + b) * (a + c) / N]
-    epsilon <- .000000001  # to offset zero cell counts
-    dt[, pmi :=   log(a / E11 + epsilon)]
-
-    # normalized pmi
-    # dt[, pmi :=   log(a  / E11) * ifelse(a > E11, 1, -1)/(-log(a/N)) ]
-
-    # compute p-values
-    dt[, p := 1 - stats::pchisq(abs(pmi), 1)]
-
-    data.frame(feature = dt$feature,
-               stat = dt[, pmi],
-               p = dt[, p],
                n_target = as.vector(x[1, ]),
                n_reference = as.vector(x[2, ]),
                stringsAsFactors = FALSE)
