@@ -44,18 +44,21 @@ textstat_summary.default <- function(x, ...) {
 }
 
 #' @method textstat_summary corpus
+#' @importFrom quanteda as.corpus
 #' @export
 textstat_summary.corpus <- function(x, ...) {
     summarize(as.corpus(x), ...)
 }
 
 #' @method textstat_summary tokens
+#' @importFrom quanteda as.tokens
 #' @export
 textstat_summary.tokens <- function(x, ...) {
     summarize(as.tokens(x), ...)
 }
 
 #' @method textstat_summary dfm
+#' @importFrom quanteda as.dfm
 #' @export
 textstat_summary.dfm <- function(x, ...) {
     summarize(as.dfm(x), ...)
@@ -78,24 +81,24 @@ summarize <- function(x, ...) {
         docid_field = "document"
     )
     result <- data.frame(
-        "document" = docnames(y),
+        "document" = quanteda::docnames(y),
         "chars" = NA,
         "sents" = NA,
-        "tokens" = ntoken(y),
-        "types" = ntype(y),
+        "tokens" = quanteda::ntoken(y),
+        "types" = quanteda::ntype(y),
         "puncts" = as.integer(temp$punct),
         "numbers" = as.integer(temp$numbers),
         "symbols" = as.integer(temp$symbols),
         "urls" = as.integer(temp$url),
         "tags" = as.integer(temp$tag),
         "emojis" = as.integer(temp$emoji),
-        row.names = seq_len(ndoc(y)),
+        row.names = seq_len(quanteda::ndoc(y)),
         stringsAsFactors = FALSE
     )
 
     if (quanteda::is.corpus(x)) {
         result$chars <- nchar(x)
-        result$sents <- ntoken(tokens(x, what = "sentence"))
+        result$sents <- quanteda::ntoken(quanteda::tokens(x, what = "sentence"))
     }
 
     return(result)

@@ -1,6 +1,6 @@
 # quanteda.textstats 0.92
 
-
+* removed older non-C++ keyness methods (#4)
 
 # quanteda.textstats 0.91
 
