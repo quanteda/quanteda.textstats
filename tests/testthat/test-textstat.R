@@ -40,11 +40,11 @@ test_that("test textstat_* are data.frame with class", {
 
 test_that("test textstat_* keeps the class after extraction", {
 
-    expect_equal(class(col[1,]), class(col))
-    expect_equal(class(key[1,]), class(key))
-    expect_equal(class(frq[1,]), class(frq))
-    expect_equal(class(lex[1,]), class(lex))
-    expect_equal(class(red[1,]), class(red))
+    expect_equal(class(col[1, ]), class(col))
+    expect_equal(class(key[1, ]), class(key))
+    expect_equal(class(frq[1, ]), class(frq))
+    expect_equal(class(lex[1, ]), class(lex))
+    expect_equal(class(red[1, ]), class(red))
 
 })
 

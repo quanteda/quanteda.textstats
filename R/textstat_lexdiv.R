@@ -365,7 +365,6 @@ compute_lexdiv_dfm_stats <- function(x, measure = NULL, log.base = 10) {
     }
 
     # return missings for tokens-only measures
-    MATTR <- MSTTR <- NULL
     if ("MATTR" %in% measure) result[["MATTR"]] <- NA
     if ("MSTTR" %in% measure) result[["MSTTR"]] <- NA
 
@@ -468,12 +467,13 @@ compute_msttr <- function(x, MSTTR_segment) {
 #' @param x input [dfm]
 #' @keywords internal dfm
 #' @importFrom quanteda featnames tokens dfm_compress
+#' @importFrom stringi stri_detect_regex
 dfm_split_hyphenated_features <- function(x) {
     # the global for matching the hyphens and similar characters
     hyphen_regex <- "^.+\\p{Pd}.+$"
 
     # figure out where the hyphens are
-    hyphenated_index <- which(stringi::stri_detect_regex(featnames(x), hyphen_regex))
+    hyphenated_index <- which(stri_detect_regex(featnames(x), hyphen_regex))
 
     # return dfm unmodified if no hyphenated features are found
     if (length(hyphenated_index) == 0) return(x)

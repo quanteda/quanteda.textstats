@@ -550,7 +550,7 @@ textstat_readability.corpus <- function(x,
     n_syll <- lapply(n_syll, function(y) ifelse(is.na(y), 1, y))
 
     # lengths in characters of the words
-    len_token <- lapply(toks, stringi::stri_length)
+    len_token <- lapply(toks, stri_length)
 
     # common statistics required by (nearly all) indexes
     W <- lengths(toks)  # number of words

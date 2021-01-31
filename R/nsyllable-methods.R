@@ -16,7 +16,7 @@
 nsyllable.tokens <- function(x, syllable_dictionary = nsyllable::data_syllables_en,
                              use.names = FALSE) {
     types <- types(x)
-    if (attr(x, 'padding')) {
+    if (attr(x, "padding")) {
         vocab_sylls <- nsyllable(c("", types), use.names = use.names)
         lapply(unclass(x), function(y) vocab_sylls[y + 1])
     } else {

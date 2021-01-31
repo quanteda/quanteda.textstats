@@ -62,10 +62,10 @@ textstat_select.textstat <- function(x, pattern = NULL,
     attrs <- attributes(x)
 
     id <- unlist(pattern2id(pattern, x[[1]], valuetype, case_insensitive))
-    if (selection == 'keep') {
-        x <- x[id,]
+    if (selection == "keep") {
+        x <- x[id, ]
     } else {
-        x <- x[id * -1,]
+        x <- x[id * -1, ]
     }
     class(x) <- attrs$class
     return(x)

@@ -30,13 +30,14 @@ nscrabble.default <- function(x, FUN = sum) {
 
 #' @rdname nscrabble
 #' @noRd
+#' @importFrom stringi stri_split_boundaries
 #' @export
 nscrabble.character <- function(x, FUN = sum) {
   FUN <- match.fun(FUN)
   points <- structure(as.integer(rep(c(1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3,
                                        1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10), 2)),
                       names = c(letters, LETTERS))
-  result <- sapply(stringi::stri_split_boundaries(x, type = "character"),
+  result <- sapply(stri_split_boundaries(x, type = "character"),
                    function(y) FUN(na.omit(points[y])))
   names(result) <- names(x)
   ifelse(result == 0, NA, result)
