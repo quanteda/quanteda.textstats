@@ -1,6 +1,6 @@
 # quanteda.textstats 0.92
 
-
+* Removes **data.table** dependency (#5).
 
 # quanteda.textstats 0.91
 

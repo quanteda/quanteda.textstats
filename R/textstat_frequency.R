@@ -7,9 +7,8 @@
 #' @param n (optional) integer specifying the top `n` features to be returned,
 #' within group if `groups` is specified
 #' @param ties_method character string specifying how ties are treated.  See
-#'   [data.table::frank()] for details.  Unlike that function,
-#'   however, the default is `"min"`, so that frequencies of 10, 10, 11
-#'   would be ranked 1, 1, 3.
+#'   [base::rank()] for details.  Unlike that function, however, the default is
+#'   `"min"`, so that frequencies of 10, 10, 11 would be ranked 1, 1, 3.
 #' @param ... additional arguments passed to [dfm_group()].  This can
 #'   be useful in passing `force = TRUE`, for instance, if you are grouping a
 #'   dfm that has been weighted.
@@ -87,7 +86,6 @@ textstat_frequency.default <- function(x, n = NULL, groups = NULL,
     stop(friendly_class_undefined_message(class(x), "textstat_frequency"))
 }
 
-#' @importFrom data.table data.table setcolorder setorder frank := .SD setDF
 #' @export
 textstat_frequency.dfm <- function(x, n = NULL, groups = NULL,
                                ties_method = c("min", "average", "first", "random", "max", "dense"),
@@ -110,27 +108,24 @@ textstat_frequency.dfm <- function(x, n = NULL, groups = NULL,
     df <- dfm_group(df, groups, ...)
     df <- as(df, "dgTMatrix")
 
-    result <- data.table(
+    result <- data.frame(
         feature = colnames(tf)[tf@j + 1L],
         frequency = tf@x,
+        rank = NA,
         docfreq = df@x,
         group = rownames(tf)[tf@i + 1L]
     )
 
-    # get the frequency rank
-    result[, rank := frank(-frequency, ties.method = ties_method), by = group]
-    setorder(result, group, rank)
+    # get the frequency ranks and sort
+    result$rank <- ave(result$frequency, result$group,
+                       FUN = function(y) rank(-y, ties.method = ties_method))
+    result <- result[order(result$group, result$rank), ]
 
     # keep only first n items by group, if n is specified
     if (!is.null(n)) {
-        stopifnot(is.numeric(n))
-        result <- result[, head(.SD, n), by = group]
+        result <- do.call(rbind, lapply(split(result, result$group), head, n))
     }
 
-    setcolorder(result, c("feature", "frequency", "rank", "docfreq", "group"))
-
-    # make into data.frame, class it, and return
-    result <- setDF(result)
     class(result) <- c("frequency", "textstat", "data.frame")
     rownames(result) <- as.character(seq_len(nrow(result)))
     return(result)

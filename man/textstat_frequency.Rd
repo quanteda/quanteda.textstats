@@ -25,9 +25,8 @@ coerced into a factor equal in length or rows to the number of documents.
 See \link[quanteda]{groups} for details.}
 
 \item{ties_method}{character string specifying how ties are treated.  See
-\code{\link[data.table:frank]{data.table::frank()}} for details.  Unlike that function,
-however, the default is \code{"min"}, so that frequencies of 10, 10, 11
-would be ranked 1, 1, 3.}
+\code{\link[base:rank]{base::rank()}} for details.  Unlike that function, however, the default is
+\code{"min"}, so that frequencies of 10, 10, 11 would be ranked 1, 1, 3.}
 
 \item{...}{additional arguments passed to \code{\link[=dfm_group]{dfm_group()}}.  This can
 be useful in passing \code{force = TRUE}, for instance, if you are grouping a

@@ -28,8 +28,8 @@ test_that("test textstat_frequency without groups", {
     corp1 <- quanteda::corpus(txt, docvars = data.frame(grp2 = grp1))
 
     expect_identical(
-        textstat_frequency(quanteda::dfm(corp1), groups = grp1, ties_method = "dense"),
-        textstat_frequency(quanteda::dfm(corp1), groups = "grp2", ties_method = "dense")
+        textstat_frequency(quanteda::dfm(corp1), groups = grp1, ties_method = "max"),
+        textstat_frequency(quanteda::dfm(corp1), groups = "grp2", ties_method = "max")
     )
 
     set.seed(10)
