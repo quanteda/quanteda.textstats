@@ -34,7 +34,7 @@
 #'
 #' textstat_frequency(dfmat1)
 #' textstat_frequency(dfmat1, groups = c("one", "two", "one"), ties_method = "first")
-#' textstat_frequency(dfmat1, groups = c("one", "two", "one"), ties_method = "dense")
+#' textstat_frequency(dfmat1, groups = c("one", "two", "one"), ties_method = "average")
 #'
 #' dfmat2 <- corpus_subset(data_corpus_inaugural, President == "Obama") %>%
 #'    dfm(remove_punct = TRUE, remove = stopwords("english"))
@@ -86,11 +86,11 @@ textstat_frequency.default <- function(x, n = NULL, groups = NULL,
     stop(friendly_class_undefined_message(class(x), "textstat_frequency"))
 }
 
+#' @importFrom stats ave
 #' @export
 textstat_frequency.dfm <- function(x, n = NULL, groups = NULL,
                                ties_method = c("min", "average", "first", "random", "max", "dense"),
                                ...) {
-    group <- frequency <- NULL
     ties_method <- match.arg(ties_method)
     x <- as.dfm(x)
 

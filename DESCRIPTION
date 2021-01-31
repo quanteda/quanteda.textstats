@@ -34,7 +34,7 @@ Suggests:
     proxy,
     rmarkdown,
     spelling,
-    svs,     
+    svs,
     testthat,
     knitr
 URL: https://quanteda.io

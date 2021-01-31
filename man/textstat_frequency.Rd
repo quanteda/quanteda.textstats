@@ -63,7 +63,7 @@ dfmat1 <- dfm(c("a a b b c d", "a d d d", "a a a"))
 
 textstat_frequency(dfmat1)
 textstat_frequency(dfmat1, groups = c("one", "two", "one"), ties_method = "first")
-textstat_frequency(dfmat1, groups = c("one", "two", "one"), ties_method = "dense")
+textstat_frequency(dfmat1, groups = c("one", "two", "one"), ties_method = "average")
 
 dfmat2 <- corpus_subset(data_corpus_inaugural, President == "Obama") \%>\%
    dfm(remove_punct = TRUE, remove = stopwords("english"))
