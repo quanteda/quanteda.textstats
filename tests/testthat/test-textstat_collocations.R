@@ -1,4 +1,5 @@
-context('test textstat_collocations.R')
+context("test textstat_collocations.R")
+
 ########################################################################################################
 # Tests of statistics for detecting multiword expressions
 # JK, 18.7.2017
@@ -7,22 +8,22 @@ context('test textstat_collocations.R')
 
 # ************************************************************
 
-MWEcounts <- function (candidate,text,stopword="xxxx") {
+MWEcounts <- function(candidate, text, stopword = "xxxx") {
     # Function for creating the 2^K table of yes/no occurrences
     # in text (character vector)
     # of words in a K-word candidate expression (character vector)
     #
     K <- length(candidate)
-    J <- length(text)-K+1
+    J <- length(text) - K + 1
 
     ##############################################################################
     # Fixed objects, here up to candidate length of 4 (extend as needed)
 
     count.vectors <- list(
-        c("00","01","10","11")
+        c("00", "01", "10", "11")
     )
-    count.vectors[[2]] <- paste(rep(c("0","1"),each=4), rep(count.vectors[[1]],2),sep="")
-    count.vectors[[3]] <- paste(rep(c("0","1"),each=8), rep(count.vectors[[2]],2),sep="")
+    count.vectors[[2]] <- paste(rep(c("0","1"), each=4), rep(count.vectors[[1]], 2), sep = "")
+    count.vectors[[3]] <- paste(rep(c("0","1"), each=8), rep(count.vectors[[2]], 2), sep = "")
     #
     noyes <- c("no","yes")
     array.dims <- list(

@@ -20,6 +20,7 @@ textstat_entropy.default <- function(x, margin = c("documents", "features"), bas
 
 #' @export
 #' @importFrom quanteda as.dfm dfm_weight
+#' @importFrom stringi stri_sub
 textstat_entropy.dfm <- function(x, margin = c("documents", "features"), base = 2) {
     x <- as.dfm(x)
     margin <- match.arg(margin)
@@ -30,7 +31,7 @@ textstat_entropy.dfm <- function(x, margin = c("documents", "features"), base = 
     e <- unlist(lapply(split(x@x, factor(x@i + 1L, levels = seq_len(nrow(x)))),
                        function(y) sum(y * log(y, base)) * -1), use.names = FALSE)
     result <- data.frame(rownames(x), e, stringsAsFactors = FALSE)
-    names(result) <- c(stringi::stri_sub(margin, 1, -2), "entropy")
+    names(result) <- c(stri_sub(margin, 1, -2), "entropy")
     class(result) <- c("entropy", "textstat", "data.frame")
     rownames(result) <- as.character(seq_len(nrow(result)))
     return(result)

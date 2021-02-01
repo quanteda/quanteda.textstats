@@ -20,7 +20,6 @@ Depends:
     R (>= 3.2.0)
 Imports:
     quanteda,
-    data.table (>= 1.9.6),
     Matrix,
     methods,
     nsyllable,
@@ -35,7 +34,7 @@ Suggests:
     proxy,
     rmarkdown,
     spelling,
-    svs,     
+    svs,
     testthat,
     knitr
 URL: https://quanteda.io
