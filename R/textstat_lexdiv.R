@@ -125,7 +125,7 @@
 #'   0.05-4)*. Available from <https://reaktanz.de/?c=hacking&s=koRpus>.
 #'
 #'   Simpson, E.H. (1949). Measurement of Diversity. *Nature*, 163: 688.
-#'   \doi{doi.org/10.1038/163688a0}
+#'   \doi{10.1038/163688a0}
 #'
 #'   Tweedie. F.J. and Baayen, R.H. (1998). How Variable May a Constant Be?
 #'   Measures of Lexical Richness in Perspective. *Computers and the
