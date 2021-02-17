@@ -831,13 +831,14 @@ prepositions <- c("a", "abaft", "abeam", "aboard", "about", "above", "absent",
 #' it is a named list of character vectors where each list element
 #' corresponds to a different readability index.
 #'
-#' @details
-#' These are:
+#' @format
+#' A list of length two:
 #' \describe{
 #' \item{`DaleChall`}{The long Dale-Chall list of 3,000 familiar (English)
 #' words needed to compute the Dale-Chall Readability Formula.}
-#' \item{`Spache`}{The revised Spache word list (see Klare 1975, 73) needed
-#' to compute the Spache Revised Formula of readability (Spache 1974.}
+#' \item{`Spache`}{The revised Spache word list (see Klare 1975, 73; Spache
+#' 1974) needed to compute the Spache Revised Formula of readability (Spache
+#' 1953).}
 #' }
 #' @references
 #' Chall, J.S., & Dale, E. (1995). *Readability Revisited: The New
@@ -855,11 +856,6 @@ prepositions <- c("a", "abaft", "abeam", "aboard", "about", "above", "absent",
 #' Spache, G. (1953). A New Readability Formula for Primary-Grade Reading
 #' Materials. *The Elementary School Journal*, 53, 410--413.
 #'
-#' Tränkle, U. & Bailer, H. (1984). Kreuzvalidierung und Neuberechnung von
-#' Lesbarkeitsformeln für die deutsche Sprache. *Zeitschrift für
-#' Entwicklungspsychologie und Pädagogische Psychologie*, 16(3), 231--244.
-#'
-#' Wheeler, L.R. & Smith, E.H. (1954). A Practical Readability Formula for the
-#' Classroom Teacher in the Primary Grades. *Elementary English*, 31,
-#' 397--399.
+#' Spache, G. (1974).  _Good reading for poor readers_. (Rvd. 9th Ed.)
+#' Champaign, Illinois: Garrard, 1974.
 "data_char_wordlists"

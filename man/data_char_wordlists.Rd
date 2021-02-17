@@ -5,7 +5,14 @@
 \alias{data_char_wordlists}
 \title{Word lists for readability statistics}
 \format{
-An object of class \code{list} of length 2.
+A list of length two:
+\describe{
+\item{\code{DaleChall}}{The long Dale-Chall list of 3,000 familiar (English)
+words needed to compute the Dale-Chall Readability Formula.}
+\item{\code{Spache}}{The revised Spache word list (see Klare 1975, 73; Spache
+1974) needed to compute the Spache Revised Formula of readability (Spache
+1953).}
+}
 }
 \usage{
 data_char_wordlists
@@ -14,15 +21,6 @@ data_char_wordlists
 \code{data_char_wordlists} provides word lists used in some readability indexes;
 it is a named list of character vectors where each list element
 corresponds to a different readability index.
-}
-\details{
-These are:
-\describe{
-\item{\code{DaleChall}}{The long Dale-Chall list of 3,000 familiar (English)
-words needed to compute the Dale-Chall Readability Formula.}
-\item{\code{Spache}}{The revised Spache word list (see Klare 1975, 73) needed
-to compute the Spache Revised Formula of readability (Spache 1974.}
-}
 }
 \references{
 Chall, J.S., & Dale, E. (1995). \emph{Readability Revisited: The New
@@ -40,12 +38,7 @@ Klare, G.R. (1975). Assessing Readability. \emph{Reading Research Quarterly}
 Spache, G. (1953). A New Readability Formula for Primary-Grade Reading
 Materials. \emph{The Elementary School Journal}, 53, 410--413.
 
-Tränkle, U. & Bailer, H. (1984). Kreuzvalidierung und Neuberechnung von
-Lesbarkeitsformeln für die deutsche Sprache. \emph{Zeitschrift für
-Entwicklungspsychologie und Pädagogische Psychologie}, 16(3), 231--244.
-
-Wheeler, L.R. & Smith, E.H. (1954). A Practical Readability Formula for the
-Classroom Teacher in the Primary Grades. \emph{Elementary English}, 31,
-397--399.
+Spache, G. (1974).  \emph{Good reading for poor readers}. (Rvd. 9th Ed.)
+Champaign, Illinois: Garrard, 1974.
 }
 \keyword{datasets}
