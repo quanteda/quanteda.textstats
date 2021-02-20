@@ -2,6 +2,9 @@
 
 * Removed **data.table** dependency (#5).
 * Removed older non-C++ keyness methods (#4).
+* Removed code that was breaking the Solaris build on CRAN.
+* Removed **digest** Import not used.
+
 
 # quanteda.textstats 0.91
 
