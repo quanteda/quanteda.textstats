@@ -1,3 +1,7 @@
+# quanteda.textstats 0.93
+
+* Minor changes to ensure compatibility with **quanteda** v3.
+
 # quanteda.textstats 0.92
 
 * Removed **data.table** dependency (#5).
