@@ -564,7 +564,7 @@ textstat_readability.corpus <- function(x,
     W7C <- vapply(len_token, function(x) sum(x >= 7), numeric(1)) # number of words with at least 7 letters
     Wlt3Sy <- W - W3Sy  # number of words with less than three syllables
 
-    result <- data.frame(document = names(x), row.names = NULL)
+    result <- data.frame(document = names(x), row.names = NULL, stringsAsFactors = FALSE)
 
     # look up D-C words if needed
     if (any(c("Dale.Chall", "Dale.Chall.old", "Dale.Chall.PSK", "Bormuth.MC", "Bormuth.GP", "DRP") %in% measure)) {

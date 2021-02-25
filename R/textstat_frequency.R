@@ -113,7 +113,8 @@ textstat_frequency.dfm <- function(x, n = NULL, groups = NULL,
         frequency = tf@x,
         rank = NA,
         docfreq = df@x,
-        group = rownames(tf)[tf@i + 1L]
+        group = rownames(tf)[tf@i + 1L],
+        stringsAsFactors = FALSE
     )
 
     # get the frequency ranks and sort
