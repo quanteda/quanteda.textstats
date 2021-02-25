@@ -1,5 +1,3 @@
-context("textstat_readability")
-
 data_char_sampletext <- quanteda::data_char_sampletext
 `%>%` <- quanteda::`%>%`
 

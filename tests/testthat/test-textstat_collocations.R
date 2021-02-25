@@ -1,5 +1,3 @@
-context("test textstat_collocations.R")
-
 ########################################################################################################
 # Tests of statistics for detecting multiword expressions
 # JK, 18.7.2017

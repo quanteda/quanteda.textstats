@@ -1,5 +1,3 @@
-context("test utils")
-
 test_that("pattern2list is working with collocations", {
     txt <- c(". . . . a b c . . a b c . . . c d e",
              "a b . . a b . . a b . . a b . a b",

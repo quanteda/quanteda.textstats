@@ -1,5 +1,3 @@
-context("test default methods for nice error messages")
-
 test_that("test default textstat methods", {
     expect_error(
         textstat_dist(TRUE),

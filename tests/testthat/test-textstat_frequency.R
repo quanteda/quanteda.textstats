@@ -1,5 +1,3 @@
-context("test textstat_frequency")
-
 test_that("test textstat_frequency without groups", {
     dfm1 <- quanteda::dfm(c("a a b b c d", "a d d d", "a a a"))
     expect_equivalent(

@@ -1,5 +1,3 @@
-context("test textstat_lexdiv")
-
 test_that("textstat_lexdiv computation is correct", {
     mydfm <- quanteda::dfm(c(d1 = "b a b a b a b a",
                              d2 = "a a b b"))
@@ -235,8 +233,6 @@ test_that("textstat_lexdiv.dfm and .tokens work same with remove_* options", {
     )
 })
 
-
-context("test textstat_lexdiv.tokens")
 
 test_that("textstat_lexdiv does not support dfm for MATTR and MSTTR", {
     mytxt <- "one one two one one two one"

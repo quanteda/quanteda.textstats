@@ -1,5 +1,3 @@
-context("tests for nscrabble")
-
 test_that("test nscrabble", {
     txt1 <- c("muzjiks", "excellency", "")
     txt2 <- c(d1 = "muzjiks", d2 = "excellency", d3 = "")

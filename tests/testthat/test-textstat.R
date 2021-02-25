@@ -1,5 +1,3 @@
-context("test textstat_*")
-
 txt <- c("A a b b c d", "B d d d", "C a a")
 toks <- quanteda::tokens(txt)
 mt <- quanteda::dfm(toks)

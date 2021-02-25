@@ -1,5 +1,3 @@
-context("test textstat_simil")
-
 data_dfm_lbgexample <- quanteda::data_dfm_lbgexample
 
 mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980 & Year < 2021))

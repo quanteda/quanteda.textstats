@@ -1,5 +1,3 @@
-context("test textstat_entropy")
-
 test_that("test textstat_entropy is working", {
     skip_if_not_installed("entropy")
 

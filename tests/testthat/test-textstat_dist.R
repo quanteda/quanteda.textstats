@@ -1,5 +1,3 @@
-context("test textstat_dist")
-
 mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980))
 mt <- quanteda::dfm_trim(mt, min_termfreq = 10)
 `%>%` <- quanteda::`%>%`

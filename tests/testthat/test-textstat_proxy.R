@@ -1,5 +1,3 @@
-context("test textstat_proxy.R")
-
 test_mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980),
                          remove = quanteda::stopwords("english"),
                          stem = TRUE, verbose = FALSE)

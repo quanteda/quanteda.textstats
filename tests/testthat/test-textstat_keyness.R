@@ -1,5 +1,3 @@
-context("test textstat_keyness()")
-
 test_that("keyness_textstat chi2 computation is correct", {
     dfmt <- quanteda::dfm(c(d1 = "b b b b b b b a a a",
                    d2 = "a a a a a a a b b"))
