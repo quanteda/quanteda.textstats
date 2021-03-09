@@ -139,7 +139,7 @@ txt <- c("Anyway, like I was sayin', shrimp is the fruit of the sea. You can
           sandwich.")
 tokens(txt) \%>\%
     textstat_lexdiv(measure = c("TTR", "CTTR", "K"))
-dfm(txt) \%>\%
+dfm(tokens(txt)) \%>\%
     textstat_lexdiv(measure = c("TTR", "CTTR", "K"))
 
 toks <- tokens(corpus_subset(data_corpus_inaugural, Year > 2000))

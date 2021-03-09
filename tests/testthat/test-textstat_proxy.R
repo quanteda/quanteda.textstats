@@ -1,7 +1,10 @@
-test_mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980),
-                         remove = quanteda::stopwords("english"),
-                         stem = TRUE, verbose = FALSE)
-test_mt <- quanteda::dfm_trim(test_mt, min_termfreq = 5)
+library("quanteda")
+
+test_mt <- tokens(corpus_subset(data_corpus_inaugural, Year > 1980)) %>%
+    tokens_remove(stopwords("english")) %>%
+    tokens_wordstem("en") %>%
+    dfm() %>%
+    dfm_trim(min_termfreq = 5)
 
 test_simil <- function(x, method, margin, ignore_upper = FALSE, ...) {
 
@@ -194,7 +197,7 @@ test_that("as.matrix works as expected", {
     txt <- c("Bacon ipsum dolor amet tenderloin hamburger bacon t-bone,",
              "Tenderloin turducken corned beef bacon.",
              "Burgdoggen venison tail, hamburger filet mignon capicola meatloaf pig pork belly.")
-    mt <- quanteda::dfm(txt)
+    mt <- quanteda::dfm(tokens(txt))
     expect_equivalent(diag(as.matrix(textstat_proxy(mt))),
                       rep(1, 3))
 })
@@ -204,8 +207,8 @@ test_that("textstat_proxy stops as expected for methods not supported", {
 })
 
 test_that("textstat_proxy works on zero-frequency features", {
-    d1 <- quanteda::dfm(c("a b c", "a b c d"))
-    d2 <- quanteda::dfm(letters[1:6])
+    d1 <- quanteda::dfm(tokens(c("a b c", "a b c d")))
+    d2 <- quanteda::dfm(tokens(letters[1:6]))
     dtest <- quanteda::dfm_match(d1, quanteda::featnames(d2))
 
     expect_equal(
@@ -221,7 +224,7 @@ test_that("textstat_proxy works on zero-frequency features", {
 test_that("textstat_proxy works on zero-feature documents (#952)", {
     corp <- quanteda::corpus(c("a b c c", "b c d", "a"),
                    docvars = data.frame(grp = factor(c("A", "A", "B"), levels = LETTERS[1:3])))
-    mt <- quanteda::dfm(corp)
+    mt <- quanteda::dfm(tokens(corp))
     mt <- quanteda::dfm_group(mt, groups = "grp", fill = TRUE)
 
     expect_equal(

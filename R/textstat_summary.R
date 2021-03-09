@@ -51,7 +51,7 @@ textstat_summary.corpus <- function(x, ...) {
 }
 
 #' @method textstat_summary tokens
-#' @importFrom quanteda as.tokens
+#' @importFrom quanteda as.tokens is.corpus
 #' @export
 textstat_summary.tokens <- function(x, ...) {
     summarize(as.tokens(x), ...)
@@ -74,7 +74,7 @@ summarize <- function(x, ...) {
     patterns[["emoji"]] <- "^\\p{Emoji_Presentation}+$"
     dict <- quanteda::dictionary(patterns)
 
-    y <- dfm(x, ...)
+    y <- dfm(if (is.corpus(x)) tokens(x) else x, ...)
     temp <- quanteda::convert(
         quanteda::dfm_lookup(y, dictionary = dict, valuetype = "regex", levels = 1),
         "data.frame",

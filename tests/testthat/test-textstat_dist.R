@@ -1,4 +1,4 @@
-mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980))
+mt <- quanteda::dfm(quanteda::tokens(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980)))
 mt <- quanteda::dfm_trim(mt, min_termfreq = 10)
 `%>%` <- quanteda::`%>%`
 
@@ -108,7 +108,7 @@ test_that("textstat_dist() returns NA for zero-variance documents", {
 })
 
 test_that("selection is always on columns (#1549)", {
-    mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980))
+    mt <- quanteda::dfm(quanteda::tokens(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980)))
     suppressWarnings({
         expect_equal(
         colnames(textstat_dist(mt, margin = "documents",

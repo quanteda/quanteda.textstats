@@ -1,6 +1,8 @@
 data_dfm_lbgexample <- quanteda::data_dfm_lbgexample
 
-mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980 & Year < 2021))
+mt <- quanteda::dfm(
+    quanteda::tokens(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980 & Year < 2021))
+)
 mt <- quanteda::dfm_trim(mt, min_termfreq = 10)
 
 test_that("y errors if not a dfm", {
@@ -126,7 +128,9 @@ test_that("textstat_simil() returns NA for zero-variance documents", {
 })
 
 test_that("selection is always on columns (#1549)", {
-    mt <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980))
+    mt <- quanteda::dfm(quanteda::tokens(
+        quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 1980)
+    ))
     suppressWarnings(expect_equal(
         textstat_simil(mt, margin = "documents", selection = c("1985-Reagan", "1989-Bush")) %>%
             as.matrix() %>%
@@ -402,8 +406,11 @@ test_that("min_simil argument works", {
 })
 
 test_that("test that min_simil coercion to matrix works as expected", {
-    dfmat <- quanteda::dfm(quanteda::corpus_subset(quanteda::data_corpus_inaugural, Year > 2000),
-                 remove_punct = TRUE, remove = quanteda::stopwords("english"))
+    library("quanteda")
+    dfmat <- corpus_subset(quanteda::data_corpus_inaugural, Year > 2000) %>%
+        tokens(remove_punct = TRUE) %>%
+        tokens_remove(stopwords("english")) %>%
+        dfm()
 
     tstat1 <- textstat_simil(dfmat, method = "cosine", margin = "documents", min_simil = 0.6)
     expect_equal(
@@ -489,7 +496,6 @@ test_that("diag2na is working", {
 })
 
 test_that("make_na_matrix is working", {
-
     expect_equal(
         as.matrix(quanteda.textstats:::make_na_matrix(c(5, 4), row = 2L:3L)),
         matrix(c(c(0, NA, NA, 0, 0),

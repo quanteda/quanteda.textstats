@@ -646,7 +646,7 @@ textstat_readability.corpus <- function(x,
     }
 
     if ("Dickes.Steiwer" %in% measure) {
-        TTR <- textstat_lexdiv(dfm(x, verbose = FALSE), measure = "TTR")$TTR
+        TTR <- textstat_lexdiv(dfm(tokens(x), verbose = FALSE), measure = "TTR")$TTR
         result[["Dickes.Steiwer"]] <- 235.95993 - (73.021 * C / W) - (12.56438 * W / St) - (50.03293 * TTR)
     }
 

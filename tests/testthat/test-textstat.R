@@ -5,24 +5,20 @@ mt <- quanteda::dfm(toks)
 col <- textstat_collocations(toks, min_count = 1)
 key <- textstat_keyness(mt)
 frq <- textstat_frequency(mt)
-#Temporary  restrict measures to static measures
+# for now: restrict measures to static measures
 lex <- textstat_lexdiv(mt, measure = c("TTR", "C", "R", "CTTR", "U", "S", "K", "D", "Vm", "Maas"))
 red <- textstat_readability(txt, measure = "all")
 
-
 test_that("test textstat_* have numbers in rownames", {
-
     expect_equal(rownames(col), as.character(seq_len(nrow(col))))
     expect_equal(rownames(key), as.character(seq_len(nrow(key))))
     expect_equal(rownames(frq), as.character(seq_len(nrow(frq))))
     expect_equal(rownames(frq), as.character(seq_len(nrow(frq))))
     expect_equal(rownames(lex), as.character(seq_len(nrow(lex))))
     expect_equal(rownames(red), as.character(seq_len(nrow(red))))
-
 })
 
 test_that("test textstat_* are data.frame with class", {
-
     expect_true("collocations" %in% class(col))
     expect_true("keyness" %in% class(key))
     expect_true("frequency" %in% class(frq))
@@ -37,13 +33,11 @@ test_that("test textstat_* are data.frame with class", {
 })
 
 test_that("test textstat_* keeps the class after extraction", {
-
     expect_equal(class(col[1, ]), class(col))
     expect_equal(class(key[1, ]), class(key))
     expect_equal(class(frq[1, ]), class(frq))
     expect_equal(class(lex[1, ]), class(lex))
     expect_equal(class(red[1, ]), class(red))
-
 })
 
 
@@ -74,5 +68,4 @@ test_that("test textstat_* keeps the class after extraction", {
     frq_test <- textstat_select(frq, "poli*")
     expect_equal(frq_test$feature,
                  frq$feature[stringi::stri_detect_regex(frq$feature, "^poli")])
-
 })

@@ -63,17 +63,19 @@ library("quanteda")
 
 # compare pre- v. post-war terms using grouping
 period <- ifelse(docvars(data_corpus_inaugural, "Year") < 1945, "pre-war", "post-war")
-dfmat1 <- dfm(data_corpus_inaugural, groups = period)
+dfmat1 <- tokens(data_corpus_inaugural) \%>\%
+    dfm() \%>\%
+    dfm_group(groups = period)
 head(dfmat1) # make sure 'post-war' is in the first row
 head(tstat1 <- textstat_keyness(dfmat1), 10)
 tail(tstat1, 10)
 
 # compare pre- v. post-war terms using logical vector
-dfmat2 <- dfm(data_corpus_inaugural)
+dfmat2 <- dfm(tokens(data_corpus_inaugural))
 head(textstat_keyness(dfmat2, docvars(data_corpus_inaugural, "Year") >= 1945), 10)
 
 # compare Trump 2017 to other post-war preseidents
-dfmat3 <- dfm(corpus_subset(data_corpus_inaugural, period == "post-war"))
+dfmat3 <- dfm(tokens(corpus_subset(data_corpus_inaugural, period == "post-war")))
 head(textstat_keyness(dfmat3, target = "2017-Trump"), 10)
 
 # using the likelihood ratio method

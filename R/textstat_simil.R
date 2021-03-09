@@ -157,8 +157,10 @@ setMethod("tail", signature(x = "textstat_proxy"), function(x, n = 6L, ...) {
 #' @examples
 #' # similarities for documents
 #' library("quanteda")
-#' dfmat <- dfm(corpus_subset(data_corpus_inaugural, Year > 2000),
-#'              remove_punct = TRUE, remove = stopwords("english"))
+#' dfmat <- corpus_subset(data_corpus_inaugural, Year > 2000) %>%
+#'     tokens(remove_punct = TRUE) %>%
+#'     tokens_remove(stopwords("english")) %>%
+#'     dfm()
 #' (tstat1 <- textstat_simil(dfmat, method = "cosine", margin = "documents"))
 #' as.matrix(tstat1)
 #' as.list(tstat1)
@@ -604,10 +606,15 @@ make_na_matrix <- function(dims, row = NULL, col = NULL) {
         i <- c(i, rep(seq_len(dims[1]), each = length(col)))
         j <- c(j, rep(col, dims[1]))
     }
-    Matrix::sparseMatrix(
-        i = i, j = j, x = as.double(NA),
-        dims = dims,
-        giveCsparse = FALSE
-        # repr = "T"
-    )
+    if (utils::packageVersion("Matrix") < 1.3) {
+        Matrix::sparseMatrix(
+            i = i, j = j, x = as.double(NA),
+            dims = dims,
+            giveCsparse = FALSE)
+    } else {
+        Matrix::sparseMatrix(
+            i = i, j = j, x = as.double(NA),
+            dims = dims,
+            repr = "T")
+    }
 }

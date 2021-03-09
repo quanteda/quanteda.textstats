@@ -30,7 +30,9 @@
 #' library("quanteda")
 #'
 #' period <- ifelse(docvars(data_corpus_inaugural, "Year") < 1945, "pre-war", "post-war")
-#' dfmat <- dfm(data_corpus_inaugural, groups = period)
+#' dfmat <- tokens(data_corpus_inaugural) %>%
+#'     dfm() %>%
+#'     dfm_group(groups = period)
 #' tstat <- textstat_keyness(dfmat)
 #' textstat_select(tstat, 'america*')
 #'

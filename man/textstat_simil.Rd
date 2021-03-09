@@ -87,8 +87,10 @@ or \code{as.matrix()} to convert it into an ordinary matrix.
 \examples{
 # similarities for documents
 library("quanteda")
-dfmat <- dfm(corpus_subset(data_corpus_inaugural, Year > 2000),
-             remove_punct = TRUE, remove = stopwords("english"))
+dfmat <- corpus_subset(data_corpus_inaugural, Year > 2000) \%>\%
+    tokens(remove_punct = TRUE) \%>\%
+    tokens_remove(stopwords("english")) \%>\%
+    dfm()
 (tstat1 <- textstat_simil(dfmat, method = "cosine", margin = "documents"))
 as.matrix(tstat1)
 as.list(tstat1)

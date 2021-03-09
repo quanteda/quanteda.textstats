@@ -1,6 +1,8 @@
+library("quanteda")
+
 test_that("keyness_textstat chi2 computation is correct", {
-    dfmt <- quanteda::dfm(c(d1 = "b b b b b b b a a a",
-                   d2 = "a a a a a a a b b"))
+  dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "b b b b b b b a a a",
+                                           d2 = "a a a a a a a b b")))
     suppressWarnings(
         result <- stats::chisq.test(as.matrix(dfmt), correct = TRUE)
     )
@@ -28,8 +30,9 @@ test_that("keyness_textstat chi2 computation is correct for three rows", {
     txt <- c(d1 = "b b b b b b b a a a",
              d2 = "a a a a a a a b b",
              d3 = "a a a b b b")
-    dfmt <- quanteda::dfm(txt)
-    dfmt_grouped <- quanteda::dfm(txt, groups = c("target", "zref", "zref"))
+    dfmt <- quanteda::dfm(quanteda::tokens(txt))
+    dfmt_grouped <- quanteda::dfm(quanteda::tokens(txt))
+    dfmt_grouped <- quanteda::dfm_group(dfmt_grouped, groups = c("target", "zref", "zref"))
     suppressWarnings(
         result <- stats::chisq.test(as.matrix(dfmt_grouped), correct = TRUE)
     )
@@ -53,9 +56,9 @@ test_that("keyness_textstat chi2 computation is correct for three rows", {
 })
 
 test_that("keyness_chi2 internal methods are equivalent", {
-    skip("Skipped because stats::chisq.test is wrong for small-value 2x2 tables")
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-                          d2 = "a a b c c d d d d e f h"))
+  skip("Skipped because stats::chisq.test is wrong for small-value 2x2 tables")
+  dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
+                                           d2 = "a a b c c d d d d e f h")))
   expect_equal(
         quanteda.textstats:::keyness_chi2_stats(dfmt),
         quanteda.textstats:::keyness_chi2_dt(dfmt)
@@ -78,8 +81,8 @@ test_that("keyness_chi2 internal methods are equivalent", {
 })
 
 test_that("basic textstat_keyness works on two rows", {
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-                   d2 = "a a b c c d d d d e f h"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
+                   d2 = "a a b c c d d d d e f h")))
     key1 <- textstat_keyness(dfmt)
     expect_equal(key1$feature,
                  c("g", "c", "b", "h", "a", "e", "f", "d"))
@@ -94,8 +97,8 @@ test_that("basic textstat_keyness works on two rows", {
 })
 
 test_that("textstat_keyness works with different targets", {
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-                   d2 = "a a b c c d d d d e f h"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
+                   d2 = "a a b c c d d d d e f h")))
     expect_equal(textstat_keyness(dfmt),
                  textstat_keyness(dfmt, target = 1))
     expect_equal(textstat_keyness(dfmt, target = "d1"),
@@ -107,9 +110,9 @@ test_that("textstat_keyness works with different targets", {
 })
 
 test_that("textstat_keyness combines non-target rows correctly", {
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
                    d2 = "a a b c c d d d d e f h",
-                   d3 = "a a a a b b c c d d d d d d"))
+                   d3 = "a a a a b b c c d d d d d d")))
     expect_equivalent(
       textstat_keyness(dfmt, 1),
       textstat_keyness(rbind(dfmt[1, ], dfmt[2, ], dfmt[3, ]), target = "d1")
@@ -117,8 +120,8 @@ test_that("textstat_keyness combines non-target rows correctly", {
 })
 
 test_that("textstat_keyness errors", {
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-                   d2 = "a a b c c d d d d e f h"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
+                   d2 = "a a b c c d d d d e f h")))
     expect_error(textstat_keyness(dfmt, target = 3),
                  "target index outside range of documents")
     expect_error(textstat_keyness(dfmt, target = "d3"),
@@ -128,8 +131,8 @@ test_that("textstat_keyness errors", {
 })
 
 test_that("keyness_textstat exact computation is correct", {
-    dfmt <- quanteda::dfm(c(d1 = "b b b b b b b a a a",
-                   d2 = "a a a a a a a b b"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "b b b b b b b a a a",
+                   d2 = "a a a a a a a b b")))
     result <- stats::fisher.test(as.matrix(dfmt))
     expect_equivalent(
         result$estimate,
@@ -142,8 +145,8 @@ test_that("keyness_textstat exact computation is correct", {
 })
 
 test_that("basic textstat_keyness exact works on two rows", {
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-                   d2 = "a a b c c d d d d e f h"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
+                   d2 = "a a b c c d d d d e f h")))
     expect_equal(textstat_keyness(dfmt, measure = "exact")$feature,
                  c("g", "c", "b", "h", "a", "e", "f", "d"))
     expect_equal(textstat_keyness(dfmt, target = 2, measure = "exact")$feature,
@@ -221,8 +224,8 @@ likelihood.test <- function(x, y = NULL, conservative=FALSE) {
 }
 
 test_that("keyness_textstat lr computation is correct", {
-    dfmt <- quanteda::dfm(c(d1 = "b b b b b b b a a a",
-                   d2 = "a a a a a a a b b"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "b b b b b b b a a a",
+                   d2 = "a a a a a a a b b")))
     result <- likelihood.test(as.matrix(dfmt))
     expect_equivalent(
         result$statistic,
@@ -246,8 +249,8 @@ test_that("keyness_textstat lr computation is correct", {
 })
 
 test_that("basic textstat_keyness lr works on two rows", {
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-                   d2 = "a a b c c d d d d e f h"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
+                   d2 = "a a b c c d d d d e f h")))
     expect_equal(textstat_keyness(dfmt, measure = "lr", correction = "none")$feature,
                  c("c", "g", "b", "h", "a", "e", "f", "d"))
     expect_equal(textstat_keyness(dfmt, target = 2, measure = "lr", correction = "none")$feature,
@@ -257,8 +260,8 @@ test_that("basic textstat_keyness lr works on two rows", {
 })
 
 test_that("textstat_keyness returns raw frequency counts", {
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-                   d2 = "a a b c c d d d d e f h"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
+                   d2 = "a a b c c d d d d e f h")))
 
     expect_equivalent(textstat_keyness(dfmt, measure = "chi2", sort = FALSE)[, c(4, 5)],
                       suppressWarnings(as.data.frame(t(dfmt), document = NULL)))
@@ -268,12 +271,11 @@ test_that("textstat_keyness returns raw frequency counts", {
 
     expect_equivalent(textstat_keyness(dfmt, measure = "lr", sort = FALSE)[, c(4, 5)],
                       suppressWarnings(as.data.frame(t(dfmt), document = NULL)))
-
 })
 
 test_that("textstat_keyness returns correct pmi", {
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-                   d2 = "a a b c c d d d d e f h"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
+                   d2 = "a a b c c d d d d e f h")))
     ## manual checking
     mykeyness <- textstat_keyness(dfmt, measure = "pmi")
     my_cal <- log(dfmt[1, 1] * sum(dfmt) / ((dfmt[1, 1] + dfmt[2, 1]) * sum(dfmt[1, ])))
@@ -294,8 +296,8 @@ test_that("textstat_keyness returns correct pmi", {
 })
 
 test_that("textstat_keyness correction warnings for pmi and exact", {
-    dfmt <- quanteda::dfm(c(d1 = "a a a b b c c c c c c d e f g h h",
-                   d2 = "a a b c c d d d d e f h"))
+    dfmt <- quanteda::dfm(quanteda::tokens(c(d1 = "a a a b b c c c c c c d e f g h h",
+                   d2 = "a a b c c d d d d e f h")))
     expect_warning(
         textstat_keyness(dfmt, measure = "pmi", correction = "yates"),
         "correction is always none for pmi"
@@ -313,8 +315,7 @@ test_that("textstat_keyness correction warnings for pmi and exact", {
 })
 
 test_that("group labels are correct, #1257", {
-
-    mt <- quanteda::dfm(c(d1 = "a b c", d2 = "a b f g", d3 = "c h i j", d4 = "i j"))
+    mt <- quanteda::dfm(quanteda::tokens(c(d1 = "a b c", d2 = "a b f g", d3 = "c h i j", d4 = "i j")))
 
     key1 <- textstat_keyness(mt, target = "d1")
     expect_identical(attr(key1, "groups"), c("d1", "reference"))
@@ -331,7 +332,6 @@ test_that("group labels are correct, #1257", {
 })
 
 test_that("raises error when dfm is empty (#1419)", {
-
     mx <- quanteda::dfm_trim(quanteda::data_dfm_lbgexample, 1000)
     expect_error(textstat_keyness(mx),
                  quanteda.textstats:::message_error("dfm_empty"))
@@ -341,6 +341,7 @@ test_that("keyness works correctly for default, single, and multiple targets", {
     d <- quanteda::corpus(c(d1 = "a a a a a b b b c c c c ",
                   d2 = "a b c d d d d e f g",
                   d3 = "a b c d d e e e e f g")) %>%
+      quanteda::tokens() %>%
       quanteda::dfm()
 
     # default target is first document

@@ -1,5 +1,5 @@
 Package: quanteda.textstats
-Version: 0.92.9000
+Version: 0.93
 Title: Textual Statistics for the Quantitative Analysis of Textual Data
 Description: Textual statistics functions formerly in the 'quanteda' package.
     Textual statistics for characterizing and comparing textual data. Includes 
@@ -17,7 +17,7 @@ Authors@R: c(
     )
 License: GPL-3
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.5.0)
 Imports:
     quanteda,
     Matrix,

@@ -1,5 +1,5 @@
 test_that("test textstat_frequency without groups", {
-    dfm1 <- quanteda::dfm(c("a a b b c d", "a d d d", "a a a"))
+    dfm1 <- quanteda::dfm(quanteda::tokens(c("a a b b c d", "a d d d", "a a a")))
     expect_equivalent(
         textstat_frequency(dfm1, ties_method = "random"),
         data.frame(feature = c("a", "d", "b", "c"),
@@ -26,13 +26,13 @@ test_that("test textstat_frequency without groups", {
     corp1 <- quanteda::corpus(txt, docvars = data.frame(grp2 = grp1))
 
     expect_identical(
-        textstat_frequency(quanteda::dfm(corp1), groups = grp1, ties_method = "max"),
-        textstat_frequency(quanteda::dfm(corp1), groups = "grp2", ties_method = "max")
+        textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp1, ties_method = "max"),
+        textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = "grp2", ties_method = "max")
     )
 
     set.seed(10)
     expect_equivalent(
-        textstat_frequency(quanteda::dfm(corp1), groups = grp1, ties_method = "random"),
+        textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp1, ties_method = "random"),
         data.frame(feature = c("a", "b", "c", "d", "d", "a"),
                    frequency = c(5,2,1,1,3,1),
                    rank = c(1:4, 1:2),
@@ -42,7 +42,7 @@ test_that("test textstat_frequency without groups", {
     )
 
     expect_equivalent(
-      textstat_frequency(quanteda::dfm(corp1), groups = grp1, n = 2, ties_method = "random"),
+      textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp1, n = 2, ties_method = "random"),
       data.frame(feature = c("a", "b", "d", "a"),
                  frequency = c(5, 2, 3, 1),
                  rank = c(1:2, 1:2),
@@ -50,7 +50,6 @@ test_that("test textstat_frequency without groups", {
                  group = c("one", "one", "two", "two"),
                  stringsAsFactors = FALSE)
     )
-
 })
 
 test_that("test textstat_frequency works with weights", {
@@ -58,7 +57,7 @@ test_that("test textstat_frequency works with weights", {
     grp1 <- c("one", "two", "one")
     corp1 <- quanteda::corpus(txt, docvars = data.frame(grp2 = grp1))
 
-    dfm1 <- quanteda::dfm(corp1)
+    dfm1 <- quanteda::dfm(quanteda::tokens(corp1))
     dfm1weighted <- quanteda::dfm_weight(dfm1, "prop")
 
     set.seed(10)
@@ -82,7 +81,7 @@ test_that("raises error when dfm is empty (#1419)", {
 
 test_that("test textstat_frequency ties methods defaults work (min)", {
     txt <- c("a a b b c d", "b b b d d d", "a a a")
-    dfmat <- quanteda::dfm(txt)
+    dfmat <- quanteda::dfm(quanteda::tokens(txt))
     expect_equivalent(
         textstat_frequency(dfmat)[, c("feature", "rank")],
         data.frame(feature = c("a", "b", "d", "c"),
@@ -92,7 +91,7 @@ test_that("test textstat_frequency ties methods defaults work (min)", {
 })
 
 test_that("test textstat_frequency with groups and weighted dfm (#1646)", {
-    dfmat <- quanteda::dfm(c("a a b b c d", "a d d d", "a a a")) %>%
+    dfmat <- quanteda::dfm(quanteda::tokens(c("a a b b c d", "a d d d", "a a a"))) %>%
       quanteda::dfm_tfidf()
 
     expect_error(
@@ -113,7 +112,7 @@ test_that("test textstat_frequency with groups and weighted dfm (#1646)", {
 })
 
 test_that("textstat_frequency does not return NAs when n > nfeat", {
-  dfmat <- quanteda::dfm(c("a a b c d", "a d d e", "a b b"))
+  dfmat <- quanteda::dfm(quanteda::tokens(c("a a b c d", "a d d e", "a b b")))
 
   # should not have NA
   expect_identical(nrow(textstat_frequency(dfmat, n = 6)), 5L)

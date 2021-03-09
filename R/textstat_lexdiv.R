@@ -148,7 +148,7 @@
 #'           sandwich.")
 #' tokens(txt) %>%
 #'     textstat_lexdiv(measure = c("TTR", "CTTR", "K"))
-#' dfm(txt) %>%
+#' dfm(tokens(txt)) %>%
 #'     textstat_lexdiv(measure = c("TTR", "CTTR", "K"))
 #'
 #' toks <- tokens(corpus_subset(data_corpus_inaugural, Year > 2000))
@@ -382,7 +382,7 @@ compute_lexdiv_dfm_stats <- function(x, measure = NULL, log.base = 10) {
 #' @param MSTTR_segment a numeric value defining the size of the each segment
 #'   for the computation of the the Mean Segmental Type-Token Ratio (Johnson, 1944)
 compute_lexdiv_tokens_stats <- function(x, measure = c("MATTR", "MSTTR"),
-                                     MATTR_window, MSTTR_segment) {
+                                        MATTR_window, MSTTR_segment) {
     measure <- match.arg(measure, several.ok = TRUE)
     result <- data.frame(document = docnames(x), stringsAsFactors = FALSE)
 
@@ -426,7 +426,7 @@ compute_mattr <- function(x, MATTR_window = 100L) {
     x <- tokens_ngrams(x, n = MATTR_window, concatenator = " ")
 
     # get a list of TTRs by document
-    temp <- lapply(as.list(x), function(y) textstat_lexdiv(dfm(y), "TTR")[["TTR"]])
+    temp <- lapply(as.list(x), function(y) textstat_lexdiv(dfm(tokens(y)), "TTR")[["TTR"]])
     result <- unlist(lapply(temp, mean))
     return(result)
 }

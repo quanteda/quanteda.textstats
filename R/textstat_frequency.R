@@ -30,14 +30,16 @@
 #' @examples
 #' library("quanteda")
 #' set.seed(20)
-#' dfmat1 <- dfm(c("a a b b c d", "a d d d", "a a a"))
+#' dfmat1 <- dfm(tokens(c("a a b b c d", "a d d d", "a a a")))
 #'
 #' textstat_frequency(dfmat1)
 #' textstat_frequency(dfmat1, groups = c("one", "two", "one"), ties_method = "first")
 #' textstat_frequency(dfmat1, groups = c("one", "two", "one"), ties_method = "average")
 #'
 #' dfmat2 <- corpus_subset(data_corpus_inaugural, President == "Obama") %>%
-#'    dfm(remove_punct = TRUE, remove = stopwords("english"))
+#'    tokens(remove_punct = TRUE) %>%
+#'    tokens_remove(stopwords("english")) %>%
+#'    dfm()
 #' tstat1 <- textstat_frequency(dfmat2)
 #' head(tstat1, 10)
 #'

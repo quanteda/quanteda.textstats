@@ -1,6 +1,8 @@
+library("quanteda")
+
 test_that("textstat_lexdiv computation is correct", {
-    mydfm <- quanteda::dfm(c(d1 = "b a b a b a b a",
-                             d2 = "a a b b"))
+    mydfm <- quanteda::dfm(tokens(c(d1 = "b a b a b a b a",
+                             d2 = "a a b b")))
     expect_equivalent(
         textstat_lexdiv(mydfm, "TTR"),
         data.frame(document = c("d1", "d2"), TTR = c(0.25, 0.5),
@@ -9,8 +11,8 @@ test_that("textstat_lexdiv computation is correct", {
 })
 
 test_that("textstat_lexdiv CTTR works correctly", {
-    mydfm <- quanteda::dfm(c(d1 = "b a b a b a b a",
-                             d2 = "a a b b"))
+    mydfm <- quanteda::dfm(tokens(c(d1 = "b a b a b a b a",
+                             d2 = "a a b b")))
     expect_equivalent(
         textstat_lexdiv(mydfm, "CTTR")$CTTR,
         c(2 / sqrt(2 * 8), 2 / sqrt(2 * 4)),
@@ -19,8 +21,8 @@ test_that("textstat_lexdiv CTTR works correctly", {
 })
 
 test_that("textstat_lexdiv R works correctly", {
-    mydfm <-quanteda:: dfm(c(d1 = "b a b a b a b a",
-                             d2 = "a a b b"))
+    mydfm <-quanteda:: dfm(tokens(c(d1 = "b a b a b a b a",
+                             d2 = "a a b b")))
     expect_equivalent(
         textstat_lexdiv(mydfm, "R")$R,
         c(2 / sqrt(8), 2 / sqrt(4)),
@@ -29,8 +31,8 @@ test_that("textstat_lexdiv R works correctly", {
 })
 
 test_that("textstat_lexdiv C works correctly", {
-    mydfm <- quanteda::dfm(c(d1 = "b a b a b a b a",
-                             d2 = "a a b b"))
+    mydfm <- quanteda::dfm(tokens(c(d1 = "b a b a b a b a",
+                             d2 = "a a b b")))
     expect_equivalent(
         textstat_lexdiv(mydfm, "C")$C,
         c(log10(2) / log10(8), log10(2) / log10(4)),
@@ -39,8 +41,8 @@ test_that("textstat_lexdiv C works correctly", {
 })
 
 test_that("textstat_lexdiv Maas works correctly", {
-    mydfm <- quanteda::dfm(c(d1 = "b a b a b a b a",
-                   d2 = "a a b b"))
+    mydfm <- quanteda::dfm(tokens(c(d1 = "b a b a b a b a",
+                   d2 = "a a b b")))
     expect_equivalent(
         textstat_lexdiv(mydfm, "Maas")$Maas[1],
         sqrt((log10(8) - log10(2)) / log10(8) ^ 2),
@@ -49,8 +51,8 @@ test_that("textstat_lexdiv Maas works correctly", {
 })
 
 test_that("textstat_lexdiv Yule's I works correctly", {
-    mydfm <- quanteda::dfm(c(d1 = "a b c",
-                   d2 = "a a b b c"))
+    mydfm <- quanteda::dfm(tokens(c(d1 = "a b c",
+                   d2 = "a a b b c")))
     expect_equivalent(
         textstat_lexdiv(mydfm, "I")$I[1], 0, tolerance = 0.01
     )
@@ -61,7 +63,7 @@ test_that("textstat_lexdiv Yule's I works correctly", {
 
 test_that("textstat_lexdiv works with a single document dfm (#706)", {
     mytxt <- "one one two one one two one"
-    mydfm <- quanteda::dfm(mytxt)
+    mydfm <- quanteda::dfm(tokens(mytxt))
     expect_equivalent(
         textstat_lexdiv(mydfm, c("TTR", "C")),
         data.frame(document = "text1", TTR = 0.286, C = 0.356,
@@ -154,7 +156,7 @@ static_measures <- c("TTR", "C", "R", "CTTR", "U", "S", "K", "D", "Vm", "Maas")
 test_that("textstat_lexdiv works similarly for corpus and tokens", {
     txt <- c(d1 = "b a b a b a b a",
              d2 = "a a b b")
-    mydfm <- quanteda::dfm(txt)
+    mydfm <- quanteda::dfm(tokens(txt))
     mytokens <- quanteda::tokens(txt)
     expect_identical(
         textstat_lexdiv(mydfm, measure = static_measures),
@@ -165,7 +167,7 @@ test_that("textstat_lexdiv works similarly for corpus and tokens", {
 test_that("textstat_lexdiv supports removal of punctuation, numbers and symbols", {
     txt <- c(d1 = "a a  b b  c c",
              d2 = "a a , b b . c c / & ^ *** ### 1 2 3 4")
-    mt <- quanteda::dfm(txt)
+    mt <- quanteda::dfm(tokens(txt))
     toks <- quanteda::tokens(txt)
     expect_identical(
         textstat_lexdiv(mt["d1", ], measure = static_measures)[, -1],
@@ -178,10 +180,10 @@ test_that("textstat_lexdiv supports removal of punctuation, numbers and symbols"
 })
 
 test_that("textstat_lexdiv supports removal of hyphenation", {
-    y <- quanteda::dfm(c(d1 = "apple-pear orange-fruit elephant-ferrari",
-               d2 = "alpha-beta charlie-delta echo-foxtrot"))
-    z <- quanteda::dfm(c(d1 = "apple pear orange fruit elephant ferrari",
-               d2 = "alpha beta charlie delta echo foxtrot"))
+    y <- quanteda::dfm(tokens(c(d1 = "apple-pear orange-fruit elephant-ferrari",
+               d2 = "alpha-beta charlie-delta echo-foxtrot")))
+    z <- quanteda::dfm(tokens(c(d1 = "apple pear orange fruit elephant ferrari",
+               d2 = "alpha beta charlie delta echo foxtrot")))
     expect_identical(
         textstat_lexdiv(y, measure = static_measures, remove_hyphens = TRUE),
         textstat_lexdiv(z, measure = static_measures, remove_hyphens = TRUE)
@@ -189,11 +191,11 @@ test_that("textstat_lexdiv supports removal of hyphenation", {
 })
 
 test_that("textstat_lexdiv can handle hyphenated words containing duplicated tokens ", {
-    dfm_nested <- quanteda::dfm(quanteda::corpus(c(d1 = "have we not-we-have bicycle ! % 123 ^ ")))
+    dfm_nested <- quanteda::dfm(tokens(quanteda::corpus(c(d1 = "have we not-we-have bicycle ! % 123 ^ "))))
     # not-we-have should be separated into three tokens, with hyphens being removed
     # remaining punctuation, symbols and numbers should also be removed
     # dfm_nested should only have 4 types with 6 tokens
-    dfm_non_nested <- quanteda::dfm(quanteda::corpus(c(d1 = "a b b c c d")))
+    dfm_non_nested <- quanteda::dfm(tokens(quanteda::corpus(c(d1 = "a b b c c d"))))
     expect_identical(textstat_lexdiv(dfm_nested, measure = static_measures, remove_hyphens = TRUE),
                      textstat_lexdiv(dfm_non_nested, measure = static_measures))
 })
@@ -207,36 +209,36 @@ test_that("textstat_lexdiv.dfm and .tokens work same with remove_* options", {
              "A shrimp-kabob costs $0.50, shrimp costs $0.25.")
     expect_identical(
         textstat_lexdiv(quanteda::tokens(txt), measure = "TTR", remove_hyphens = TRUE),
-        textstat_lexdiv(quanteda::dfm(txt, tolower = FALSE), measure = "TTR", remove_hyphens = TRUE)
+        textstat_lexdiv(quanteda::dfm(tokens(txt), tolower = FALSE), measure = "TTR", remove_hyphens = TRUE)
     )
     expect_identical(
         textstat_lexdiv(quanteda::tokens(txt), measure = "TTR",
                         remove_punct = TRUE, remove_hyphens = TRUE),
-        textstat_lexdiv(quanteda::dfm(txt), measure = "TTR",
+        textstat_lexdiv(quanteda::dfm(tokens(txt)), measure = "TTR",
                         remove_punct = TRUE, remove_hyphens = TRUE)
     )
     expect_identical(
         textstat_lexdiv(quanteda::tokens(txt), measure = "TTR", remove_punct = TRUE),
-        textstat_lexdiv(quanteda::dfm(txt), measure = "TTR", remove_punct = TRUE)
+        textstat_lexdiv(quanteda::dfm(tokens(txt)), measure = "TTR", remove_punct = TRUE)
     )
     expect_identical(
         textstat_lexdiv(quanteda::tokens(txt[2]), measure = "TTR", remove_symbols = TRUE),
-        textstat_lexdiv(quanteda::dfm(txt[2]), measure = "TTR", remove_symbols = TRUE)
+        textstat_lexdiv(quanteda::dfm(tokens(txt[2])), measure = "TTR", remove_symbols = TRUE)
     )
     expect_true(
-        textstat_lexdiv(quanteda::dfm(txt[2]), measure = "TTR", remove_symbols = TRUE)[1, "TTR"] !=
-        textstat_lexdiv(quanteda::dfm(txt[2]), measure = "TTR", remove_symbols = FALSE)[1, "TTR"]
+        textstat_lexdiv(quanteda::dfm(tokens(txt[2])), measure = "TTR", remove_symbols = TRUE)[1, "TTR"] !=
+        textstat_lexdiv(quanteda::dfm(tokens(txt[2])), measure = "TTR", remove_symbols = FALSE)[1, "TTR"]
     )
     expect_identical(
         textstat_lexdiv(quanteda::tokens(txt), measure = "TTR", remove_numbers = TRUE),
-        textstat_lexdiv(quanteda::dfm(txt), measure = "TTR", remove_numbers = TRUE)
+        textstat_lexdiv(quanteda::dfm(tokens(txt)), measure = "TTR", remove_numbers = TRUE)
     )
 })
 
 
 test_that("textstat_lexdiv does not support dfm for MATTR and MSTTR", {
     mytxt <- "one one two one one two one"
-    mydfm <- quanteda::dfm(mytxt)
+    mydfm <- quanteda::dfm(tokens(mytxt))
     expect_error(
         textstat_lexdiv(mydfm, measure = "MATTR"),
         "average-based measures are only available for tokens inputs"
@@ -396,7 +398,7 @@ test_that("textstat_lexdiv works with measure = 'all'", {
 })
 
 test_that("dfm_split_hyphenated_features works as expected", {
-    dfmat <- quanteda::dfm("One-two one two three.")
+    dfmat <- quanteda::dfm(quanteda::tokens("One-two one two three."))
     expect_identical(
         quanteda::featnames(quanteda.textstats:::dfm_split_hyphenated_features(dfmat)),
         c("one", "two", "three", ".", "-")

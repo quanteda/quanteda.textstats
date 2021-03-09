@@ -6,3 +6,4 @@
 ^LICENSE$
 ^\.github$
 ^CRAN-RELEASE$
+^revdep$
