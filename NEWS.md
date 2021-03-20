@@ -1,3 +1,7 @@
+# quanteda.textstats 0.94
+
+Move the S4 definitions for simil, dist, and proxy textstat classes from **quanteda** to **quanteda.textstats**.
+
 # quanteda.textstats 0.93
 
 * Minor changes to ensure compatibility with **quanteda** v3.

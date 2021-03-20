@@ -1,9 +1,8 @@
 # Submission notes
 
-- Fixes breaking tests on r-oldrel-macos-x86_64 and r-oldrel-windows-ix86+x86_64, caused by the changes to R in the default treatment of characters as factors when creating a data.frame.
+This package must accompany the quanteda v3 release, which we have submitted today at the same time.  Tested with that submission, it passes.  Tested against the existing quanteda 2.1.2, it fails because the S4 classes are multiply defined, and quanteda.textstats has to import quanteda.
 
-
-errors on Solaris and on r-oldrel-windows, only discovered after the initial publication on CRAN.
+This is the only change versus the recently updated v0.93 of quanteda.textstats, which the CRAN results report as OK on all platforms.
 
 ## Test environments
 
@@ -15,8 +14,10 @@ errors on Solaris and on r-oldrel-windows, only discovered after the initial pub
 
 ## R CMD check results
 
-No ERRORs, NOTEs, or WARNINGs produced.
+No ERRORs, NOTEs, or WARNINGs produced when tested with quanteda v3.
+
+Fails because of conflicting S4 class definitions if tested with quanteda v2.1.2.
 
 ## Downstream dependencies
 
-I ran revdepcheck::revdep_check() to verify that this update breaks none of the package's four reverse dependencies.
+This will not break downstream dependencies as we have changed nothing except the S4 headers versus the existing CRAN v0.93, which is OK on all platforms.
