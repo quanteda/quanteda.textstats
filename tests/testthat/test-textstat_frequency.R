@@ -27,7 +27,7 @@ test_that("test textstat_frequency without groups", {
 
     expect_identical(
         textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp1, ties_method = "max"),
-        textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = "grp2", ties_method = "max")
+        textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = corp1$grp2, ties_method = "max")
     )
 
     set.seed(10)

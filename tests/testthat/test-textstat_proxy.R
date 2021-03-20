@@ -1,13 +1,12 @@
 library("quanteda")
 
 test_mt <- tokens(corpus_subset(data_corpus_inaugural, Year > 1980)) %>%
-    tokens_remove(stopwords("english")) %>%
+    tokens_remove(stopwords("en")) %>%
     tokens_wordstem("en") %>%
     dfm() %>%
     dfm_trim(min_termfreq = 5)
 
 test_simil <- function(x, method, margin, ignore_upper = FALSE, ...) {
-
     if (margin == "documents") {
         by_rows <- TRUE
         selection <- "1985-Reagan"
@@ -197,7 +196,7 @@ test_that("as.matrix works as expected", {
     txt <- c("Bacon ipsum dolor amet tenderloin hamburger bacon t-bone,",
              "Tenderloin turducken corned beef bacon.",
              "Burgdoggen venison tail, hamburger filet mignon capicola meatloaf pig pork belly.")
-    mt <- quanteda::dfm(tokens(txt))
+    mt <- dfm(tokens(txt))
     expect_equivalent(diag(as.matrix(textstat_proxy(mt))),
                       rep(1, 3))
 })
@@ -207,9 +206,9 @@ test_that("textstat_proxy stops as expected for methods not supported", {
 })
 
 test_that("textstat_proxy works on zero-frequency features", {
-    d1 <- quanteda::dfm(tokens(c("a b c", "a b c d")))
-    d2 <- quanteda::dfm(tokens(letters[1:6]))
-    dtest <- quanteda::dfm_match(d1, quanteda::featnames(d2))
+    d1 <- dfm(tokens(c("a b c", "a b c d")))
+    d2 <- dfm(tokens(letters[1:6]))
+    dtest <- dfm_match(d1, featnames(d2))
 
     expect_equal(
         textstat_proxy(dtest, method = "cosine")[2, 1], 0.866,
@@ -222,10 +221,10 @@ test_that("textstat_proxy works on zero-frequency features", {
 })
 
 test_that("textstat_proxy works on zero-feature documents (#952)", {
-    corp <- quanteda::corpus(c("a b c c", "b c d", "a"),
-                   docvars = data.frame(grp = factor(c("A", "A", "B"), levels = LETTERS[1:3])))
-    mt <- quanteda::dfm(tokens(corp))
-    mt <- quanteda::dfm_group(mt, groups = "grp", fill = TRUE)
+    corp <- corpus(c("a b c c", "b c d", "a"),
+                             docvars = data.frame(grp = factor(c("A", "A", "B"), levels = LETTERS[1:3])))
+    mt <- dfm(tokens(corp))
+    mt <- dfm_group(mt, groups = corp$grp, fill = TRUE)
 
     expect_equal(
         as.numeric(textstat_proxy(mt, method = "cosine")[1, ]),
@@ -241,8 +240,8 @@ test_that("textstat_proxy works on zero-feature documents (#952)", {
 
 test_that("textstat_proxy works with non-intersecting documents or features", {
 
-    toks <- quanteda::tokens(c(doc1 = "a b c d e", doc2 = "b c f e", doc3 = "c d f", doc4 = "f g h"), remove_punct = TRUE)
-    mt <- quanteda::dfm(toks)
+    toks <- tokens(c(doc1 = "a b c d e", doc2 = "b c f e", doc3 = "c d f", doc4 = "f g h"), remove_punct = TRUE)
+    mt <- dfm(toks)
     sim1 <- textstat_proxy(mt, margin = "features")
     expect_equal(as.matrix(textstat_proxy(mt[, c("a", "b")], mt[, c("c", "d", "e")], margin = "features")),
                  as.matrix(sim1[c("a", "b"), c("c", "d", "e"), drop = FALSE]))
@@ -252,7 +251,7 @@ test_that("textstat_proxy works with non-intersecting documents or features", {
 })
 
 test_that("raises error when dfm is empty (#1419)", {
-    mt <- quanteda::dfm_trim(quanteda::data_dfm_lbgexample, 1000)
+    mt <- dfm_trim(data_dfm_lbgexample, 1000)
     expect_silent(textstat_proxy(mt))
     expect_silent(textstat_proxy(mt, mt))
 })
@@ -286,8 +285,8 @@ test_that("rank argument is working", {
 })
 
 test_that("record zeros even in the sparse matrix", {
-    toks <- quanteda::tokens(c(doc1 = "a b c", doc2 = "d e f"), remove_punct = TRUE)
-    mt <- quanteda::dfm(toks)
+    toks <- tokens(c(doc1 = "a b c", doc2 = "d e f"), remove_punct = TRUE)
+    mt <- dfm(toks)
     expect_true(any(textstat_proxy(mt)@x == 0))
     expect_true(any(textstat_proxy(mt, method = "cosine")@x == 0))
     expect_true(any(textstat_proxy(mt, method = "cosine", min_proxy = -0.5)@x == 0))
@@ -309,7 +308,7 @@ test_that("textstat_proxy raises error when y is not a dfm", {
 })
 
 test_that("use_na is working", {
-    mt <- quanteda::as.dfm(matrix(c(rep(0, 4),
+    mt <- as.dfm(matrix(c(rep(0, 4),
                           rep(1, 4),
                           c(1, 3, 2, 0)), ncol = 3))
 
