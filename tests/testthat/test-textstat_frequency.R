@@ -29,10 +29,14 @@ test_that("test textstat_frequency without groups", {
         textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp1, ties_method = "max"),
         textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = corp1$grp2, ties_method = "max")
     )
+    expect_identical(
+        textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp1, ties_method = "max"),
+        textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp2, ties_method = "max")
+    )
 
     set.seed(10)
     expect_equivalent(
-        textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp1, ties_method = "random"),
+        textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp2, ties_method = "random"),
         data.frame(feature = c("a", "b", "c", "d", "d", "a"),
                    frequency = c(5,2,1,1,3,1),
                    rank = c(1:4, 1:2),
@@ -42,7 +46,7 @@ test_that("test textstat_frequency without groups", {
     )
 
     expect_equivalent(
-      textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp1, n = 2, ties_method = "random"),
+      textstat_frequency(quanteda::dfm(quanteda::tokens(corp1)), groups = grp2, n = 2, ties_method = "random"),
       data.frame(feature = c("a", "b", "d", "a"),
                  frequency = c(5, 2, 3, 1),
                  rank = c(1:2, 1:2),

@@ -66,10 +66,17 @@ textstat_frequency(dfmat1, groups = c("one", "two", "one"), ties_method = "avera
 
 dfmat2 <- corpus_subset(data_corpus_inaugural, President == "Obama") \%>\%
    tokens(remove_punct = TRUE) \%>\%
-   tokens_remove(stopwords("english")) \%>\%
+   tokens_remove(stopwords("en")) \%>\%
    dfm()
 tstat1 <- textstat_frequency(dfmat2)
 head(tstat1, 10)
+
+dfmat3 <- head(data_corpus_inaugural) \%>\%
+   tokens(remove_punct = TRUE) \%>\%
+   tokens_remove(stopwords("en")) \%>\%
+   dfm()
+textstat_frequency(dfmat3, n = 2, groups = President)
+
 
 \dontrun{
 # plot 20 most frequent words
@@ -82,12 +89,14 @@ ggplot(tstat1[1:20, ], aes(x = reorder(feature, frequency), y = frequency)) +
 # plot relative frequencies by group
 dfmat3 <- data_corpus_inaugural \%>\%
     corpus_subset(Year > 2000) \%>\%
-    dfm(remove = stopwords("english"), remove_punct = TRUE) \%>\%
-    dfm_group(groups = "President") \%>\%
+    tokens(remove_punct = TRUE) \%>\%
+    tokens_remove(stopwords("en")) \%>\%
+    dfm() \%>\%
+    dfm_group(groups = President) \%>\%
     dfm_weight(scheme = "prop")
 
 # calculate relative frequency by president
-tstat2 <- textstat_frequency(dfmat3, n = 10, groups = "President")
+tstat2 <- textstat_frequency(dfmat3, n = 10, groups = President)
 
 # plot frequencies
 ggplot(data = tstat2, aes(x = factor(nrow(tstat2):1), y = frequency)) +
