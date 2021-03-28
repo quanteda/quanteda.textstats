@@ -1,5 +1,4 @@
-data_char_sampletext <- quanteda::data_char_sampletext
-`%>%` <- quanteda::`%>%`
+library("quanteda")
 
 test_that("readability works: basic", {
     txt <- "This was adjusted by a prolongation of the period of reimbursement in nature of a new loan

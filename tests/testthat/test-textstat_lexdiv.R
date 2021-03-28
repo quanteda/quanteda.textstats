@@ -87,8 +87,9 @@ test_that("Yule's K and Herndon's Vm correction are (approximately) correct", {
     df <- read.csv("../data/stjohn_latin.csv", stringsAsFactors = FALSE)
     data_corpus_stjohn <- df %>%
         corpus(text_field = "latin") %>%
-        texts(groups = df$chapter) %>%  # combine verses into a single document
-        corpus(docvars = data.frame(chapter = 1:4))
+        corpus_group(groups = df$chapter) # %>%
+        # as.character() %>%  # combine verses into a single document
+        # corpus(docvars = data.frame(chapter = 1:4))
     docnames(data_corpus_stjohn) <- paste0("chap", 1:4)
 
     data_dfm_stjohn <- data_corpus_stjohn %>%

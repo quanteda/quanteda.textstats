@@ -528,7 +528,7 @@ textstat_readability.corpus <- function(x,
         measure <- unique(measure)
     }
 
-    x <- texts(x)
+    x <- as.character(x)
     if (!is.null(min_sentence_length) || !is.null(max_sentence_length)) {
         temp <- char_trim(x, "sentences",
                           min_ntoken = min_sentence_length,
