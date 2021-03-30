@@ -1,6 +1,7 @@
 # quanteda.textstats 0.94
 
-Move the S4 definitions for simil, dist, and proxy textstat classes from **quanteda** to **quanteda.textstats**.
+* Move the S4 definitions for simil, dist, and proxy textstat classes from **quanteda** to **quanteda.textstats**.
+* Changes the operation of `groups` in `textstat_frequency()` to operate as in **quanteda** v3.
 
 # quanteda.textstats 0.93
 
