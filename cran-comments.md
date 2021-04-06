@@ -1,5 +1,7 @@
 # Submission notes
 
+UPDATE: Fixes three deprecation warnings from the earlier submission of v0.94.
+
 This package must accompany the quanteda v3 release, which we have submitted today at the same time.  Tested with that submission, it passes.  Tested against the existing quanteda 2.1.2, it fails because the S4 classes are multiply defined, and quanteda.textstats has to import quanteda.
 
 This is the only change versus the recently updated v0.93 of quanteda.textstats, which the CRAN results report as OK on all platforms.
