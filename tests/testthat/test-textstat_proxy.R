@@ -172,14 +172,9 @@ test_that("test textstat_proxy maximum distance", {
 
 test_that("test textstat_proxy canberra distance", {
     skip_if_not_installed("proxy")
-    test_dist(test_mt, "canberra", "documents")
-    test_dist(test_mt, "canberra", "features")
-})
-
-test_that("test textstat_proxy canberra distance", {
-    skip_if_not_installed("proxy")
-    test_dist(test_mt, "canberra", "documents")
-    test_dist(test_mt, "canberra", "features")
+    # proxyC and proxy disagree when sparsity is high
+    test_dist(as.dfm(test_mt + 1), "canberra", "documents")
+    test_dist(as.dfm(test_mt + 1), "canberra", "features")
 })
 
 test_that("test textstat_proxy minkowski distance", {
