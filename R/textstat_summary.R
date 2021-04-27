@@ -65,21 +65,30 @@ textstat_summary.dfm <- function(x, ...) {
 }
 
 summarize <- function(x, ...) {
-
+    
+    # for old ICU
+    skip_emoji <- as.numeric(stringi::stri_info()[["Unicode.version"]]) < 9
+    
     patterns <- removals_regex(punct = TRUE, symbols = TRUE,
                                numbers = TRUE, url = TRUE)
     patterns[["tag"]] <-
         list("username" = paste0("^", quanteda::quanteda_options("pattern_username"), "$"),
              "hashtag" = paste0("^", quanteda::quanteda_options("pattern_hashtag"), "$"))
-    patterns[["emoji"]] <- "^\\p{Emoji_Presentation}+$"
+    
+    if (!skip_emoji) 
+        patterns[["emoji"]] <- "^\\p{Emoji_Presentation}+$"
+    
     dict <- quanteda::dictionary(patterns)
-
     y <- dfm(if (is.corpus(x)) tokens(x) else x, ...)
     temp <- quanteda::convert(
         quanteda::dfm_lookup(y, dictionary = dict, valuetype = "regex", levels = 1),
         "data.frame",
         docid_field = "document"
     )
+    
+    if (skip_emoji) 
+        temp$emoji <- NA
+    
     result <- data.frame(
         "document" = quanteda::docnames(y),
         "chars" = NA,
