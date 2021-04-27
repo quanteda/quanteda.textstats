@@ -67,7 +67,7 @@ textstat_summary.dfm <- function(x, ...) {
 summarize <- function(x, ...) {
     
     # for old ICU
-    skip_emoji <- as.numeric(stringi::stri_info()[["Unicode.version"]]) < 11
+    skip_emoji <- as.numeric(stringi::stri_info()[["Unicode.version"]]) < 9
     
     patterns <- removals_regex(punct = TRUE, symbols = TRUE,
                                numbers = TRUE, url = TRUE)
