@@ -1,3 +1,8 @@
+# quanteda.textstats 0.94.1
+
+* Updated `textstat_simil()` for new **proxyC** version v2.0.
+* Now returns emoji counts as `NA`, without failure, for ICU versions older than 9 (#35 and #24).
+
 # quanteda.textstats 0.94
 
 * Move the S4 definitions for simil, dist, and proxy textstat classes from **quanteda** to **quanteda.textstats**.
