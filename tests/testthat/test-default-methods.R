@@ -1,16 +1,16 @@
 test_that("test default textstat methods", {
-    expect_error(
-        textstat_dist(TRUE),
-        "textstat_dist\\(\\) only works on dfm objects"
-    )
+    # expect_error(
+    #     textstat_dist(TRUE),
+    #     "textstat_dist\\(\\) only works on dfm objects"
+    # )
     expect_error(
         textstat_keyness(TRUE),
         "textstat_keyness\\(\\) only works on dfm objects"
     )
-    expect_error(
-        textstat_simil(TRUE),
-        "textstat_simil\\(\\) only works on dfm objects"
-    )
+    # expect_error(
+    #     textstat_simil(TRUE),
+    #     "textstat_simil\\(\\) only works on dfm objects"
+    # )
     expect_error(
         textstat_lexdiv(TRUE),
         "textstat_lexdiv\\(\\) only works on dfm, tokens objects"

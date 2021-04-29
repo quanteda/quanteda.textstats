@@ -16,6 +16,20 @@ No ERRORs, NOTEs, or WARNINGs, except:
 
 As per the existing CRAN checks, installation fails on r-oldrel-windows-ix86+x86_64, but this is apparently not a fault of quanteda.textstats, but rather a problem with RcppParallel, which fails on that platform.
 
+In checking via devtools::check_win_oldrelease(), we see:
+
+** checking whether the namespace can be loaded with stated dependencies ... NOTE
+Warning in .recacheSubclasses(def@className, def, env) :
+  undefined subclass "numericVector" of class "Mnumeric"; definition not updated
+
+A namespace must be able to be loaded with just the base namespace
+loaded: otherwise if the namespace gets loaded by a saved object, the
+session will be unable to start.
+
+Probably some imports need to be declared in the NAMESPACE file.
+
+but are not sure where this is coming from.
+
 ## Downstream dependencies
 
 No new breaking downstream dependencies.
