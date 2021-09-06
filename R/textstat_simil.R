@@ -635,9 +635,13 @@ textstat_proxy <- function(x, y = NULL,
     if (method %in% c("cosine", "correlation", "jaccard", "ejaccard", "dice", "edice",
                       "hamman", "simple matching", "faith")) {
         if (identical(x, y)) {
-            result <- proxyC::simil(x, NULL, 2, method, min_simil = min_proxy, rank = rank)
+            suppressWarnings({
+                result <- proxyC::simil(x, NULL, 2, method, min_simil = min_proxy, rank = rank)
+            })
         } else {
-            result <- proxyC::simil(x, y, 2, method, min_simil = min_proxy, rank = rank)
+            suppressWarnings({
+                result <- proxyC::simil(x, y, 2, method, min_simil = min_proxy, rank = rank)
+            })
         }
     } else {
         if (identical(x, y)) {
