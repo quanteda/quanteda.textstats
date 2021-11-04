@@ -1,6 +1,10 @@
+# quanteda.textstats 0.94.2
+
+* Updated `textstat_simil()` for new **proxyC** version v0.2.2, which affects how similarities are returned for `NA` values.  See #45.
+
 # quanteda.textstats 0.94.1
 
-* Updated `textstat_simil()` for new **proxyC** version v2.0.
+* Updated `textstat_simil()` for new **proxyC** version v-0.2.0.
 * Now returns emoji counts as `NA`, without failure, for ICU versions older than 9 (#35 and #24).
 
 # quanteda.textstats 0.94

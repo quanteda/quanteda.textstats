@@ -636,11 +636,11 @@ textstat_proxy <- function(x, y = NULL,
                       "hamman", "simple matching", "faith")) {
         if (identical(x, y)) {
             suppressWarnings({
-                result <- proxyC::simil(x, NULL, 2, method, min_simil = min_proxy, rank = rank)
+                result <- proxyC::simil(x, NULL, 2, method, min_simil = min_proxy, rank = rank, use_nan = use_na)
             })
         } else {
             suppressWarnings({
-                result <- proxyC::simil(x, y, 2, method, min_simil = min_proxy, rank = rank)
+                result <- proxyC::simil(x, y, 2, method, min_simil = min_proxy, rank = rank, use_nan = use_na)
             })
         }
     } else {
@@ -651,39 +651,6 @@ textstat_proxy <- function(x, y = NULL,
         }
     }
     dimnames(result) <- list(colnames(x), colnames(y))
-    if (use_na) {
-        if (method == "correlation") {
-            na1 <- proxyC::colSds(x) == 0
-            na2 <- proxyC::colSds(y) == 0
-        } else {
-            na1 <- proxyC::colZeros(x) == nrow(x)
-            na2 <- proxyC::colZeros(y) == nrow(y)
-        }
-        if (any(na1) || any(na2))
-            result <- result + make_na_matrix(dim(result), which(na1), which(na2))
-    }
     return(result)
 }
 
-make_na_matrix <- function(dims, row = NULL, col = NULL) {
-    i <- j <- integer()
-    if (is.integer(row)) {
-        i <- c(i, rep(row, dims[2]))
-        j <- c(j, rep(seq_len(dims[2]), each = length(row)))
-    }
-    if (is.integer(col)) {
-        i <- c(i, rep(seq_len(dims[1]), each = length(col)))
-        j <- c(j, rep(col, dims[1]))
-    }
-    if (utils::packageVersion("Matrix") < 1.3) {
-        Matrix::sparseMatrix(
-            i = i, j = j, x = as.double(NA),
-            dims = dims,
-            giveCsparse = FALSE)
-    } else {
-        Matrix::sparseMatrix(
-            i = i, j = j, x = as.double(NA),
-            dims = dims,
-            repr = "T")
-    }
-}
