@@ -1,6 +1,7 @@
-# quanteda.textstats 0.94.2
+# quanteda.textstats 0.95
 
 * Updated `textstat_simil()` for new **proxyC** version v0.2.2, which affects how similarities are returned for `NA` values.  See #45.
+* Fixed a bug in the computation of Yule's K (#46)
 
 # quanteda.textstats 0.94.1
 
