@@ -10,7 +10,7 @@ textstat_simil(
   y = NULL,
   selection = NULL,
   margin = c("documents", "features"),
-  method = c("correlation", "cosine", "jaccard", "ejaccard", "dice", "edice", "hamman",
+  method = c("correlation", "cosine", "jaccard", "ejaccard", "dice", "edice", "hamann",
     "simple matching"),
   min_simil = NULL,
   ...
@@ -61,7 +61,7 @@ pairwise comparisons, or a \link[stats:dist]{dist} format.
 \details{
 \code{textstat_simil} options are: \code{"correlation"} (default),
 \code{"cosine"}, \code{"jaccard"}, \code{"ejaccard"}, \code{"dice"},
-\code{"edice"}, \code{"simple matching"}, and \code{"hamman"}.
+\code{"edice"}, \code{"simple matching"}, and \code{"hamann"}.
 
 \code{textstat_dist} options are: \code{"euclidean"} (default),
 \code{"manhattan"}, \code{"maximum"}, \code{"canberra"},

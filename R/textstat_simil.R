@@ -200,7 +200,7 @@ setMethod("tail", signature(x = "textstat_proxy"), function(x, n = 6L, ...) {
 #' @param ... unused
 #' @details `textstat_simil` options are: `"correlation"` (default),
 #'   `"cosine"`, `"jaccard"`, `"ejaccard"`, `"dice"`,
-#'   `"edice"`, `"simple matching"`, and `"hamman"`.
+#'   `"edice"`, `"simple matching"`, and `"hamann"`.
 #' @note If you want to compute similarity on a "normalized" dfm object
 #'   (controlling for variable document lengths, for methods such as correlation
 #'   for which different document lengths matter), then wrap the input dfm in
@@ -249,7 +249,7 @@ setMethod("tail", signature(x = "textstat_proxy"), function(x, n = 6L, ...) {
 textstat_simil <- function(x, y = NULL, selection = NULL,
                            margin = c("documents", "features"),
                            method = c("correlation", "cosine", "jaccard", "ejaccard",
-                                      "dice", "edice", "hamman", "simple matching"),
+                                      "dice", "edice", "hamann", "simple matching"),
                            min_simil = NULL, ...) {
     UseMethod("textstat_simil")
 }
@@ -258,7 +258,7 @@ textstat_simil <- function(x, y = NULL, selection = NULL,
 textstat_simil.default <- function(x, y = NULL, selection = NULL,
                                margin = c("documents", "features"),
                                method = c("correlation", "cosine", "jaccard", "ejaccard",
-                                          "dice", "edice", "hamman", "simple matching"),
+                                          "dice", "edice", "hamann", "simple matching"),
                                min_simil = NULL, ...) {
     stop(friendly_class_undefined_message(class(x), "textstat_simil"))
 }
@@ -267,7 +267,7 @@ textstat_simil.default <- function(x, y = NULL, selection = NULL,
 textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
                                margin = c("documents", "features"),
                                method = c("correlation", "cosine", "jaccard", "ejaccard",
-                                          "dice", "edice", "hamman", "simple matching"),
+                                          "dice", "edice", "hamann", "simple matching"),
                                min_simil = NULL, ...) {
 
     if (!is.null(selection))
@@ -276,7 +276,10 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
 
     x <- as.dfm(x)
     margin <- match.arg(margin)
-    method <- match.arg(method)
+    method <- match.arg(method, c(eval(formals(textstat_simil)[["method"]]), "hamman"))
+
+    # trap older "hamman" spelling
+    if (method == "hamman") method <- "hamann"
 
     if (margin == "features") {
         name <- colnames(x)
@@ -608,7 +611,7 @@ setMethod("as.matrix", "textstat_simil_symm_sparse",
 textstat_proxy <- function(x, y = NULL,
                            margin = c("documents", "features"),
                            method = c("cosine", "correlation", "jaccard", "ejaccard",
-                                      "dice", "edice", "hamman", "simple matching",
+                                      "dice", "edice", "hamann", "simple matching",
                                       "euclidean", "chisquared", "hamming", "kullback",
                                       "manhattan", "maximum", "canberra", "minkowski"),
                            p = 2, min_proxy = NULL, rank = NULL, use_na = FALSE) {
@@ -622,7 +625,10 @@ textstat_proxy <- function(x, y = NULL,
     }
 
     margin <- match.arg(margin)
-    method <- match.arg(method)
+    method <- match.arg(method, c(eval(formals(textstat_proxy)[["method"]]), "hamman"))
+
+    # trap older "hamman" spelling
+    if (method == "hamman") method <- "hamann"
 
     if (margin == "documents") {
         f <- union(featnames(x), featnames(y))
@@ -633,7 +639,7 @@ textstat_proxy <- function(x, y = NULL,
             stop("x and y must contain the same documents")
     }
     if (method %in% c("cosine", "correlation", "jaccard", "ejaccard", "dice", "edice",
-                      "hamman", "simple matching", "faith")) {
+                      "hamann", "simple matching", "faith")) {
         if (identical(x, y)) {
             suppressWarnings({
                 result <- proxyC::simil(x, NULL, 2, method, min_simil = min_proxy, rank = rank, use_nan = use_na)

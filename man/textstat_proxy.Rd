@@ -8,7 +8,7 @@ textstat_proxy(
   x,
   y = NULL,
   margin = c("documents", "features"),
-  method = c("cosine", "correlation", "jaccard", "ejaccard", "dice", "edice", "hamman",
+  method = c("cosine", "correlation", "jaccard", "ejaccard", "dice", "edice", "hamann",
     "simple matching", "euclidean", "chisquared", "hamming", "kullback", "manhattan",
     "maximum", "canberra", "minkowski"),
   p = 2,
