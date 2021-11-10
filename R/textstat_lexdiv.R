@@ -337,7 +337,7 @@ compute_lexdiv_dfm_stats <- function(x, measure = NULL, log.base = 10) {
     }
 
     if ("K" %in% measure)
-        result[["K"]] <- 10 ^ 4 * vapply(ViN, function(y) sum(y$ViN * (y$i / y$n_tokens) ^ 2), numeric(1))
+        result[["K"]] <- 10 ^ 4 * vapply(ViN, function(y) (-1 / y$n_tokens[1]) + sum(y$ViN * (y$i / y$n_tokens) ^ 2), numeric(1))
     if ("I" %in% measure) {
         M_2 <- vapply(ViN, function(y) sum(y$ViN * y$i^2), numeric(1))
         M_1 <- n_types
