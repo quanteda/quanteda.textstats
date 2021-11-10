@@ -276,10 +276,9 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
 
     x <- as.dfm(x)
     margin <- match.arg(margin)
-    method <- match.arg(method, c(eval(formals(textstat_simil)[["method"]]), "hamman"))
 
-    # trap older "hamman" spelling
-    if (method == "hamman") method <- "hamann"
+    if (method == "hamman") method <- "hamann" # trap older "hamman" spelling
+    method <- match.arg(method)
 
     if (margin == "features") {
         name <- colnames(x)
@@ -625,10 +624,9 @@ textstat_proxy <- function(x, y = NULL,
     }
 
     margin <- match.arg(margin)
-    method <- match.arg(method, c(eval(formals(textstat_proxy)[["method"]]), "hamman"))
 
-    # trap older "hamman" spelling
-    if (method == "hamman") method <- "hamann"
+    if (method == "hamman") method <- "hamann" # trap older "hamman" spelling
+    method <- match.arg(method)
 
     if (margin == "documents") {
         f <- union(featnames(x), featnames(y))
