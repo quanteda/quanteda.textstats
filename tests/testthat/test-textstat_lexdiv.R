@@ -100,23 +100,46 @@ test_that("Yule's K and Herndon's Vm correction are (approximately) correct", {
     # work with chapter 1
     data_dfm_stjohnch1 <- dfm_subset(data_dfm_stjohn, chapter == 1)
 
-    expect_equal(
-        as.integer(ntoken(data_dfm_stjohnch1)), # 770
-        755L,     # from Miranda-Garcia and Calle-Martin (2005, Table 1)
-        tol = 15  # might differ b/c of different translations, spellings, or token-counting method
+    freqs <- data_dfm_stjohnch1 %>%
+        featfreq() %>%
+        head(n = 331) %>%
+        sort(decreasing = FALSE)
+    freqnames <- names(freqs)
+    # from Table 1
+    freqs <- c(rep(1, 212),
+           rep(2, 51),
+           rep(3, 26),
+           rep(4, 13),
+           rep(5, 6),
+           rep(6, 6),
+           rep(7, 3),
+           rep(8, 4),
+           rep(10, 1),
+           rep(11, 1),
+           rep(13, 3),
+           rep(16, 1),
+           rep(17, 1),
+           rep(19, 1),
+           rep(21, 1),
+           rep(59, 1))
+    names(freqs) <- freqnames
+    dfmat <- as.dfm(matrix(freqs, nrow = 1, dimnames = list(docnames(data_dfm_stjohnch1),
+                                                            freqnames)))
+    expect_identical(
+        as.integer(ntoken(dfmat)), # 770
+        755L     # from Miranda-Garcia and Calle-Martin (2005, Table 1)
     )
 
-    expect_equal(
-        as.integer(ntype(data_dfm_stjohnch1)),  # 329
-        331L,     # from Miranda-Garcia and Calle-Martin (2005, Table 1)
-        tol = 2   # might be off because of different translations or token-counting method
+    expect_identical(
+        as.integer(ntype(dfmat)),  # 329
+        331L     # from Miranda-Garcia and Calle-Martin (2005, Table 1)
     )
 
     expect_equivalent(
-        textstat_lexdiv(data_dfm_stjohnch1, "K"),  # 129.0943
+        textstat_lexdiv(dfmat, "K"),  # 112.767
         # from Miranda-Garcia and Calle-Martin (2005, Table 3)
-        data.frame(document = "chap1", K = 126.3366167, stringsAsFactors = FALSE),
-        tol = 3
+        data.frame(document = "chap1", K = 113.091583, stringsAsFactors = FALSE),
+        tolerance = 0.5
     )
 
     # tests on multiple documents - this is Ch 1 and Chs 1-4 as per the first two rows of
@@ -126,9 +149,9 @@ test_that("Yule's K and Herndon's Vm correction are (approximately) correct", {
     docnames(data_dfm_stjohncomb)[2] <- "chaps1-4"
     expect_equivalent(
         textstat_lexdiv(data_dfm_stjohncomb, "K"),
-        data.frame(document = c("chap1", "chaps1-4"), K = c(126.3366167, 99.43763148),
+        data.frame(document = c("chap1", "chaps1-4"), K = c(113.091583, 109.957455),
                    stringsAsFactors = FALSE),
-        tol = 3
+        tolerance = 1
     )
 
     # try also Herdan's Vm and Simpson's D - these are VERY WEAK tests
@@ -404,5 +427,18 @@ test_that("dfm_split_hyphenated_features works as expected", {
     expect_identical(
         featnames(quanteda.textstats:::dfm_split_hyphenated_features(dfmat)),
         c("one", "two", "three", ".", "-")
+    )
+})
+
+test_that("Exact tests for Yule's K", {
+    txt <- c("a b c d d e e f f f",
+             "a b c d d e e f f f g g g g")
+    toks <- tokens(txt)
+    textstat_lexdiv(toks, "K")
+
+    # from koRpus and in issue #46
+    expect_equal(
+        round(textstat_lexdiv(toks, "K")$K, 3),
+        c(1000, 1122.449)
     )
 })
