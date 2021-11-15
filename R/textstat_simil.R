@@ -277,7 +277,7 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
     x <- as.dfm(x)
     margin <- match.arg(margin)
 
-    if (method == "hamman") method <- "hamann" # trap older "hamman" spelling
+    method[method == "hamman"] <- "hamann" # trap older "hamman" spelling
     method <- match.arg(method)
 
     if (margin == "features") {
@@ -625,7 +625,7 @@ textstat_proxy <- function(x, y = NULL,
 
     margin <- match.arg(margin)
 
-    if (method == "hamman") method <- "hamann" # trap older "hamman" spelling
+    method[method == "hamman"] <- "hamann" # trap older "hamman" spelling
     method <- match.arg(method)
 
     if (margin == "documents") {

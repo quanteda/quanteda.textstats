@@ -113,8 +113,8 @@ test_that("test textstat_proxy hamann similarity", {
     test_simil(test_mt, "hamman", "features")
 
     expect_identical(
-        textstat_simil(test_mt, "hamman"),
-        textstat_simil(test_mt, "hamann")
+        textstat_simil(test_mt, method = "hamman"),
+        textstat_simil(test_mt, method = "hamann")
     )
 })
 

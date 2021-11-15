@@ -1,7 +1,7 @@
 library("quanteda")
 
-mt <- corpus_subset(data_corpus_inaugural, Year > 1980 & Year < 2021) %>% 
-  tokens() %>% 
+mt <- corpus_subset(data_corpus_inaugural, Year > 1980 & Year < 2021) %>%
+  tokens() %>%
   dfm()
 mt <- dfm_trim(mt, min_termfreq = 10)
 
@@ -98,7 +98,7 @@ test_that("textstat_simil() returns NA for zero-variance documents", {
         as.matrix(textstat_simil(mt, method = "cosine")),
         mt_na_some
     )
-  
+
     # proxy::simil is wrong
     # expect_equivalent(
     #      as.matrix(textstat_simil(mt, method = "jaccard")),
@@ -119,13 +119,13 @@ test_that("textstat_simil() returns NA for zero-variance documents", {
     #     as.matrix(textstat_simil(mt, method = "edice")),
     #     mt_na_some
     # )
-    
+
     # proxyC::simil is wrong (#44)
     # expect_equal(
     #     as.matrix(textstat_simil(mt, method = "hamman")),
     #     mt_na_some
     # )
-    
+
     # proxy::simil is wrong
     # expect_equal(
     #     as.matrix(textstat_simil(mt, method = "simple matching")),
@@ -165,7 +165,7 @@ test_that("selection is always on columns (#1549)", {
 
 test_that("all similarities are between 0 and 1", {
     methods <- c("correlation", "cosine", "jaccard", "ejaccard",
-                 "dice", "edice", "hamman", "simple matching")
+                 "dice", "edice", "hamann", "simple matching")
     for (m in methods) {
         minmax <- range(textstat_simil(mt, method = m, margin = "documents"))
         tol <- .000001
@@ -547,4 +547,11 @@ test_that("as.data.frame works with subsetted object", {
                    document2 = factor(c(rep("R1", 5), c(rep("R3", 5))), levels = levs2))
     )
     expect_identical(levels(simildf$document1), levels(simildf$document1))
+})
+
+test_that("hamman still works", {
+    expect_identical(
+        textstat_simil(data_dfm_lbgexample, method = "hamman"),
+        textstat_simil(data_dfm_lbgexample, method = "hamann")
+    )
 })
