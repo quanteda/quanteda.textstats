@@ -107,10 +107,15 @@ test_that("test textstat_proxy simple matching similarity", {
     test_simil(test_mt, "simple matching", "features")
 })
 
-test_that("test textstat_proxy hamman similarity", {
+test_that("test textstat_proxy hamann similarity", {
     skip_if_not_installed("proxy")
     test_simil(test_mt, "hamman", "documents")
     test_simil(test_mt, "hamman", "features")
+
+    expect_identical(
+        textstat_simil(test_mt, method = "hamman"),
+        textstat_simil(test_mt, method = "hamann")
+    )
 })
 
 

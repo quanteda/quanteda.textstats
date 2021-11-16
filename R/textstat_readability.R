@@ -662,7 +662,7 @@ textstat_readability.corpus <- function(x,
         result[["ELF"]] <- W2Sy / St
 
     if ("Farr.Jenkins.Paterson" %in% measure)
-        result[["Farr.Jenkins.Paterson"]] <- -31.517 - 1.015 * W / St + 1.599 * W_1Sy / W
+        result[["Farr.Jenkins.Paterson"]] <- -31.517 - 1.015 * W / St + 1.599 * W_1Sy / W * 100
 
     if ("Flesch" %in% measure)
         result[["Flesch"]] <- 206.835 - 1.015 * W / St - 84.6 * Sy / W
