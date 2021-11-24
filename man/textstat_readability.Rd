@@ -395,8 +395,9 @@ Coleman, E.B. (1971). Developing a technology of written instruction: Some
 determiners of the complexity of prose. \emph{Verbal learning research and the
 technology of written instruction}, 155--204.
 
-Coleman, M. & Liau, T.L. (1975). \href{https://psycnet.apa.org/record/1975-22007-001}{A Computer Readability Formula Designed for Machine Scoring}.
-\emph{Journal of Applied Psychology}, 60(2), 283.
+Coleman, M. & Liau, T.L. (1975). A Computer Readability Formula Designed
+for Machine Scoring. \emph{Journal of Applied Psychology}, 60(2), 283.
+\doi{10.1037/h0076540}
 
 Dale, E. and Chall, J.S. (1948). A Formula for Predicting Readability:
 Instructions.  \emph{Educational Research
@@ -417,11 +418,12 @@ DuBay, W.H. (2004). \href{http://www.impact-information.com/impactinfo/readabili
 Fang, I. E. (1966). \href{https://www.tandfonline.com/doi/abs/10.1080/08838156609363529?journalCode=hbem19}{The "Easy listening formula"}.
 \emph{Journal of Broadcasting & Electronic Media}, 11(1), 63--68.
 
-Farr, J. N., Jenkins, J.J., & Paterson, D.G. (1951). \href{https://psycnet.apa.org/record/1952-03973-001}{Simplification of Flesch Reading Ease Formula}. \emph{Journal of
-Applied Psychology}, 35(5): 333.
+Farr, J. N., Jenkins, J.J., & Paterson, D.G. (1951). Simplification of
+Flesch Reading Ease Formula. \emph{Journal of Applied Psychology}, 35(5): 333.
+\doi{10.1037/h0057532}
 
-Flesch, R. (1948). \href{https://psycnet.apa.org/record/1949-01274-001}{A New Readability Yardstick}. \emph{Journal of
-Applied Psychology}, 32(3), 221.
+Flesch, R. (1948). A New Readability Yardstick. \emph{Journal of Applied
+Psychology}, 32(3), 221.  \doi{10.1037/h0057532}
 
 Fucks, W. (1955). Der Unterschied des Prosastils von Dichtern und anderen
 Schriftstellern. \emph{Sprachforum}, 1, 233-244.
@@ -442,10 +444,11 @@ McLaughlin, G.H. (1969). \href{https://ogg.osu.edu/media/documents/health_lit/WR
 Michalke, M. (2014). \emph{koRpus: An R Package for Text Analysis (Version 0.05-4)}.
 Available from \url{https://reaktanz.de/?c=hacking&s=koRpus}.
 
-Powers, R.D., Sumner, W.A., and Kearl, B.E. (1958). \href{https://psycnet.apa.org/record/1962-03617-001}{A Recalculation of Four Adult Readability Formulas.}. \emph{Journal of
-Educational Psychology}, 49(2), 99.
+Powers, R.D., Sumner, W.A., and Kearl, B.E. (1958). A Recalculation of
+Four Adult Readability Formulas. \emph{Journal of Educational Psychology},
+49(2), 99.  \doi{10.1037/h0043254}
 
-Senter, R. J., & Smith, E. A. (1967). \href{https://apps.dtic.mil/dtic/tr/fulltext/u2/667273.pdf}{Automated readability index.}
+Senter, R. J., & Smith, E. A. (1967). \href{https://apps.dtic.mil/sti/pdfs/AD0667273.pdf}{Automated readability index.}
 Wright-Patterson Air Force Base. Report No. AMRL-TR-6620.
 
 *Solomon, N. W. (2006). \emph{Qualitative Analysis of Media Language}. India.

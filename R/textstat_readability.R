@@ -376,9 +376,9 @@
 #'   determiners of the complexity of prose. *Verbal learning research and the
 #'   technology of written instruction*, 155--204.
 #'
-#'   Coleman, M. & Liau, T.L. (1975). [A Computer Readability Formula Designed
-#'   for Machine Scoring](https://psycnet.apa.org/record/1975-22007-001).
-#'   *Journal of Applied Psychology*, 60(2), 283.
+#'   Coleman, M. & Liau, T.L. (1975). A Computer Readability Formula Designed
+#'   for Machine Scoring. *Journal of Applied Psychology*, 60(2), 283.
+#'   \doi{10.1037/h0076540}
 #'
 #'   Dale, E. and Chall, J.S. (1948). A Formula for Predicting Readability:
 #'   Instructions.  *Educational Research
@@ -403,14 +403,12 @@
 #'   formula"](https://www.tandfonline.com/doi/abs/10.1080/08838156609363529?journalCode=hbem19).
 #'   *Journal of Broadcasting & Electronic Media*, 11(1), 63--68.
 #'
-#'   Farr, J. N., Jenkins, J.J., & Paterson, D.G. (1951). [Simplification of
-#'   Flesch Reading Ease
-#'   Formula](https://psycnet.apa.org/record/1952-03973-001). *Journal of
-#'   Applied Psychology*, 35(5): 333.
+#'   Farr, J. N., Jenkins, J.J., & Paterson, D.G. (1951). Simplification of
+#'   Flesch Reading Ease Formula. *Journal of Applied Psychology*, 35(5): 333.
+#'   \doi{10.1037/h0057532}
 #'
-#'   Flesch, R. (1948). [A New Readability
-#'   Yardstick](https://psycnet.apa.org/record/1949-01274-001). *Journal of
-#'   Applied Psychology*, 32(3), 221.
+#'   Flesch, R. (1948). A New Readability Yardstick. *Journal of Applied
+#'   Psychology*, 32(3), 221.  \doi{10.1037/h0057532}
 #'
 #'   Fucks, W. (1955). Der Unterschied des Prosastils von Dichtern und anderen
 #'   Schriftstellern. *Sprachforum*, 1, 233-244.
@@ -434,13 +432,12 @@
 #'   Michalke, M. (2014). *koRpus: An R Package for Text Analysis (Version 0.05-4)*.
 #'   Available from <https://reaktanz.de/?c=hacking&s=koRpus>.
 #'
-#'   Powers, R.D., Sumner, W.A., and Kearl, B.E. (1958). [A Recalculation of
-#'   Four Adult Readability
-#'   Formulas.](https://psycnet.apa.org/record/1962-03617-001). *Journal of
-#'   Educational Psychology*, 49(2), 99.
+#'   Powers, R.D., Sumner, W.A., and Kearl, B.E. (1958). A Recalculation of
+#'   Four Adult Readability Formulas. *Journal of Educational Psychology*,
+#'   49(2), 99.  \doi{10.1037/h0043254}
 #'
 #'   Senter, R. J., & Smith, E. A. (1967). [Automated readability
-#'   index.](https://apps.dtic.mil/dtic/tr/fulltext/u2/667273.pdf)
+#'   index.](https://apps.dtic.mil/sti/pdfs/AD0667273.pdf)
 #'   Wright-Patterson Air Force Base. Report No. AMRL-TR-6620.
 #'
 #'   *Solomon, N. W. (2006). *Qualitative Analysis of Media Language*. India.

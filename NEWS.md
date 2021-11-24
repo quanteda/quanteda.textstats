@@ -1,7 +1,8 @@
 # quanteda.textstats 0.95
 
 * Updated `textstat_simil()` for new **proxyC** version v0.2.2, which affects how similarities are returned for `NA` values.  See #45.
-* Fixed a bug in the computation of Yule's K (#46)
+* Fixed a bug in the computation of Yule's K. (#46)
+* Corrected the name of similarity method "hamann" to its correct spelling (formerly "hamman", which still works too). (#44)
 
 # quanteda.textstats 0.94.1
 
