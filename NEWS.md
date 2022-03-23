@@ -1,3 +1,7 @@
+# quanteda.textstats 0.95.1
+
+* Fixed how subsetting (`[`) works for textstat outputs, to fix #50.
+
 # quanteda.textstats 0.95
 
 * Updated `textstat_simil()` for new **proxyC** version v0.2.2, which affects how similarities are returned for `NA` values.  See #45.

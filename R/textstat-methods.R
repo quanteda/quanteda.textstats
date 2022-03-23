@@ -1,17 +1,5 @@
 # base methods --------------
 
-#' @method "[" textstat
-#' @export
-#' @noRd
-"[.textstat" <- function(x, i, j, ...) {
-    if (missing(i)) i <- seq_len(nrow(x))
-    if (missing(j)) j <- seq_len(ncol(x))
-    l <- class(x)
-    x <- as.data.frame(x)[i, j, drop = FALSE]
-    class(x) <- l
-    return(x)
-}
-
 # textstat_select ------------
 
 #' Select rows of textstat objects by glob, regex or fixed patterns
