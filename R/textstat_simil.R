@@ -383,6 +383,7 @@ textstat_dist.default <- function(x, y = NULL, selection = NULL,
 
 #' @export
 #' @importFrom quanteda featnames is.dfm
+#' @importFrom utils packageVersion
 textstat_dist.dfm <- function(x, y = NULL, selection = NULL,
                               margin = c("documents", "features"),
                               method = c("euclidean",
@@ -431,12 +432,21 @@ textstat_dist.dfm <- function(x, y = NULL, selection = NULL,
                            p = p, use_na = TRUE)
 
     if (is(temp, "dsTMatrix")) {
-        temp <- as(temp, "dsyMatrix")
-        return(new("textstat_dist_symm", as(temp, "dspMatrix"),
+        retval <- if (packageVersion("Matrix") < "1.4.2") {
+            as(as(temp, "dsyMatrix"), "dspMatrix") } else {
+                as(temp, "packedMatrix")
+            }
+        return(new("textstat_dist_symm",
+                   retval,
                    method = method, margin = margin,
                    type = "textstat_dist"))
     } else {
-        return(new("textstat_dist", as(temp, "dgeMatrix"),
+        retval <- if (packageVersion("Matrix") < "1.4.2") {
+                as(temp, "dgeMatrix") } else {
+                    as(as(temp, "generalMatrix"), "unpackedMatrix")
+                }
+        return(new("textstat_dist",
+                   retval,
                    method = method, margin = margin,
                    type = "textstat_dist"))
     }

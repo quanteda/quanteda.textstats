@@ -120,11 +120,11 @@ textstat_frequency.dfm <- function(x, n = NULL, groups = NULL,
 
     tf <- x
     tf <- dfm_group(tf, groups, ...)
-    tf <- as(tf, "dgTMatrix")
+    tf <- as(as(tf, "TsparseMatrix"), "dgTMatrix")
 
     df <- dfm_weight(x, "boolean", force = TRUE)
     df <- dfm_group(df, groups, ...)
-    df <- as(df, "dgTMatrix")
+    df <- as(as(df, "TsparseMatrix"), "dgTMatrix")
 
     result <- data.frame(
         feature = colnames(tf)[tf@j + 1L],
