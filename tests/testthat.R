@@ -6,7 +6,7 @@ library("testthat")
 library("quanteda.textstats")
 quanteda::quanteda_options(reset = TRUE)
 
-# strongly test for Matrix deprecations
-options(Matrix.warnDeprecatedCoerce = 2)
+# return a warning for all Matrix deprecations
+options(Matrix.warnDeprecatedCoerce = 1)
 
 test_check("quanteda.textstats")

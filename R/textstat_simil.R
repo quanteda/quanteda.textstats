@@ -597,7 +597,13 @@ proxy2triplet <- function(x, upper) {
 setMethod("as.matrix", "textstat_simil_sparse",
           function(x, omitted = NA, ...) {
               x[x == 0] <- omitted
-              as.matrix(as(x, "dgeMatrix"))
+              return(
+                  if (packageVersion("Matrix") < "1.4.2") {
+                      as.matrix(as(x, "dgeMatrix"))
+                  } else {
+                      as.matrix(as(x, "unpackedMatrix"))
+                  }
+              )
           })
 
 #' @export
@@ -606,8 +612,13 @@ setMethod("as.matrix", "textstat_simil_sparse",
 setMethod("as.matrix", "textstat_simil_symm_sparse",
           function(x, omitted = NA, ...) {
               x[x == 0] <- omitted
-              # as.matrix(as(x, "dgeMatrix"))
-              as.matrix(x)
+              return(
+                  if (packageVersion("Matrix") < "1.4.2") {
+                      as.matrix(as(x, "dgeMatrix"))
+                  } else {
+                      as.matrix(as(x, "unpackedMatrix"))
+                  }
+              )
           })
 
 # textstat_proxy ---------
