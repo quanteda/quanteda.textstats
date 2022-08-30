@@ -315,12 +315,19 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
 
     if (is.null(min_simil)) {
         if (is(temp, "dsTMatrix")) {
-            temp <- as(temp, "dsyMatrix")
-            return(new("textstat_simil_symm", as(temp, "dspMatrix"),
+            retval <- if (packageVersion("Matrix") < "1.4.2") {
+                as(as(temp, "dsyMatrix"), "dspMatrix") } else {
+                    as(temp, "packedMatrix")
+                }
+            return(new("textstat_simil_symm", retval,
                        method = method, margin = margin,
                        type = "textstat_simil"))
         } else {
-            return(new("textstat_simil", as(temp, "dgeMatrix"),
+            retval <- if (packageVersion("Matrix") < "1.4.2") {
+                as(temp, "dgeMatrix") } else {
+                    as(as(temp, "generalMatrix"), "unpackedMatrix")
+                }
+            return(new("textstat_simil", retval,
                        method = method, margin = margin,
                        type = "textstat_simil"))
         }
@@ -566,11 +573,13 @@ diag2na <- function(x) {
 proxy2triplet <- function(x, upper) {
     if (class(x) %in% c("textstat_dist", "textstat_simil")) {
         x <- as(x, "dgTMatrix")
+        # x <- as(x, "TsparseMatrix")
     } else {
         if (class(x) %in% c("textstat_dist_symm", "textstat_simil_symm"))
             x <- as(as(x, "dsyMatrix"), "dsTMatrix")
         if (upper)
             x <- as(x, "dgTMatrix")
+            # x <- as(x, "TsparseMatrix")
     }
     return(x)
 }
@@ -597,7 +606,8 @@ setMethod("as.matrix", "textstat_simil_sparse",
 setMethod("as.matrix", "textstat_simil_symm_sparse",
           function(x, omitted = NA, ...) {
               x[x == 0] <- omitted
-              as.matrix(as(x, "dgeMatrix"))
+              # as.matrix(as(x, "dgeMatrix"))
+              as.matrix(x)
           })
 
 # textstat_proxy ---------
