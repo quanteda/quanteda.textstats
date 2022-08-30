@@ -391,17 +391,16 @@
 #'   die Deutsche Sprache. *Zeitschrift für Entwicklungspsychologie und
 #'   Pädagogische Psychologie* 9(1), 20--28.
 #'
-#'   Danielson, W.A., & Bryan, S.D. (1963). [Computer Automation of Two
+#'   Danielson, W.A., & Bryan, S.D. (1963). Computer Automation of Two
 #'   Readability
-#'   Formulas](https://journals.sagepub.com/doi/abs/10.1177/107769906304000207).
-#'   *Journalism Quarterly*, 40(2), 201--206.
+#'   Formulas.
+#'   *Journalism Quarterly*, 40(2), 201--206. \doi{10.1177/107769906304000207}
 #'
 #'   DuBay, W.H. (2004). [*The Principles of
-#'   Readability*](http://www.impact-information.com/impactinfo/readability02.pdf).
+#'   Readability*](https://files.eric.ed.gov/fulltext/ED490073.pdf).
 #'
-#'   Fang, I. E. (1966). [The "Easy listening
-#'   formula"](https://www.tandfonline.com/doi/abs/10.1080/08838156609363529?journalCode=hbem19).
-#'   *Journal of Broadcasting & Electronic Media*, 11(1), 63--68.
+#'   Fang, I. E. (1966). The "Easy listening formula". *Journal of Broadcasting
+#'   & Electronic Media*, 11(1), 63--68.  \doi{10.1080/08838156609363529}
 #'
 #'   Farr, J. N., Jenkins, J.J., & Paterson, D.G. (1951). Simplification of
 #'   Flesch Reading Ease Formula. *Journal of Applied Psychology*, 35(5): 333.
@@ -416,9 +415,8 @@
 #'   Gunning, R. (1952). *The Technique of Clear Writing*.  New York:
 #'   McGraw-Hill.
 #'
-#'   Klare, G.R. (1975). Assessing
-#'   Readability.  *Reading Research
-#'   Quarterly*, 10(1), 62-102.  `https://www.jstor.org/stable/747086`
+#'   Klare, G.R. (1975). Assessing Readability.  *Reading Research Quarterly*,
+#'   10(1), 62-102.  \doi{10.2307/747086}
 #'
 #'   Kincaid, J. P., Fishburne Jr, R.P., Rogers, R.L., & Chissom, B.S. (1975).
 #'   [Derivation of New Readability Formulas (Automated Readability Index, FOG

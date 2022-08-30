@@ -410,13 +410,15 @@ Dickes, P. & Steiwer, L. (1977). Ausarbeitung von Lesbarkeitsformeln für
 die Deutsche Sprache. \emph{Zeitschrift für Entwicklungspsychologie und
 Pädagogische Psychologie} 9(1), 20--28.
 
-Danielson, W.A., & Bryan, S.D. (1963). \href{https://journals.sagepub.com/doi/abs/10.1177/107769906304000207}{Computer Automation of Two Readability Formulas}.
-\emph{Journalism Quarterly}, 40(2), 201--206.
+Danielson, W.A., & Bryan, S.D. (1963). Computer Automation of Two
+Readability
+Formulas.
+\emph{Journalism Quarterly}, 40(2), 201--206. \doi{10.1177/107769906304000207}
 
-DuBay, W.H. (2004). \href{http://www.impact-information.com/impactinfo/readability02.pdf}{\emph{The Principles of Readability}}.
+DuBay, W.H. (2004). \href{https://files.eric.ed.gov/fulltext/ED490073.pdf}{\emph{The Principles of Readability}}.
 
-Fang, I. E. (1966). \href{https://www.tandfonline.com/doi/abs/10.1080/08838156609363529?journalCode=hbem19}{The "Easy listening formula"}.
-\emph{Journal of Broadcasting & Electronic Media}, 11(1), 63--68.
+Fang, I. E. (1966). The "Easy listening formula". \emph{Journal of Broadcasting
+& Electronic Media}, 11(1), 63--68.  \doi{10.1080/08838156609363529}
 
 Farr, J. N., Jenkins, J.J., & Paterson, D.G. (1951). Simplification of
 Flesch Reading Ease Formula. \emph{Journal of Applied Psychology}, 35(5): 333.
@@ -431,9 +433,8 @@ Schriftstellern. \emph{Sprachforum}, 1, 233-244.
 Gunning, R. (1952). \emph{The Technique of Clear Writing}.  New York:
 McGraw-Hill.
 
-Klare, G.R. (1975). Assessing
-Readability.  \emph{Reading Research
-Quarterly}, 10(1), 62-102.  \verb{https://www.jstor.org/stable/747086}
+Klare, G.R. (1975). Assessing Readability.  \emph{Reading Research Quarterly},
+10(1), 62-102.  \doi{10.2307/747086}
 
 Kincaid, J. P., Fishburne Jr, R.P., Rogers, R.L., & Chissom, B.S. (1975).
 \href{https://stars.library.ucf.edu/istlibrary/56/}{Derivation of New Readability Formulas (Automated Readability Index, FOG count and Flesch Reading Ease Formula) for Navy Enlisted Personnel}.
