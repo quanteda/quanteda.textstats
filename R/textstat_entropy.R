@@ -27,7 +27,7 @@ textstat_entropy.dfm <- function(x, margin = c("documents", "features"), base = 
     if (margin == "features")
         x <- t(x)
     x <- dfm_weight(x, "prop")
-    x <- as(x, "dgTMatrix")
+    x <- as(x, "TsparseMatrix")
     e <- unlist(lapply(split(x@x, factor(x@i + 1L, levels = seq_len(nrow(x)))),
                        function(y) sum(y * log(y, base)) * -1), use.names = FALSE)
     result <- data.frame(rownames(x), e, stringsAsFactors = FALSE)
