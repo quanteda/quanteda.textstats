@@ -319,7 +319,9 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
                 as(as(temp, "dsyMatrix"), "dspMatrix") } else {
                     as(temp, "packedMatrix")
                 }
-            return(new("textstat_simil_symm", retval,
+            retval <- pack(as(temp, "denseMatrix"))
+            return(new("textstat_simil_symm",
+                       retval,
                        method = method, margin = margin,
                        type = "textstat_simil"))
         } else {
@@ -327,7 +329,8 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
                 as(temp, "dgeMatrix") } else {
                     as(as(temp, "generalMatrix"), "unpackedMatrix")
                 }
-            return(new("textstat_simil", retval,
+            return(new("textstat_simil",
+                       retval,
                        method = method, margin = margin,
                        type = "textstat_simil"))
         }
@@ -603,6 +606,7 @@ setMethod("as.matrix", "textstat_simil_sparse",
                   } else {
                       as.matrix(as(x, "unpackedMatrix"))
                   }
+                  # as.matrix(unpack(as(x, "denseMatrix")))
               )
           })
 
@@ -618,6 +622,7 @@ setMethod("as.matrix", "textstat_simil_symm_sparse",
                   } else {
                       as.matrix(as(x, "unpackedMatrix"))
                   }
+                  # as.matrix(unpack(as(x, "denseMatrix")))
               )
           })
 
