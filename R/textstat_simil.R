@@ -566,7 +566,7 @@ diag2na <- function(x) {
             i = i, j = j, x = NA,
             dims = dim(x), dimnames = dimnames(x)
         )
-        x <- as(x, "dgTMatrix")
+        x <- as(x, "TsparseMatrix") # as(x, "dgTMatrix")
     } else {
         stop("x must be a triplet matrix")
     }
@@ -575,14 +575,25 @@ diag2na <- function(x) {
 
 proxy2triplet <- function(x, upper) {
     if (class(x) %in% c("textstat_dist", "textstat_simil")) {
-        x <- as(x, "dgTMatrix")
-        # x <- as(x, "TsparseMatrix")
+        x <- as(x, "TsparseMatrix")
+        # x <- as(x, "dgTMatrix")
     } else {
-        if (class(x) %in% c("textstat_dist_symm", "textstat_simil_symm"))
-            x <- as(as(x, "dsyMatrix"), "dsTMatrix")
-        if (upper)
-            x <- as(x, "dgTMatrix")
-            # x <- as(x, "TsparseMatrix")
+        if (class(x) %in% c("textstat_dist_symm", "textstat_simil_symm")) {
+            # x <- as(x, "dsTMatrix")
+            x <- if (packageVersion("Matrix") < "1.4.2") {
+                    # as(as(x, "dsyMatrix"), "dsTMatrix")
+                    as(unpack(x), "TsparseMatrix")
+                } else {
+                    as(unpack(x), "TsparseMatrix")
+                    # as(as(x, "unpackedMatrix"), "TsparseMatrix")
+                }
+        }
+        if (upper) {
+            x <- if (packageVersion("Matrix") < "1.4.2") {
+                as(x, "dgTMatrix") } else {
+                    as(as(x, "TsparseMatrix"), "generalMatrix")
+                }
+        }
     }
     return(x)
 }

@@ -495,9 +495,12 @@ test_that("diag2na is working", {
 
     mat5 <- Matrix::Matrix(rep(0, 9), nrow = 3,
                            dimnames = list(c("a", "b", "c"), c("b", "c", "d")))
-    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(as(mat5, "TsparseMatrix"), "dgTMatrix"))),
+    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(as(mat5, "TsparseMatrix"), "generalMatrix"))),
                  matrix(c(0, NA, 0, 0, 0, NA, 0, 0, 0), nrow = 3,
                         dimnames = list(c("a", "b", "c"), c("b", "c", "d"))))
+    # expect_equal(as.matrix(quanteda.textstats:::diag2na(as(as(mat5, "TsparseMatrix"), "dgTMatrix"))),
+    #              matrix(c(0, NA, 0, 0, 0, NA, 0, 0, 0), nrow = 3,
+    #                     dimnames = list(c("a", "b", "c"), c("b", "c", "d"))))
 
 })
 
