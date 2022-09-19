@@ -38,7 +38,7 @@ install.packages("quanteda.textstats")
 Or for the latest development version:
 ```{r eval = FALSE}
 # devtools package required to install quanteda from Github 
-devtools::install_github("quanteda/quanteda.textstats") 
+remotes::install_github("quanteda/quanteda.textstats") 
 ```
 
 Because this compiles some C++ and Fortran source code, you will need to have installed the appropriate compilers.

@@ -5,7 +5,7 @@
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
-[![](https://img.shields.io/badge/devel%20version-0.95.1-royalblue.svg)](https://github.com/quanteda/quanteda.textstats)
+[![](https://img.shields.io/badge/devel%20version-0.96-royalblue.svg)](https://github.com/quanteda/quanteda.textstats)
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textstats?color=orange)](https://CRAN.R-project.org/package=quanteda.textstats)
@@ -32,7 +32,7 @@ Or for the latest development version:
 
 ``` r
 # devtools package required to install quanteda from Github 
-devtools::install_github("quanteda/quanteda.textstats") 
+remotes::install_github("quanteda/quanteda.textstats") 
 ```
 
 Because this compiles some C++ and Fortran source code, you will need to

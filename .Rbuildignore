@@ -7,3 +7,4 @@
 ^\.github$
 ^CRAN-RELEASE$
 ^revdep$
+^CRAN-SUBMISSION$

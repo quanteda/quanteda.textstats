@@ -1,9 +1,6 @@
-# quanteda.textstats 0.95.2
+# quanteda.textstats 0.96
 
-* Fixes for compatibility with Matrix 1.4.2.
-
-# quanteda.textstats 0.95.1
-
+* Fixes for compatibility with Matrix >= 1.5. (#54)
 * Fixed how subsetting (`[`) works for textstat outputs, to fix #50.
 
 # quanteda.textstats 0.95
