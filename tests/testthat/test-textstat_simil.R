@@ -472,32 +472,35 @@ test_that("diag2na is working", {
 
     mat1 <- Matrix::Matrix(1:9, nrow = 3,
                            dimnames = list(c("a", "b", "c"), c("b", "c", "d")))
-    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(mat1, "dgTMatrix"))),
+    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(as(mat1, "TsparseMatrix"), "dgTMatrix"))),
                  matrix(c(1, NA, 3, 4, 5, NA, 7, 8, 9), nrow = 3,
                         dimnames = list(c("a", "b", "c"), c("b", "c", "d"))))
 
     mat2 <- Matrix::Matrix(1:9, nrow = 3,
                            dimnames = list(c("a", "b", "c"), c("d", "c", "b")))
-    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(mat2, "dgTMatrix"))),
+    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(as(mat2, "TsparseMatrix"), "dgTMatrix"))),
                  matrix(c(1, 2, 3, 4, 5, NA, 7, NA, 9), nrow = 3,
                         dimnames = list(c("a", "b", "c"), c("d", "c", "b"))))
 
     mat3 <- Matrix::Matrix(1:6, nrow = 3,
                            dimnames = list(c("a", "b", "c"), c("c", "b")))
-    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(mat3, "dgTMatrix"))),
+    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(as(mat3, "TsparseMatrix"), "dgTMatrix"))),
                  matrix(c(1, 2, NA, 4, NA, 6), nrow = 3,
                         dimnames = list(c("a", "b", "c"), c("c", "b"))))
 
     mat4 <- Matrix::forceSymmetric(mat1)
-    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(mat4, "dsTMatrix"))),
+    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(as(mat4, "TsparseMatrix"), "dsTMatrix"))),
                  matrix(c(NA, 4, 7, 4, NA, 8, 7, 8, NA), nrow = 3,
                         dimnames = list(c("b", "c", "d"), c("b", "c", "d"))))
 
     mat5 <- Matrix::Matrix(rep(0, 9), nrow = 3,
                            dimnames = list(c("a", "b", "c"), c("b", "c", "d")))
-    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(mat5, "dgTMatrix"))),
+    expect_equal(as.matrix(quanteda.textstats:::diag2na(as(as(mat5, "TsparseMatrix"), "generalMatrix"))),
                  matrix(c(0, NA, 0, 0, 0, NA, 0, 0, 0), nrow = 3,
                         dimnames = list(c("a", "b", "c"), c("b", "c", "d"))))
+    # expect_equal(as.matrix(quanteda.textstats:::diag2na(as(as(mat5, "TsparseMatrix"), "dgTMatrix"))),
+    #              matrix(c(0, NA, 0, 0, 0, NA, 0, 0, 0), nrow = 3,
+    #                     dimnames = list(c("a", "b", "c"), c("b", "c", "d"))))
 
 })
 

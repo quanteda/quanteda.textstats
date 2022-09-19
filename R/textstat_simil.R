@@ -315,12 +315,22 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
 
     if (is.null(min_simil)) {
         if (is(temp, "dsTMatrix")) {
-            temp <- as(temp, "dsyMatrix")
-            return(new("textstat_simil_symm", as(temp, "dspMatrix"),
+            retval <- if (packageVersion("Matrix") < "1.4.2") {
+                as(as(temp, "dsyMatrix"), "dspMatrix") } else {
+                    as(temp, "packedMatrix")
+                }
+            retval <- pack(as(temp, "denseMatrix"))
+            return(new("textstat_simil_symm",
+                       retval,
                        method = method, margin = margin,
                        type = "textstat_simil"))
         } else {
-            return(new("textstat_simil", as(temp, "dgeMatrix"),
+            retval <- if (packageVersion("Matrix") < "1.4.2") {
+                as(temp, "dgeMatrix") } else {
+                    as(as(temp, "generalMatrix"), "unpackedMatrix")
+                }
+            return(new("textstat_simil",
+                       retval,
                        method = method, margin = margin,
                        type = "textstat_simil"))
         }
@@ -383,6 +393,7 @@ textstat_dist.default <- function(x, y = NULL, selection = NULL,
 
 #' @export
 #' @importFrom quanteda featnames is.dfm
+#' @importFrom utils packageVersion
 textstat_dist.dfm <- function(x, y = NULL, selection = NULL,
                               margin = c("documents", "features"),
                               method = c("euclidean",
@@ -431,12 +442,21 @@ textstat_dist.dfm <- function(x, y = NULL, selection = NULL,
                            p = p, use_na = TRUE)
 
     if (is(temp, "dsTMatrix")) {
-        temp <- as(temp, "dsyMatrix")
-        return(new("textstat_dist_symm", as(temp, "dspMatrix"),
+        retval <- if (packageVersion("Matrix") < "1.4.2") {
+            as(as(temp, "dsyMatrix"), "dspMatrix") } else {
+                as(temp, "packedMatrix")
+            }
+        return(new("textstat_dist_symm",
+                   retval,
                    method = method, margin = margin,
                    type = "textstat_dist"))
     } else {
-        return(new("textstat_dist", as(temp, "dgeMatrix"),
+        retval <- if (packageVersion("Matrix") < "1.4.2") {
+                as(temp, "dgeMatrix") } else {
+                    as(as(temp, "generalMatrix"), "unpackedMatrix")
+                }
+        return(new("textstat_dist",
+                   retval,
                    method = method, margin = margin,
                    type = "textstat_dist"))
     }
@@ -546,7 +566,7 @@ diag2na <- function(x) {
             i = i, j = j, x = NA,
             dims = dim(x), dimnames = dimnames(x)
         )
-        x <- as(x, "dgTMatrix")
+        x <- as(x, "TsparseMatrix") # as(x, "dgTMatrix")
     } else {
         stop("x must be a triplet matrix")
     }
@@ -555,12 +575,25 @@ diag2na <- function(x) {
 
 proxy2triplet <- function(x, upper) {
     if (class(x) %in% c("textstat_dist", "textstat_simil")) {
-        x <- as(x, "dgTMatrix")
+        x <- as(x, "TsparseMatrix")
+        # x <- as(x, "dgTMatrix")
     } else {
-        if (class(x) %in% c("textstat_dist_symm", "textstat_simil_symm"))
-            x <- as(as(x, "dsyMatrix"), "dsTMatrix")
-        if (upper)
-            x <- as(x, "dgTMatrix")
+        if (class(x) %in% c("textstat_dist_symm", "textstat_simil_symm")) {
+            # x <- as(x, "dsTMatrix")
+            x <- if (packageVersion("Matrix") < "1.4.2") {
+                    # as(as(x, "dsyMatrix"), "dsTMatrix")
+                    as(unpack(x), "TsparseMatrix")
+                } else {
+                    as(unpack(x), "TsparseMatrix")
+                    # as(as(x, "unpackedMatrix"), "TsparseMatrix")
+                }
+        }
+        if (upper) {
+            x <- if (packageVersion("Matrix") < "1.4.2") {
+                as(x, "dgTMatrix") } else {
+                    as(as(x, "TsparseMatrix"), "generalMatrix")
+                }
+        }
     }
     return(x)
 }
@@ -578,7 +611,14 @@ proxy2triplet <- function(x, upper) {
 setMethod("as.matrix", "textstat_simil_sparse",
           function(x, omitted = NA, ...) {
               x[x == 0] <- omitted
-              as.matrix(as(x, "dgeMatrix"))
+              return(
+                  if (packageVersion("Matrix") < "1.4.2") {
+                      as.matrix(as(x, "dgeMatrix"))
+                  } else {
+                      as.matrix(as(x, "unpackedMatrix"))
+                  }
+                  # as.matrix(unpack(as(x, "denseMatrix")))
+              )
           })
 
 #' @export
@@ -587,7 +627,14 @@ setMethod("as.matrix", "textstat_simil_sparse",
 setMethod("as.matrix", "textstat_simil_symm_sparse",
           function(x, omitted = NA, ...) {
               x[x == 0] <- omitted
-              as.matrix(as(x, "dgeMatrix"))
+              return(
+                  if (packageVersion("Matrix") < "1.4.2") {
+                      as.matrix(as(x, "dgeMatrix"))
+                  } else {
+                      as.matrix(as(x, "unpackedMatrix"))
+                  }
+                  # as.matrix(unpack(as(x, "denseMatrix")))
+              )
           })
 
 # textstat_proxy ---------

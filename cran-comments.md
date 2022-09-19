@@ -1,8 +1,8 @@
 # Submission notes
 
 Purpose:
-* To fix errors happening on the checks for 0.94.1 related to empty dfms.
-* To implement other minor bug fixes detailed in NEWS.md.
+
+* To ensure compatibility with forthcoming Matrix 1.4.2.
 
 ## Test environments
 
@@ -14,23 +14,7 @@ Purpose:
 
 ## R CMD check results
 
-No ERRORs, NOTEs, or WARNINGs, except:
-
-Found the following (possibly) invalid URLs:
-  URL: https://doi.org/10.1037/h0043254
-    From: man/textstat_readability.Rd
-    Status: 400
-    Message: Bad Request
-  URL: https://doi.org/10.1037/h0057532
-    From: man/textstat_readability.Rd
-    Status: 400
-    Message: Bad Request
-  URL: https://doi.org/10.1037/h0076540
-    From: man/textstat_readability.Rd
-    Status: 400
-    Message: Bad Request
-    
-These seem to be an issue with CRAN checks, not with the URLs, since I used \doi{} for these.  I contacted Uwe Ligges before submitting, and he advised me to ignore these.
+No ERRORs, NOTEs, or WARNINGs.
 
 ## Downstream dependencies
 
