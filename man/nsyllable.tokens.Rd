@@ -6,6 +6,7 @@
 \usage{
 \method{nsyllable}{tokens}(
   x,
+  language = "en",
   syllable_dictionary = nsyllable::data_syllables_en,
   use.names = FALSE
 )
@@ -15,6 +16,10 @@
 syllables will be counted.  This will count all syllables in a character
 vector without regard to separating tokens, so it is recommended that x be
 individual terms.}
+
+\item{language}{specify the language for syllable counts by \href{https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes}{ISO 639-1} code. The
+default is English, using the data object \code{\link[nsyllable]{data_syllables_en}}, an English
+pronunciation dictionary from CMU.}
 
 \item{syllable_dictionary}{optional named integer vector of syllable counts
 where the names are lower case tokens.  This can be used to override the

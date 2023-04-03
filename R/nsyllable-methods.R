@@ -13,7 +13,8 @@
 #' @importFrom nsyllable nsyllable
 #' @export
 #' @keywords internal
-nsyllable.tokens <- function(x, syllable_dictionary = nsyllable::data_syllables_en,
+nsyllable.tokens <- function(x, language = "en",
+                             syllable_dictionary = nsyllable::data_syllables_en,
                              use.names = FALSE) {
     types <- types(x)
     if (attr(x, "padding")) {
