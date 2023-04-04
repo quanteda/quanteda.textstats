@@ -5,7 +5,7 @@
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
-[![](https://img.shields.io/badge/devel%20version-0.96-royalblue.svg)](https://github.com/quanteda/quanteda.textstats)
+[![](https://img.shields.io/badge/devel%20version-0.96.2-royalblue.svg)](https://github.com/quanteda/quanteda.textstats)
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textstats?color=orange)](https://CRAN.R-project.org/package=quanteda.textstats)
@@ -13,6 +13,9 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textstats?colo
 status](https://github.com/quanteda/quanteda.textstats/workflows/R-CMD-check/badge.svg)](https://github.com/quanteda/quanteda.textstats/actions)
 [![codecov](https://codecov.io/gh/quanteda/quanteda.textstats/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/quanteda.textstats)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.00774/status.svg)](https://doi.org/10.21105/joss.00774)
+[![Codecov test
+coverage](https://codecov.io/gh/quanteda/quanteda.textstats/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/quanteda.textstats?branch=master)
+[![R-CMD-check](https://github.com/quanteda/quanteda.textstats/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/quanteda/quanteda.textstats/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## About
