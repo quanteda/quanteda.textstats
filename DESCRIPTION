@@ -30,13 +30,14 @@ Imports:
 LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
 Suggests:
     entropy,
-    ExPosition,     
+    ExPosition,
     proxy,
     rmarkdown,
     spelling,
     svs,
     testthat,
-    knitr
+    knitr,
+    covr
 URL: https://quanteda.io
 Encoding: UTF-8
 BugReports: https://github.com/quanteda/quanteda.textstats/issues

@@ -8,3 +8,4 @@
 ^CRAN-RELEASE$
 ^revdep$
 ^CRAN-SUBMISSION$
+^codecov\.yml$
