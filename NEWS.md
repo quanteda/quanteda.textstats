@@ -1,5 +1,6 @@
 # quanteda.textstats 0.96
 
+* Fixes for C++ header compatibility for existing **quanteda** 3.x and the forthcoming 4.0 version.
 * Fixes for compatibility with Matrix >= 1.5. (#54)
 * Fixed how subsetting (`[`) works for textstat outputs, to fix #50.
 
