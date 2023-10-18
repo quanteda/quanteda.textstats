@@ -4,8 +4,8 @@
 using namespace quanteda;
 
 #if QUANTEDA_USE_TBB
-typedef tbb::concurrent_vector<std::pair<Ngram, unsigned int>> VecPair;
-typedef tbb::concurrent_unordered_map<Ngram, std::pair<unsigned int, unsigned int>, hash_ngram, equal_ngram> MapNgramsPair;
+typedef tbb::concurrent_vector<std::pair<Ngram, UintParam>> VecPair;
+typedef tbb::concurrent_unordered_map<Ngram, std::pair<unsigned int, UintParam>, hash_ngram, equal_ngram> MapNgramsPair;
 #else
 typedef std::vector<std::pair<Ngram, unsigned int>> VecPair;
 typedef std::unordered_map<Ngram, std::pair<unsigned int, unsigned int>, hash_ngram, equal_ngram> MapNgramsPair;
