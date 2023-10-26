@@ -2,12 +2,11 @@
 
 Purpose:
 
-* To fix a C++ header issue for compability with a forthcoming **quanteda** 4.0 major release.
+* To fix packageVersion() calling a numeric instead of character, following a note from Kurt Hornik.
 
 ## Test environments
 
-* local macOS 13.2.1, R 4.3.0
-* Ubuntu 20.04 LTS, R 4.3.0
+* local macOS 13.5, R 4.3.1
 * Windows release via devtools::check_win_release()
 * Windows devel via devtools::check_win_devel()
 * Windows old-release via devtools::check_win_oldrelease()

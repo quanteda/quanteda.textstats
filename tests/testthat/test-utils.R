@@ -5,7 +5,7 @@ test_that("pattern2list is working with collocations", {
     toks <- quanteda::tokens(txt)
     type <- quanteda::types(toks)
     col <- textstat_collocations(toks, size = 2:3)
-    ids <- if (packageVersion("quanteda") < 2.9) {
+    ids <- if (packageVersion("quanteda") < "2.9") {
         quanteda:::pattern2list(col, type, "fixed", TRUE)
     } else {
         quanteda::object2id(col, type, "fixed", TRUE)

@@ -417,7 +417,7 @@ compute_mattr <- function(x, MATTR_window = 100L) {
     if (MATTR_window < 1)
         stop("MATTR_window must be positive")
     if (any(ntoken(x) < MATTR_window)) {
-        MATTR_window <- max(ntoken(x))
+        MATTR_window <- min(ntoken(x))
         warning("MATTR_window exceeds some documents' token lengths, resetting to ",
                 MATTR_window, call. = FALSE)
     }
@@ -435,13 +435,13 @@ compute_mattr <- function(x, MATTR_window = 100L) {
 #'
 #' Compute the Mean Segmental Type-Token Ratio (Johnson 1944) for a tokens input.
 #' @param x input [tokens]
-#' @param segment_size the size of the segment
+#' @inheritParams textstat_lexdiv
 #' @keywords internal textstat lexdiv
 compute_msttr <- function(x, MSTTR_segment) {
     if (MSTTR_segment < 1)
         stop("MSTTR_segment must be positive")
     if (any(ntoken(x) < MSTTR_segment)) {
-        MSTTR_segment <- max(ntoken(x))
+        MSTTR_segment <- min(ntoken(x))
         warning("MSTTR_segment exceeds some documents' token lengths, resetting to ",
                 MSTTR_segment)
     }
