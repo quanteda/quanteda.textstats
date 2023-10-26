@@ -3,8 +3,13 @@
 #include <bitset>
 using namespace quanteda;
 
+#ifdef QUANTEDA
+float GLOBAL_PATTERN_MAX_LOAD_FACTOR = 0.05;
+float GLOBAL_NGRAMS_MAX_LOAD_FACTOR = 0.25;
+#endif
+
 #if QUANTEDA_USE_TBB
-typedef tbb::atomic<unsigned int> UintAtomic; // changed to std::atomic<unsigned int> for TBB 2021
+typedef tbb::atomic<unsigned int> UintAtomic; // NOTE: changed to std::atomic<unsigned int> for TBB 2021
 typedef tbb::concurrent_vector<std::pair<Ngram, UintAtomic>> VecPair;
 typedef tbb::concurrent_unordered_map<Ngram, std::pair<UintAtomic, UintAtomic>, hash_ngram, equal_ngram> MapNgramsPair;
 #else
