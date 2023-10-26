@@ -1,4 +1,4 @@
-library("quanteda")
+library(quanteda)
 
 test_that("readability works: basic", {
     txt <- "This was adjusted by a prolongation of the period of reimbursement in nature of a new loan
@@ -64,15 +64,16 @@ health during pregnancy, and the special care your doctor gave you before the
 baby was born. Other things important to your child's health are food,
 clothes, baths, sleep, and habit training. A baby needs a clean, happy place
 to live, and he must be kept from having any sickness that can be prevented."
-    unfamiliar_words <- quanteda::tokens_remove(quanteda::tokens(dc1, remove_punct = TRUE),
-                                       pattern = quanteda::char_tolower(data_char_wordlists$dalechall),
+    unfamiliar_words <- tokens_remove(tokens(dc1, remove_punct = TRUE),
+                                       pattern = char_tolower(data_char_wordlists$dalechall),
                                        case_insensitive = TRUE) %>%
         as.character()
     expect_identical(
         unique(unfamiliar_words),
         c("necessary", "foundation", "affect", "pregnancy", "special", "prevented")
     )
-    expect_equivalent(quanteda::ntoken(dc1, remove_punct = TRUE), 132)
+
+    expect_equivalent(ntoken(tokens(dc1, remove_punct = TRUE)), 132)
     expect_equal(textstat_readability(dc1, "Dale.Chall.old")$Dale.Chall.old + 3.6365, 5.3684, tolerance = .1)
 
     dc2 <- "Diphtheria used to kill many babies. Today no child need die of
@@ -85,19 +86,19 @@ Your doctor will tell you that your baby should have this protection before
 his first birthday. Six months after the last injection of toxoid, the
 physician may test your baby to see if another dose of toxoid is necessary.
 Before the child enters school an extra shot of toxoid is often given."
-    unfamiliar_words <- quanteda::tokens_remove(quanteda::tokens(dc2, remove_punct = TRUE),
-                                       pattern = quanteda::char_tolower(data_char_wordlists$dalechall),
+    unfamiliar_words <- tokens_remove(tokens(dc2, remove_punct = TRUE),
+                                       pattern = char_tolower(data_char_wordlists$dalechall),
                                        case_insensitive = TRUE) %>%
         as.character()
     expect_identical(
-        unique(quanteda::char_tolower(unfamiliar_words)),
+        unique(char_tolower(unfamiliar_words)),
         c("diphtheria", "diseases", "treatment", "prevention", "disease",
           "immunization", "physicians", "usually", "injections", "doses",
           "toxoid", "protection", "injection", "physician", "dose", "necessary")
     )
     expect_identical(length(unfamiliar_words), 20L)
-    expect_equivalent(quanteda::ntoken(dc2, remove_punct = TRUE), 131)
-    expect_equivalent(quanteda::nsentence(dc2), 9)
+    expect_equivalent(ntoken(tokens(dc2, remove_punct = TRUE)), 131)
+    expect_equivalent(ntoken(tokens(dc2, what = "sentence")), 9)
     expect_equal(textstat_readability(dc2, "Dale.Chall.old")$Dale.Chall.old, 6.7490, tolerance = .02)
 
     dc3 <- "The germs that cause tuberculosis can enter the baby's body through
@@ -108,18 +109,18 @@ dishes, his toys. The baby's hands may carry germs from soiled objects to his
 mouth. Kissing is one way of spreading TB as well as other germs. Tuberculosis
 of the bones or joints or of certain organs of the body besides the lungs can
 come to the bottle-fed baby in milk which has not been pasteurized or boiled."
-    unfamiliar_words <- quanteda::tokens_remove(quanteda::tokens(dc3, remove_punct = TRUE),
-                                       pattern = quanteda::char_tolower(data_char_wordlists$dalechall),
+    unfamiliar_words <- tokens_remove(tokens(dc3, remove_punct = TRUE),
+                                       pattern = char_tolower(data_char_wordlists$dalechall),
                                        case_insensitive = TRUE) %>%
         as.character()
     expect_identical(
-        unique(quanteda::char_tolower(unfamiliar_words)),
+        unique(char_tolower(unfamiliar_words)),
         c("germs", "tuberculosis", "spray", "moisture", "active", "germ-filled",
           "objects", "tb", "joints", "lungs", "bottle-fed", "pasteurized")
     )
     expect_equal(length(unfamiliar_words), 17, tolerance = 1)
-    expect_equivalent(quanteda::ntoken(dc3, remove_punct = TRUE), 111)
-    expect_equivalent(quanteda::nsentence(dc3), 6)
+    expect_equivalent(ntoken(tokens(dc3, remove_punct = TRUE)), 111)
+    expect_equivalent(ntoken(tokens(dc3, what = "sentence")), 6)
     expect_equal(textstat_readability(dc3, "Dale.Chall.old")$Dale.Chall.old, 6.9474, tolerance = .01)
 })
 
@@ -169,7 +170,7 @@ test_that("man/textstat_readability returns NA for empty documents", {
     txt <- c(d1 = "The cat in the hat at green ham and eggs.",
              d2 = "",
              d3 = "Once upon a time.")
-    corp <- quanteda::corpus(txt)
+    corp <- corpus(txt)
 
     expect_equivalent(
         textstat_readability(txt, "Flesch"),

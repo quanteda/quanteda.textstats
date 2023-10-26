@@ -264,13 +264,13 @@ test_that("textstat_keyness returns raw frequency counts", {
                    d2 = "a a b c c d d d d e f h")))
 
     expect_equivalent(textstat_keyness(dfmt, measure = "chi2", sort = FALSE)[, c(4, 5)],
-                      suppressWarnings(as.data.frame(t(dfmt), document = NULL)))
+                      as.data.frame.matrix(t(as.matrix(dfmt))))
 
     expect_equivalent(textstat_keyness(dfmt, measure = "exact", sort = FALSE)[, c(4, 5)],
-                      suppressWarnings(as.data.frame(t(dfmt), document = NULL)))
+                      as.data.frame.matrix(t(as.matrix(dfmt))))
 
     expect_equivalent(textstat_keyness(dfmt, measure = "lr", sort = FALSE)[, c(4, 5)],
-                      suppressWarnings(as.data.frame(t(dfmt), document = NULL)))
+                      as.data.frame.matrix(t(as.matrix(dfmt))))
 })
 
 test_that("textstat_keyness returns correct pmi", {
