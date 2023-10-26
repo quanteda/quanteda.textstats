@@ -41,22 +41,10 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// qatd_cpp_set_meta
-void qatd_cpp_set_meta(RObject object_, List meta_);
-RcppExport SEXP _quanteda_textstats_qatd_cpp_set_meta(SEXP object_SEXP, SEXP meta_SEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< RObject >::type object_(object_SEXP);
-    Rcpp::traits::input_parameter< List >::type meta_(meta_SEXP);
-    qatd_cpp_set_meta(object_, meta_);
-    return R_NilValue;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_quanteda_textstats_qatd_cpp_collocations", (DL_FUNC) &_quanteda_textstats_qatd_cpp_collocations, 7},
     {"_quanteda_textstats_qatd_cpp_keyness", (DL_FUNC) &_quanteda_textstats_qatd_cpp_keyness, 3},
-    {"_quanteda_textstats_qatd_cpp_set_meta", (DL_FUNC) &_quanteda_textstats_qatd_cpp_set_meta, 2},
     {NULL, NULL, 0}
 };
 
