@@ -533,7 +533,7 @@ textstat_readability.corpus <- function(x,
     }
 
     # get sentence lengths - BEFORE lower-casing
-    n_sent <- nsentence(x)
+    n_sent <- ntoken(tokens(x, what = "sentence"))
 
     # get the word length and syllable info for use in computing quantities
     x <- char_tolower(x)
