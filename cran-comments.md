@@ -2,11 +2,14 @@
 
 Purpose:
 
-* To fix packageVersion() calling a numeric instead of character, following a note from Kurt Hornik.
+* To fix a C++ issue with TBB that was causing an installation failure on 
+  downstream packages on ubuntu-devel environments.
+* To remove some C++ code for similarity computations that is not needed 
+  because it is contained in the **proxy** library.
 
 ## Test environments
 
-* local macOS 13.5, R 4.3.1
+* local macOS 13.6, R 4.3.1
 * Windows release via devtools::check_win_release()
 * Windows devel via devtools::check_win_devel()
 * Windows old-release via devtools::check_win_oldrelease()
