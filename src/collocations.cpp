@@ -217,14 +217,14 @@ void estimates_lambda2(std::size_t i,
  * @param nested estimate parameters for nested collocations
  */
 // [[Rcpp::export]]
-DataFrame qatd_cpp_collocations(const List &texts_,
-                                const CharacterVector &types_,
-                                const IntegerVector &words_ignore_,
-                                const unsigned int count_min,
-                                const IntegerVector sizes_,
-                                const String &method,
-                                const double smoothing,
-                                const int thread = 1){
+DataFrame cpp_collocations(const List &texts_,
+                           const CharacterVector &types_,
+                           const IntegerVector &words_ignore_,
+                           const unsigned int count_min,
+                           const IntegerVector sizes_,
+                           const String &method,
+                           const double smoothing,
+                           const int thread = 1){
 
     Texts texts = as<Texts>(texts_);
     std::vector<unsigned int> sizes = as< std::vector<unsigned int> >(sizes_);

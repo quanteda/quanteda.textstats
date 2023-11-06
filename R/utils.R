@@ -21,3 +21,11 @@ check_dots <- function(..., method = NULL) {
         warning(arg, " argument is not used.", call. = FALSE)
     }
 }
+
+get_threads <- function() {
+    value <- getOption("quanteda_threads", -1L)
+    if (!is.integer(value) || length(value) != 1L)
+        stop("Invalid value of threads in quanteda options")
+    return(value)
+}
+
