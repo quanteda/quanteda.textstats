@@ -140,7 +140,6 @@ textstat_collocations.tokens <- function(x, method = "lambda",
     x <- as.tokens(x)
     method <- match.arg(method, c("lambda"))
 
-
     if (any(size == 1))
         stop("Collocation sizes must be larger than 1")
     if (any(size > 5))
@@ -159,9 +158,9 @@ textstat_collocations.tokens <- function(x, method = "lambda",
     types <- types(x)
     id_ignore <- unlist(pattern2id("^\\p{P}+$", types, "regex", FALSE), use.names = FALSE)
     if (is.null(id_ignore)) id_ignore <- integer()
-    result <- qatd_cpp_collocations(x, types, id_ignore, min_count, size,
-                                    if (method == "lambda1") "lambda1" else "lambda",
-                                    smoothing)
+    result <- cpp_collocations(x, types, id_ignore, min_count, size,
+                               if (method == "lambda1") "lambda1" else "lambda",
+                               smoothing, get_threads())
 
     # compute z for lambda methods
     result$z <- result$lambda / result$sigma

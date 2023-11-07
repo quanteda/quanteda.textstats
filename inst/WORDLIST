@@ -125,7 +125,6 @@ Zeitschrift
 Zusammenhang
 anderen
 angewandte
-codecov
 cruft
 des
 deutsche
@@ -134,18 +133,15 @@ dfm's
 dfms
 dist
 docvars
-doi
 eines
 für
 gfortran
 hamann
 hamman
-io
 keyness
 koRpus
 macOS
 nsyllable
-org
 proxyC
 puncts
 quanteda
@@ -154,6 +150,7 @@ rix
 sents
 simil
 sy
+tbb
 textstat
 textstats
 th
