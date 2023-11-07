@@ -2,10 +2,7 @@
 
 Purpose:
 
-* To fix a C++ issue with TBB that was causing an installation failure on 
-  downstream packages on ubuntu-devel environments.
-* To remove some C++ code for similarity computations that is not needed 
-  because it is contained in the **proxy** library.
+* To update the C++ code to better call the tbb library for parallel computing.
 
 ## Test environments
 
