@@ -123,8 +123,8 @@
 #'   \item{`"Farr.Jenkins.Paterson"`:}{Farr-Jenkins-Paterson's
 #'   Simplification of Flesch's Reading Ease Score (Farr, Jenkins and Paterson 1951). \deqn{
 #'    -31.517 - (1.015 \times ASL) + (1.599 \times
-#'   \frac{n_{wsy=1}}{n_{w}}}{ -31.517
-#'   - (1.015 * ASL) + (1.599 * Nwsy1 / Nw)}
+#'   \frac{n_{wsy=1}}{n_{w}})}{ -31.517
+#'   - (1.015 * ASL) + (1.599 * Nwsy1 / Nw )}
 #'
 #'   where \eqn{n_{wsy=1}} = Nwsy1 = the number of one-syllable words.}
 #'
