@@ -148,7 +148,7 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
             warning("correction is always none for pmi")
         result <- data.frame(
             feature = featnames(temp),
-            stat = cpp_keyness(temp, measure, correction, get_threads()),
+            stat = cpp_keyness(temp, measure, correction, quanteda:::get_threads()),
             p = NA,
             n_target = as.vector(temp[1, ]),
             n_reference = as.vector(temp[2, ]),
