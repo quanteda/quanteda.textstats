@@ -19,15 +19,14 @@ License: GPL-3
 Depends:
     R (>= 3.5.0)
 Imports:
-    quanteda,
+    quanteda (>= 4.0),
     Matrix (>= 1.5-0),
     methods,
     nsyllable,
     proxyC (>= 0.1.4),
     Rcpp (>= 0.12.12),
-    RcppParallel,
     stringi
-LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.7.600.1.0), quanteda
+LinkingTo: Rcpp, RcppArmadillo (>= 0.7.600.1.0), quanteda
 Suggests:
     entropy,
     ExPosition,
