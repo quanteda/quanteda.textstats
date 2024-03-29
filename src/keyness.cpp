@@ -101,42 +101,11 @@ inline double pmi_lambda(
 
 }
 
-struct KeynessWorker : public Worker {
-    const arma::sp_mat &mt;
-    const arma::colvec &margin;
-    const std::string &measure;
-    const std::string &correct;
-    DoubleParams& stats;
-
-    KeynessWorker(
-        const arma::sp_mat &mt_, const arma::colvec &margin_,
-        const std::string &measure_, const std::string &correct_, DoubleParams &stats_
-    ) : mt(mt_), margin(margin_), measure(measure_), correct(correct_), stats(stats_) {}
-
-    void operator() (std::size_t begin, std::size_t end) {
-
-        if (measure == "chi2") {
-            for (std::size_t i = begin; i < end; i++) {
-                stats[i] = chisq_lambda(mt(0, i), mt(1, i), margin, correct);
-            }
-        } else if (measure == "lr") {
-            for (std::size_t i = begin; i < end; i++) {
-                stats[i] = lr_lambda(mt(0, i), mt(1, i), margin, correct);
-            }
-        } else if (measure == "pmi") {
-            for (std::size_t i = begin; i < end; i++) {
-                stats[i] = pmi_lambda(mt(0, i), mt(1, i), margin, false);
-            }
-        }
-    }
-};
-
 // [[Rcpp::export]]
-Rcpp::NumericVector qatd_cpp_keyness(
-    arma::sp_mat &mt,
-    const std::string measure,
-    const std::string correct
-) {
+Rcpp::NumericVector cpp_keyness(arma::sp_mat &mt,
+                                const std::string measure,
+                                const std::string correct,
+                                int thread = -1) {
     if (mt.n_rows != 2)
         throw std::range_error("Invalid DFM object");
 
@@ -144,8 +113,24 @@ Rcpp::NumericVector qatd_cpp_keyness(
     DoubleParams stats(mt.n_cols);
 
 #if QUANTEDA_USE_TBB
-    KeynessWorker keyness_worker(mt, margin, measure, correct, stats);
-    parallelFor(0, mt.n_cols, keyness_worker);
+    tbb::task_arena arena(thread);
+    arena.execute([&]{
+        tbb::parallel_for(tbb::blocked_range<int>(0, mt.n_cols), [&](tbb::blocked_range<int> r) {
+            if (measure == "chi2") {
+                for (int i = r.begin(); i < r.end(); ++i) {
+                    stats[i] = chisq_lambda(mt(0, i), mt(1, i), margin, correct);
+                }
+            } else if (measure == "lr") {
+                for (std::size_t i = 0; i < mt.n_cols; i++) {
+                    stats[i] = lr_lambda(mt(0, i), mt(1, i), margin, correct);
+                }
+            } else if (measure == "pmi") {
+                for (std::size_t i = 0; i < mt.n_cols; i++) {
+                    stats[i] = pmi_lambda(mt(0, i), mt(1, i), margin, false);
+                }
+            }
+        });
+    });
 #else
     if (measure == "chi2") {
         for (std::size_t i = 0; i < mt.n_cols; i++) {
@@ -161,6 +146,5 @@ Rcpp::NumericVector qatd_cpp_keyness(
         }
     }
 #endif
-
     return Rcpp::wrap(stats);
 }
