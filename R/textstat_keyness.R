@@ -136,8 +136,8 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
             label <- c("target", "reference")
         }
     }
-    g <- factor(target, levels = c(TRUE, FALSE), labels = label)
-    temp <- dfm_group(x, groups = g)
+    grouping <- factor(target, levels = c(TRUE, FALSE), labels = label)
+    temp <- dfm_group(x, groups = grouping)
 
     if (measure == "exact") {
         if (measure == "exact" && !correction %in% c("default", "none"))
@@ -148,7 +148,7 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
             warning("correction is always none for pmi")
         result <- data.frame(
             feature = featnames(temp),
-            stat = cpp_keyness(temp, measure, correction, get_threads()),
+            stat = qatd_cpp_keyness(temp, measure, correction),
             p = NA,
             n_target = as.vector(temp[1, ]),
             n_reference = as.vector(temp[2, ]),

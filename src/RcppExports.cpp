@@ -11,9 +11,9 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// cpp_collocations
-DataFrame cpp_collocations(const List& texts_, const CharacterVector& types_, const IntegerVector& words_ignore_, const unsigned int count_min, const IntegerVector sizes_, const String& method, const double smoothing, const int thread);
-RcppExport SEXP _quanteda_textstats_cpp_collocations(SEXP texts_SEXP, SEXP types_SEXP, SEXP words_ignore_SEXP, SEXP count_minSEXP, SEXP sizes_SEXP, SEXP methodSEXP, SEXP smoothingSEXP, SEXP threadSEXP) {
+// qatd_cpp_collocations
+DataFrame qatd_cpp_collocations(const List& texts_, const CharacterVector& types_, const IntegerVector& words_ignore_, const unsigned int count_min, const IntegerVector sizes_, const String& method, const double smoothing);
+RcppExport SEXP _quanteda_textstats_qatd_cpp_collocations(SEXP texts_SEXP, SEXP types_SEXP, SEXP words_ignore_SEXP, SEXP count_minSEXP, SEXP sizes_SEXP, SEXP methodSEXP, SEXP smoothingSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -24,29 +24,27 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const IntegerVector >::type sizes_(sizes_SEXP);
     Rcpp::traits::input_parameter< const String& >::type method(methodSEXP);
     Rcpp::traits::input_parameter< const double >::type smoothing(smoothingSEXP);
-    Rcpp::traits::input_parameter< const int >::type thread(threadSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_collocations(texts_, types_, words_ignore_, count_min, sizes_, method, smoothing, thread));
+    rcpp_result_gen = Rcpp::wrap(qatd_cpp_collocations(texts_, types_, words_ignore_, count_min, sizes_, method, smoothing));
     return rcpp_result_gen;
 END_RCPP
 }
-// cpp_keyness
-Rcpp::NumericVector cpp_keyness(arma::sp_mat& mt, const std::string measure, const std::string correct, const int thread);
-RcppExport SEXP _quanteda_textstats_cpp_keyness(SEXP mtSEXP, SEXP measureSEXP, SEXP correctSEXP, SEXP threadSEXP) {
+// qatd_cpp_keyness
+Rcpp::NumericVector qatd_cpp_keyness(arma::sp_mat& mt, const std::string measure, const std::string correct);
+RcppExport SEXP _quanteda_textstats_qatd_cpp_keyness(SEXP mtSEXP, SEXP measureSEXP, SEXP correctSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< arma::sp_mat& >::type mt(mtSEXP);
     Rcpp::traits::input_parameter< const std::string >::type measure(measureSEXP);
     Rcpp::traits::input_parameter< const std::string >::type correct(correctSEXP);
-    Rcpp::traits::input_parameter< const int >::type thread(threadSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_keyness(mt, measure, correct, thread));
+    rcpp_result_gen = Rcpp::wrap(qatd_cpp_keyness(mt, measure, correct));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_quanteda_textstats_cpp_collocations", (DL_FUNC) &_quanteda_textstats_cpp_collocations, 8},
-    {"_quanteda_textstats_cpp_keyness", (DL_FUNC) &_quanteda_textstats_cpp_keyness, 4},
+    {"_quanteda_textstats_qatd_cpp_collocations", (DL_FUNC) &_quanteda_textstats_qatd_cpp_collocations, 7},
+    {"_quanteda_textstats_qatd_cpp_keyness", (DL_FUNC) &_quanteda_textstats_qatd_cpp_keyness, 3},
     {NULL, NULL, 0}
 };
 

@@ -101,49 +101,62 @@ inline double pmi_lambda(
 
 }
 
-// [[Rcpp::export]]
-Rcpp::NumericVector cpp_keyness(arma::sp_mat &mt,
-                                const std::string measure,
-                                const std::string correct,
-                                const int thread = 1) {
+struct KeynessWorker : public Worker {
+    const arma::sp_mat &mt;
+    const arma::colvec &margin;
+    const std::string &measure;
+    const std::string &correct;
+    DoubleParams& stats;
 
+    KeynessWorker(
+        const arma::sp_mat &mt_, const arma::colvec &margin_,
+        const std::string &measure_, const std::string &correct_, DoubleParams &stats_
+    ) : mt(mt_), margin(margin_), measure(measure_), correct(correct_), stats(stats_) {}
+
+    void operator() (std::size_t begin, std::size_t end) {
+
+        if (measure == "chi2") {
+            for (std::size_t i = begin; i < end; i++) {
+                stats[i] = chisq_lambda(mt(0, i), mt(1, i), margin, correct);
+            }
+        } else if (measure == "lr") {
+            for (std::size_t i = begin; i < end; i++) {
+                stats[i] = lr_lambda(mt(0, i), mt(1, i), margin, correct);
+            }
+        } else if (measure == "pmi") {
+            for (std::size_t i = begin; i < end; i++) {
+                stats[i] = pmi_lambda(mt(0, i), mt(1, i), margin, false);
+            }
+        }
+    }
+};
+
+// [[Rcpp::export]]
+Rcpp::NumericVector qatd_cpp_keyness(
+    arma::sp_mat &mt,
+    const std::string measure,
+    const std::string correct
+) {
     if (mt.n_rows != 2)
         throw std::range_error("Invalid DFM object");
 
     arma::colvec margin(arma::sum(mt, 1));
     DoubleParams stats(mt.n_cols);
 
-    std::size_t I = mt.n_cols;
 #if QUANTEDA_USE_TBB
-    tbb::task_arena arena(thread);
-    arena.execute([&]{
-        tbb::parallel_for(tbb::blocked_range<int>(0, I), [&](tbb::blocked_range<int> r) {
-            if (measure == "chi2") {
-                for (int i = r.begin(); i < r.end(); ++i) {
-                    stats[i] = chisq_lambda(mt(0, i), mt(1, i), margin, correct);
-                }
-            } else if (measure == "lr") {
-                for (int i = r.begin(); i < r.end(); ++i) {
-                    stats[i] = lr_lambda(mt(0, i), mt(1, i), margin, correct);
-                }
-            } else if (measure == "pmi") {
-                for (int i = r.begin(); i < r.end(); ++i) {
-                    stats[i] = pmi_lambda(mt(0, i), mt(1, i), margin, false);
-                }
-            }
-        });
-    });
+    KeynessWorker keyness_worker(mt, margin, measure, correct, stats);
+    parallelFor(0, mt.n_cols, keyness_worker);
 #else
     if (measure == "chi2") {
-        for (std::size_t i = 0; i < I; i++) {
+        for (std::size_t i = 0; i < mt.n_cols; i++) {
             stats[i] = chisq_lambda(mt(0, i), mt(1, i), margin, correct);
         }
     } else if (measure == "lr") {
-        for (std::size_t i = 0; i < I; i++) {
+        for (std::size_t i = 0; i < mt.n_cols; i++) {
             stats[i] = lr_lambda(mt(0, i), mt(1, i), margin, correct);
         }
     } else if (measure == "pmi") {
-        for (std::size_t i = 0; i < I; i++) {
+        for (std::size_t i = 0; i < mt.n_cols; i++) {
             stats[i] = pmi_lambda(mt(0, i), mt(1, i), margin, false);
         }
     }

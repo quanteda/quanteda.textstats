@@ -106,6 +106,22 @@ Text mark(Text tokens,
     return tokens;
 }
 
+struct mark_mt : public Worker{
+
+    Texts &texts;
+    SetUnigrams &set_ignore;
+    unsigned int &id_ignore;
+
+    mark_mt(Texts &texts_, SetUnigrams &set_ignore_, unsigned int &id_ignore_):
+        texts(texts_), set_ignore(set_ignore_), id_ignore(id_ignore_) {}
+
+    void operator()(std::size_t begin, std::size_t end){
+        for (std::size_t h = begin; h < end; h++) {
+            texts[h] = mark(texts[h], set_ignore, id_ignore);
+        }
+    }
+};
+
 void counts2(Text text,
              MapNgramsPair &counts_seq,
              const std::vector<unsigned int> &sizes,
@@ -154,6 +170,25 @@ void counts2(Text text,
     }
 }
 
+struct counts_mt2 : public Worker {
+
+    Texts texts;
+    MapNgramsPair &counts_seq;
+    const std::vector<unsigned int> &sizes;
+    const unsigned int &id_ignore;
+
+    counts_mt2(Texts texts_, MapNgramsPair &counts_seq_, const std::vector<unsigned int> &sizes_,
+               const unsigned int &id_ignore_):
+        texts(texts_), counts_seq(counts_seq_), sizes(sizes_),
+        id_ignore(id_ignore_) {}
+
+    void operator()(std::size_t begin, std::size_t end){
+        for (std::size_t h = begin; h < end; h++){
+            counts2(texts[h], counts_seq, sizes, id_ignore);
+        }
+    }
+};
+
 void estimates2(std::size_t i,
                 VecNgrams &seqs,  // seqs without padding
                 MapNgramsPair counts_seq,
@@ -177,6 +212,31 @@ void estimates2(std::size_t i,
         counts_bit[bit] += it->second.first;
     }
 }
+
+struct estimates_mt2 : public Worker{
+    VecNgrams &seqs;
+    MapNgramsPair &counts_seq;
+    DoubleParams &dice;
+    DoubleParams &pmi;
+    DoubleParams &logratio;
+    DoubleParams &chi2;
+    DoubleParams &gensim;
+    DoubleParams &lfmd;
+    const String &method;
+    const double smoothing;
+
+    estimates_mt2(VecNgrams &seqs_, MapNgramsPair &counts_seq_, DoubleParams &dice_,
+                  DoubleParams &pmi_, DoubleParams &logratio_, DoubleParams &chi2_, DoubleParams &gensim_, DoubleParams &lfmd_, const String &method,
+                  const double smoothing_):
+        seqs(seqs_), counts_seq(counts_seq_), dice(dice_), pmi(pmi_), logratio(logratio_), chi2(chi2_),
+        gensim(gensim_), lfmd(lfmd_), method(method), smoothing(smoothing_){}
+
+    void operator()(std::size_t begin, std::size_t end){
+        for (std::size_t i = begin; i < end; i++) {
+            estimates2(i, seqs, counts_seq, dice, pmi, logratio, chi2, gensim, lfmd, method, smoothing);
+        }
+    }
+};
 
 void estimates_lambda2(std::size_t i,
                        const VecNgrams &seqs,
@@ -206,6 +266,27 @@ void estimates_lambda2(std::size_t i,
     }
 }
 
+struct estimates_lambda_mt2 : public Worker{
+    const VecNgrams &seqs;
+    const VecPair &seq_all;
+    DoubleParams &sgma;
+    DoubleParams &lmda;
+    const String &method;
+    const double smoothing;
+
+    estimates_lambda_mt2(const VecNgrams &seqs_, const VecPair &seq_all_, DoubleParams &sgma_, DoubleParams &lmda_,
+                         const String &method, const double smoothing_) :
+        seqs(seqs_), seq_all(seq_all_), sgma(sgma_), lmda(lmda_),
+        method(method), smoothing(smoothing_) {}
+
+    void operator()(std::size_t begin, std::size_t end){
+        for (std::size_t i = begin; i < end; i++) {
+            estimates_lambda2(i, seqs, seq_all, sgma, lmda, method, smoothing);
+        }
+    }
+};
+
+
 /*
  * This function estimates the strength of association between specified words
  * that appear in sequences.
@@ -217,14 +298,13 @@ void estimates_lambda2(std::size_t i,
  * @param nested estimate parameters for nested collocations
  */
 // [[Rcpp::export]]
-DataFrame cpp_collocations(const List &texts_,
-                           const CharacterVector &types_,
-                           const IntegerVector &words_ignore_,
-                           const unsigned int count_min,
-                           const IntegerVector sizes_,
-                           const String &method,
-                           const double smoothing,
-                           const int thread = 1){
+DataFrame qatd_cpp_collocations(const List &texts_,
+                                const CharacterVector &types_,
+                                const IntegerVector &words_ignore_,
+                                const unsigned int count_min,
+                                const IntegerVector sizes_,
+                                const String &method,
+                                const double smoothing){
 
     Texts texts = as<Texts>(texts_);
     std::vector<unsigned int> sizes = as< std::vector<unsigned int> >(sizes_);
@@ -239,18 +319,11 @@ DataFrame cpp_collocations(const List &texts_,
     }
 
     // replace ineligble tokens with special ID
-    std::size_t H = texts.size();
 #if QUANTEDA_USE_TBB
-    tbb::task_arena arena(thread);
-    arena.execute([&]{
-        tbb::parallel_for(tbb::blocked_range<int>(0, H), [&](tbb::blocked_range<int> r) {
-            for (int h = r.begin(); h < r.end(); ++h) {
-                texts[h] = mark(texts[h], set_ignore, id_ignore);
-            }
-        });
-    });
+    mark_mt mark_mt(texts, set_ignore, id_ignore);
+    parallelFor(0, texts.size(), mark_mt, id_ignore);
 #else
-    for (std::size_t h = 0; h < H; h++) {
+    for (std::size_t h = 0; h < texts.size(); h++) {
         texts[h] = mark(texts[h], set_ignore, id_ignore);
     }
 #endif
@@ -261,15 +334,10 @@ DataFrame cpp_collocations(const List &texts_,
     //dev::Timer timer;
     //dev::start_timer("Count", timer);
 #if QUANTEDA_USE_TBB
-    arena.execute([&]{
-        tbb::parallel_for(tbb::blocked_range<int>(0, H), [&](tbb::blocked_range<int> r) {
-            for (int h = r.begin(); h < r.end(); ++h) {
-                counts2(texts[h], counts_seq, sizes, id_ignore);
-            }
-        });
-    });
+    counts_mt2 count_mt(texts, counts_seq, sizes, id_ignore);
+    parallelFor(0, texts.size(), count_mt);
 #else
-    for (std::size_t h = 0; h < H; h++) {
+    for (std::size_t h = 0; h < texts.size(); h++) {
         counts2(texts[h], counts_seq, sizes, id_ignore);
     }
 #endif
@@ -302,25 +370,20 @@ DataFrame cpp_collocations(const List &texts_,
     //DoubleParams dice(len_np), pmi(len_np), logratio(len_np), chi2(len_np), gensim(len_np), lfmd(len_np);
 
     //dev::start_timer("Estimate", timer);
-    std::size_t I = seqs.size();
 #if QUANTEDA_USE_TBB
-    arena.execute([&]{
-        tbb::parallel_for(tbb::blocked_range<int>(0, I), [&](tbb::blocked_range<int> r) {
-            for (int i = r.begin(); i < r.end(); ++i) {
-                estimates_lambda2(i, seqs, seqs_all, sgma, lmda, method, smoothing);
-            }
-        });
-    });
+    estimates_lambda_mt2 estimate_mt(seqs, seqs_all, sgma, lmda, method, smoothing);
+    parallelFor(0, seqs.size(), estimate_mt);
 #else
-    for (std::size_t i = 0; i < I; i++) {
+    for (std::size_t i = 0; i < seqs.size(); i++) {
         estimates_lambda2(i, seqs, seqs_all, sgma, lmda, method, smoothing);
     }
 #endif
     //dev::stop_timer("Estimate", timer);
 
+
     // convert sequences from integer to character
-    CharacterVector seqs_(I);
-    for (std::size_t i = 0; i < I; i++) {
+    CharacterVector seqs_(seqs.size());
+    for (std::size_t i = 0; i < seqs.size(); i++) {
         seqs_[i] = join_strings(seqs[i], types_, " ");
     }
 
