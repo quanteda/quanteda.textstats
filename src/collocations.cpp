@@ -224,7 +224,7 @@ DataFrame cpp_collocations(const List &texts_,
                            const IntegerVector sizes_,
                            const String &method,
                            const double smoothing,
-                           const int thread = 1){
+                           const int thread = -1){
 
     Texts texts = as<Texts>(texts_);
     std::vector<unsigned int> sizes = as< std::vector<unsigned int> >(sizes_);

@@ -105,7 +105,7 @@ inline double pmi_lambda(
 Rcpp::NumericVector cpp_keyness(arma::sp_mat &mt,
                                 const std::string measure,
                                 const std::string correct,
-                                const int thread = 1) {
+                                const int thread = -1) {
 
     if (mt.n_rows != 2)
         throw std::range_error("Invalid DFM object");
