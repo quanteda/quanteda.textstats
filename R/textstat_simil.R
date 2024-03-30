@@ -355,7 +355,6 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
 #' @details `textstat_dist` options are: `"euclidean"` (default),
 #'   `"manhattan"`, `"maximum"`, `"canberra"`,
 #'   and `"minkowski"`.
-#' @importFrom RcppParallel RcppParallelLibs
 #' @examples
 #'
 #' # distances for documents
