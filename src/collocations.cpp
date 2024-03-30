@@ -10,12 +10,11 @@ float GLOBAL_NGRAMS_MAX_LOAD_FACTOR = 0.25;
 
 typedef std::atomic<unsigned int> UintAtomic;
 #if QUANTEDA_USE_TBB
-typedef tbb::concurrent_vector<std::pair<Ngram, UintAtomic>> VecPair;
 typedef tbb::concurrent_unordered_map<Ngram, std::pair<UintAtomic, UintAtomic>, hash_ngram, equal_ngram> MapNgramsPair;
 #else
-typedef std::vector<std::pair<Ngram, UintAtomic>> VecPair;
 typedef std::unordered_map<Ngram, std::pair<UintAtomic, UintAtomic>, hash_ngram, equal_ngram> MapNgramsPair;
 #endif
+typedef std::vector<std::pair<Ngram, unsigned int>> VecNgramsPair;
 
 // return the matching pattern between two words at each position, 0 for matching, 1 for not matching.
 // for example, for 3-gram, bit = 000, 001, 010 ... 111 eg. 0-7
@@ -107,7 +106,7 @@ Text mark(Text tokens,
 }
 
 void counts2(Text text,
-             MapNgramsPair &counts_all,
+             MapNgramsPair &map_seqs,
              const std::vector<unsigned int> &sizes,
              const unsigned int &id_ignore){
 
@@ -140,7 +139,7 @@ void counts2(Text text,
                 Text text_sub(text.begin() + i, text.begin() + i + size);
                 //Rcout << "@" << i << " " <<  nested << ": ";
                 //dev::print_ngram(text_sub);
-                auto &count = counts_all[text_sub];
+                auto &count = map_seqs[text_sub];
                 count.first++;
                 if (!padded) {
                     if (nested) {
@@ -154,33 +153,9 @@ void counts2(Text text,
     }
 }
 
-void estimates2(std::size_t i,
-                VecNgrams &seqs,  // seqs without padding
-                MapNgramsPair counts_all,
-                DoubleParams &dice,
-                DoubleParams &pmi,
-                DoubleParams &logratio,
-                DoubleParams &chi2,
-                DoubleParams &gensim,
-                DoubleParams &lfmd,
-                const String &method,
-                const double smoothing) {
-
-    std::size_t n = seqs[i].size(); //n=2:5, seqs
-    if (n == 1) return; // ignore single words
-    // output counts
-    std::vector<double> counts_bit(std::pow(2, n), smoothing);
-    for (auto it = counts_all.begin(); it != counts_all.end(); ++it) {
-        if (it->first.size() != n) continue; // skip different lengths
-        int bit;
-        bit = match_bit2(seqs[i], it->first);
-        counts_bit[bit] += it->second.first;
-    }
-}
-
 void estimates_lambda2(std::size_t i,
                        const VecNgrams &seqs,
-                       const MapNgramsPair &counts_all,
+                       const VecNgramsPair &seqs_counts,
                        DoubleParams &sgma,
                        DoubleParams &lmda,
                        const String &method,
@@ -190,11 +165,10 @@ void estimates_lambda2(std::size_t i,
     if (n == 1) return; // ignore single words
 
     std::vector<double> counts_bit(std::pow(2, n), smoothing);
-    //for (std::size_t j = 0; j < seqs_all.size(); j++) {
-    for (auto it = counts_all.begin(); it != counts_all.end(); ++it) {
-        if (it->first.size() != n) continue; // skip different lengths
-        int bit = match_bit2(seqs[i], it->first);
-        counts_bit[bit] += it->second.first;
+    for (std::size_t j = 0; j < seqs_counts.size(); j++) {
+        if (seqs_counts[j].first.size() != n) continue; // skip different lengths
+        int bit = match_bit2(seqs[i], seqs_counts[j].first);
+        counts_bit[bit] += seqs_counts[j].second;
     }
 
     //B-J algorithm
@@ -256,8 +230,8 @@ DataFrame cpp_collocations(const List &texts_,
     }
 #endif
 
-    MapNgramsPair counts_all;
-    counts_all.max_load_factor(GLOBAL_PATTERN_MAX_LOAD_FACTOR);
+    MapNgramsPair map_seqs;
+    map_seqs.max_load_factor(GLOBAL_PATTERN_MAX_LOAD_FACTOR);
 
     //dev::Timer timer;
     //dev::start_timer("Count", timer);
@@ -265,26 +239,34 @@ DataFrame cpp_collocations(const List &texts_,
     arena.execute([&]{
         tbb::parallel_for(tbb::blocked_range<int>(0, H), [&](tbb::blocked_range<int> r) {
             for (int h = r.begin(); h < r.end(); ++h) {
-                counts2(texts[h], counts_all, sizes, id_ignore);
+                counts2(texts[h], map_seqs, sizes, id_ignore);
             }
         });
     });
 #else
     for (std::size_t h = 0; h < H; h++) {
-        counts2(texts[h], counts_all, sizes, id_ignore);
+        counts2(texts[h], map_seqs, sizes, id_ignore);
     }
 #endif
-    //dev::stop_timer("Count", timer);
 
-    VecNgrams seqs;
+    std::size_t N = map_seqs.size();
+    
+    // for estimation
+    VecNgramsPair seqs_count; // all the collocation
+    seqs_count.reserve(N);
+    VecNgrams seqs; // only eligible collocation 
+    seqs.reserve(N);
+    
+    // for output
     IntParams counts, counts_nested, lengths;
-    std::size_t len = counts_all.size();
-    seqs.reserve(len);
-    counts.reserve(len);
-    counts_nested.reserve(len);
-    lengths.reserve(len);
-    for (auto it = counts_all.begin(); it != counts_all.end(); ++it) {
+    counts.reserve(N);
+    counts_nested.reserve(N);
+    lengths.reserve(N);
+    
+    for (auto it = map_seqs.begin(); it != map_seqs.end(); ++it) {
         if (it->second.first < count_min) continue;
+        // convert to a vector for faster iteration
+        seqs_count.push_back(std::make_pair(it->first, (unsigned int)it->second.first));
         // estimate only sequences without padding
         if (std::none_of(it->first.begin(), it->first.end(), [](unsigned int v){ return v == 0; })) {
             seqs.push_back(it->first);
@@ -304,13 +286,13 @@ DataFrame cpp_collocations(const List &texts_,
     arena.execute([&]{
         tbb::parallel_for(tbb::blocked_range<int>(0, I), [&](tbb::blocked_range<int> r) {
             for (int i = r.begin(); i < r.end(); ++i) {
-                estimates_lambda2(i, seqs, counts_all, sgma, lmda, method, smoothing);
+                estimates_lambda2(i, seqs, seqs_count, sgma, lmda, method, smoothing);
             }
         });
     });
 #else
     for (std::size_t i = 0; i < I; i++) {
-        estimates_lambda2(i, seqs, counts_all, sgma, lmda, method, smoothing);
+        estimates_lambda2(i, seqs, seqs_count, sgma, lmda, method, smoothing);
     }
 #endif
     //dev::stop_timer("Estimate", timer);
