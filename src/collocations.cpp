@@ -264,9 +264,9 @@ DataFrame cpp_collocations(const List &texts_,
     lengths.reserve(N);
     
     for (auto it = map_seqs.begin(); it != map_seqs.end(); ++it) {
-        if (it->second.first < count_min) continue;
         // convert to a vector for faster iteration
         seqs_count.push_back(std::make_pair(it->first, (unsigned int)it->second.first));
+        if (it->second.first < count_min) continue;
         // estimate only sequences without padding
         if (std::none_of(it->first.begin(), it->first.end(), [](unsigned int v){ return v == 0; })) {
             seqs.push_back(it->first);
