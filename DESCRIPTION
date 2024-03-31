@@ -19,7 +19,7 @@ License: GPL-3
 Depends:
     R (>= 3.5.0)
 Imports:
-    quanteda (>= 4.0.0),
+    quanteda,
     Matrix (>= 1.5-0),
     methods,
     nsyllable,
