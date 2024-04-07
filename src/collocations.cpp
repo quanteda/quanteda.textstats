@@ -8,7 +8,7 @@ float GLOBAL_PATTERN_MAX_LOAD_FACTOR = 0.05;
 float GLOBAL_NGRAMS_MAX_LOAD_FACTOR = 0.25;
 #endif
 
-#ifdef TBB_VERSION_MAJOR
+#if TBB_VERSION_MAJOR >= 2021
 typedef std::atomic<unsigned int> UintAtomic; //oneAPI TBB
 #else
 typedef tbb::atomic<unsigned int> UintAtomic; //old TBB
