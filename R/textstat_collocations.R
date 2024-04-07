@@ -160,7 +160,7 @@ textstat_collocations.tokens <- function(x, method = "lambda",
     if (is.null(id_ignore)) id_ignore <- integer()
     result <- cpp_collocations(x, types, id_ignore, min_count, size,
                                if (method == "lambda1") "lambda1" else "lambda",
-                               smoothing, get_threads())
+                               smoothing, quanteda:::get_threads())
 
     # compute z for lambda methods
     result$z <- result$lambda / result$sigma
