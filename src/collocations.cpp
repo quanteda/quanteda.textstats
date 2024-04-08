@@ -8,7 +8,12 @@ float GLOBAL_PATTERN_MAX_LOAD_FACTOR = 0.05;
 float GLOBAL_NGRAMS_MAX_LOAD_FACTOR = 0.25;
 #endif
 
-typedef std::atomic<unsigned int> UintAtomic;
+#if TBB_VERSION_MAJOR >= 2021
+typedef std::atomic<unsigned int> UintAtomic; //oneAPI TBB
+#else
+typedef tbb::atomic<unsigned int> UintAtomic; //old TBB
+#endif
+
 #if QUANTEDA_USE_TBB
 typedef tbb::concurrent_unordered_map<Ngram, std::pair<UintAtomic, UintAtomic>, hash_ngram, equal_ngram> MapNgramsPair;
 #else
