@@ -14,7 +14,8 @@ textstat_keyness(
 )
 }
 \arguments{
-\item{x}{a \link{dfm} containing the features to be examined for keyness}
+\item{x}{a \link[quanteda:dfm]{dfm} containing the features to be examined for
+keyness}
 
 \item{target}{the document index (numeric, character or logical) identifying
 the document forming the "target" for computing keyness; all other
@@ -55,7 +56,7 @@ their keyness scores and frequency counts.
 \description{
 Calculate "keyness", a score for features that occur differentially across
 different categories.  Here, the categories are defined by reference to a
-"target" document index in the \link{dfm}, with the reference group
+"target" document index in the \link[quanteda:dfm]{dfm}, with the reference group
 consisting of all other documents.
 }
 \examples{

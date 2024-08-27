@@ -15,12 +15,13 @@ textstat_collocations(
 )
 }
 \arguments{
-\item{x}{a character, \link{corpus}, or \link{tokens} object whose collocations will be
-scored.  The tokens object should include punctuation, and if any words
-have been removed, these should have been removed with \code{padding = TRUE}.
-While identifying collocations for tokens objects is supported, you will
-get better results with character or corpus objects due to relatively
-imperfect detection of sentence boundaries from texts already tokenized.}
+\item{x}{a character, \link[quanteda:corpus]{corpus}, or
+\link[quanteda:tokens]{tokens} object whose collocations will be scored.  The
+tokens object should include punctuation, and if any words have been
+removed, these should have been removed with \code{padding = TRUE}. While
+identifying collocations for tokens objects is supported, you will get
+better results with character or corpus objects due to relatively imperfect
+detection of sentence boundaries from texts already tokenized.}
 
 \item{method}{association measure for detecting collocations. Currently this
 is limited to \code{"lambda"}.  See Details.}
@@ -53,9 +54,9 @@ collocations, from text.
 }
 \details{
 Documents are grouped for the purposes of scoring, but collocations will not
-span sentences. If \code{x} is a \link{tokens} object and some tokens have been
-removed, this should be done using \verb{[tokens_remove](x, pattern, padding = TRUE)} so that counts will still be accurate, but the pads will prevent those
-collocations from being scored.
+span sentences. If \code{x} is a \link[quanteda:tokens]{tokens} object and some tokens
+have been removed, this should be done using \verb{[tokens_remove](x, pattern, padding = TRUE)} so that counts will still be accurate, but the pads will
+prevent those collocations from being scored.
 
 The \code{lambda} computed for a size = \eqn{K}-word target multi-word expression
 the coefficient for the  \eqn{K}-way interaction parameter in the saturated

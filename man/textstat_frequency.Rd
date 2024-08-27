@@ -13,7 +13,7 @@ textstat_frequency(
 )
 }
 \arguments{
-\item{x}{a \link{dfm} object}
+\item{x}{a \link[quanteda:dfm]{dfm} object}
 
 \item{n}{(optional) integer specifying the top \code{n} features to be returned,
 within group if \code{groups} is specified}
@@ -27,9 +27,9 @@ previous behaviours for \code{groups}. See \code{news(Version >= "3.0", package 
 \code{\link[base:rank]{base::rank()}} for details.  Unlike that function, however, the default is
 \code{"min"}, so that frequencies of 10, 10, 11 would be ranked 1, 1, 3.}
 
-\item{...}{additional arguments passed to \code{\link[=dfm_group]{dfm_group()}}.  This can
-be useful in passing \code{force = TRUE}, for instance, if you are grouping a
-dfm that has been weighted.}
+\item{...}{additional arguments passed to \link[quanteda:dfm_group]{dfm_group()}.
+This can be useful in passing \code{force = TRUE}, for instance, if you are
+grouping a dfm that has been weighted.}
 }
 \value{
 a data.frame containing the following variables:
@@ -52,8 +52,8 @@ their term and document frequencies within groups.
 }
 \description{
 Produces counts and document frequencies summaries of the features in a
-\link{dfm}, optionally grouped by a \link{docvars} variable or other supplied
-grouping variable.
+\link[quanteda:dfm]{dfm}, optionally grouped by a \link[quanteda:docvars]{docvars}
+variable or other supplied grouping variable.
 }
 \examples{
 library("quanteda")

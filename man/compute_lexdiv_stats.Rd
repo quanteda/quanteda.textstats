@@ -16,7 +16,7 @@ compute_lexdiv_tokens_stats(
 )
 }
 \arguments{
-\item{x}{a \link{dfm} object}
+\item{x}{a \link[quanteda:dfm]{dfm} object}
 
 \item{measure}{a list of lexical diversity measures.}
 
@@ -41,10 +41,10 @@ lexical diversity measures on dfms or tokens objects
 }
 \details{
 \code{compute_lexdiv_dfm_stats} in an internal function that
-computes the lexical diversity measures from a \link{dfm} input.
+computes the lexical diversity measures from a \link[quanteda:dfm]{dfm} input.
 
 \code{compute_lexdiv_tokens_stats} in an internal function that
-computes the lexical diversity measures from a \link{dfm} input.
+computes the lexical diversity measures from a \link[quanteda:dfm]{dfm} input.
 }
 \keyword{internal}
 \keyword{textstat}

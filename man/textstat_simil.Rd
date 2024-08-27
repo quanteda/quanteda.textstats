@@ -27,8 +27,9 @@ textstat_dist(
 )
 }
 \arguments{
-\item{x, y}{a \link{dfm} objects; \code{y} is an optional target matrix matching
-\code{x} in the margin on which the similarity or distance will be computed.}
+\item{x, y}{a \link[quanteda:dfm]{dfm} objects; \code{y} is an optional target matrix
+matching \code{x} in the margin on which the similarity or distance will be
+computed.}
 
 \item{selection}{(deprecated - use \code{y} instead).}
 
@@ -54,7 +55,7 @@ unless \code{y} is specified.
 These functions compute matrixes of distances and similarities between
 documents or features from a \code{\link[=dfm]{dfm()}} and return a matrix of
 similarities or distances in a sparse format.  These methods are fast
-and robust because they operate directly on the sparse \link{dfm} objects.
+and robust because they operate directly on the sparse \link[quanteda:dfm]{dfm} objects.
 The output can easily be coerced to an ordinary matrix, a data.frame of
 pairwise comparisons, or a \link[stats:dist]{dist} format.
 }

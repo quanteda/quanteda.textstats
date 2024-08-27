@@ -15,7 +15,8 @@ textstat_readability(
 )
 }
 \arguments{
-\item{x}{a character or \link{corpus} object containing the texts}
+\item{x}{a character or \link[quanteda:corpus]{corpus} object containing the
+texts}
 
 \item{measure}{character vector defining the readability measure to calculate.
 Matches are case-insensitive.  See other valid measures under Details.}
@@ -32,7 +33,8 @@ may not really be sentences, such as section titles, table elements, and
 other cruft that might be in the texts following conversion.
 
 For finer-grained control, consider filtering sentences prior first,
-including through pattern-matching, using \code{\link[=corpus_trim]{corpus_trim()}}.}
+including through pattern-matching, using
+\link[quanteda:corpus_trim]{corpus_trim()}.}
 
 \item{intermediate}{if \code{TRUE}, include intermediate quantities in the output}
 

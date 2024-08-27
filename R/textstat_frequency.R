@@ -1,17 +1,17 @@
 #' Tabulate feature frequencies
 #'
 #' Produces counts and document frequencies summaries of the features in a
-#' [dfm], optionally grouped by a [docvars] variable or other supplied
-#' grouping variable.
-#' @param x a [dfm] object
+#' [dfm][quanteda::dfm], optionally grouped by a [docvars][quanteda::docvars]
+#' variable or other supplied grouping variable.
+#' @param x a [dfm][quanteda::dfm] object
 #' @param n (optional) integer specifying the top `n` features to be returned,
 #' within group if `groups` is specified
 #' @param ties_method character string specifying how ties are treated.  See
 #'   [base::rank()] for details.  Unlike that function, however, the default is
 #'   `"min"`, so that frequencies of 10, 10, 11 would be ranked 1, 1, 3.
-#' @param ... additional arguments passed to [dfm_group()].  This can
-#'   be useful in passing `force = TRUE`, for instance, if you are grouping a
-#'   dfm that has been weighted.
+#' @param ... additional arguments passed to [dfm_group()][quanteda::dfm_group].
+#'   This can be useful in passing `force = TRUE`, for instance, if you are
+#'   grouping a dfm that has been weighted.
 #' @inheritParams quanteda::groups
 #' @return a data.frame containing the following variables:
 #' \describe{

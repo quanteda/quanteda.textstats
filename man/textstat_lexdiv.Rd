@@ -19,8 +19,8 @@ textstat_lexdiv(
 )
 }
 \arguments{
-\item{x}{an \link{dfm} or \link{tokens} input object for whose documents
-lexical diversity will be computed}
+\item{x}{an \link[quanteda:dfm]{dfm} or \link[quanteda:tokens]{tokens} input object
+for whose documents lexical diversity will be computed}
 
 \item{measure}{a character vector defining the measure to compute}
 

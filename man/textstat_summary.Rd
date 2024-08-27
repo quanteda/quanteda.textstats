@@ -23,8 +23,8 @@ tokens such as numbers, punctuation marks, symbols, tags and emojis.
 \item sents
 = number of sentences; equal \code{ntoken(tokens(x), what = "sentence")}
 \item
-tokens = number of tokens; equal to \code{\link[=ntoken]{ntoken()}}
-\item types = number of unique tokens; equal to \code{\link[=ntype]{ntype()}}
+tokens = number of tokens; equal to \link[quanteda:ntoken]{ntoken()}
+\item types = number of unique tokens; equal to \link[quanteda:ntoken]{ntype()}
 \item puncts = number of punctuation marks (\verb{^\\p\{P\}+$})
 \item numbers = number of numeric tokens
 (\verb{^\\p\{Sc\}\{0,1\}\\p\{N\}+([.,]*\\p\{N\})*\\p\{Sc\}\{0,1\}$})

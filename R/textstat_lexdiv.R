@@ -74,8 +74,8 @@
 #'   are ignored.}
 #'   }
 #'
-#' @param x an [dfm] or [tokens] input object for whose documents
-#'   lexical diversity will be computed
+#' @param x an [dfm][quanteda::dfm] or [tokens][quanteda::tokens] input object
+#'   for whose documents lexical diversity will be computed
 #' @param measure a character vector defining the measure to compute
 #' @param remove_numbers logical; if `TRUE` remove features or tokens that
 #'   consist only of numerals (the Unicode "Number" `[N]` class)
@@ -280,7 +280,7 @@ textstat_lexdiv.tokens <-
 #' @description
 #' Internal functions used in [textstat_lexdiv()], for computing
 #' lexical diversity measures on dfms or tokens objects
-#' @param x a [dfm] object
+#' @param x a [dfm][quanteda::dfm] object
 #' @param measure a list of lexical diversity measures.
 #' @return a `data.frame` with a `document` column containing the
 #'   input document name, followed by columns with the lexical diversity
@@ -293,7 +293,7 @@ NULL
 #' @param log.base a numeric value defining the base of the logarithm (for
 #'   measures using logs)
 #' @details `compute_lexdiv_dfm_stats` in an internal function that
-#'   computes the lexical diversity measures from a [dfm] input.
+#'   computes the lexical diversity measures from a [dfm][quanteda::dfm] input.
 #' @importFrom quanteda ntoken ntype docnames
 compute_lexdiv_dfm_stats <- function(x, measure = NULL, log.base = 10) {
 
@@ -376,7 +376,7 @@ compute_lexdiv_dfm_stats <- function(x, measure = NULL, log.base = 10) {
 
 #' @rdname compute_lexdiv_stats
 #' @details `compute_lexdiv_tokens_stats` in an internal function that
-#'   computes the lexical diversity measures from a [dfm] input.
+#'   computes the lexical diversity measures from a [dfm][quanteda::dfm] input.
 #' @param MATTR_window a numeric value defining the size of the moving window
 #'   for computation of the Moving-Average Type-Token Ratio (Covington & McFall, 2010)
 #' @param MSTTR_segment a numeric value defining the size of the each segment
@@ -407,7 +407,7 @@ compute_lexdiv_tokens_stats <- function(x, measure = c("MATTR", "MSTTR"),
 #' from Covington & McFall (2010), averaging all of the sequential moving
 #' windows of tokens of size `MATTR_window` across the text, returning the
 #' average as the MATTR.
-#' @param x a [tokens] object
+#' @param x a [tokens][quanteda::tokens] object
 #' @param MATTR_window integer; the size of the moving window for computation of
 #'   TTR, between 1 and the number of tokens of the document
 #' @keywords internal textstat lexdiv
@@ -434,7 +434,7 @@ compute_mattr <- function(x, MATTR_window = 100L) {
 #' Compute the Mean Segmental Type-Token Ratio (MSTTR)
 #'
 #' Compute the Mean Segmental Type-Token Ratio (Johnson 1944) for a tokens input.
-#' @param x input [tokens]
+#' @param x input [tokens][quanteda::tokens]
 #' @inheritParams textstat_lexdiv
 #' @keywords internal textstat lexdiv
 compute_msttr <- function(x, MSTTR_segment) {
@@ -464,7 +464,7 @@ compute_msttr <- function(x, MSTTR_segment) {
 #' Takes a dfm that contains features with hyphenated words, such as
 #' "split-second" and turns them into features that split the elements
 #' in the same was as `tokens(x, remove_hyphens = TRUE)` would have done.
-#' @param x input [dfm]
+#' @param x input [dfm][quanteda::dfm]
 #' @keywords internal dfm
 #' @importFrom quanteda featnames tokens dfm_compress
 #' @importFrom stringi stri_detect_regex

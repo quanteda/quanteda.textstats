@@ -18,8 +18,8 @@ textstat_proxy(
 )
 }
 \arguments{
-\item{y}{if a \link{dfm} object is provided, proximity between documents or
-features in \code{x} and \code{y} is computed.}
+\item{y}{if a \link[quanteda:dfm]{dfm} object is provided, proximity between
+documents or features in \code{x} and \code{y} is computed.}
 
 \item{margin}{identifies the margin of the dfm on which similarity or
 difference will be computed:  \code{"documents"} for documents or
