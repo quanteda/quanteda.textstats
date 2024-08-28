@@ -38,7 +38,7 @@ scored}
 \item{tolower}{logical; if \code{TRUE}, form collocations as lower-cased
 combinations}
 
-\item{...}{additional arguments passed to \code{\link[=tokens]{tokens()}}}
+\item{...}{additional arguments passed to \link[quanteda:tokens]{tokens()}}
 }
 \value{
 \code{textstat_collocations} returns a data.frame of collocations and

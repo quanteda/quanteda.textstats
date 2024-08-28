@@ -30,7 +30,7 @@ dictionary is supplied, this will override the \code{language} argument.}
 syllable count vector}
 }
 \description{
-Extends \code{nsyllable()} methods for \link{tokens} objects.
+Extends \code{nsyllable()} methods for \link[quanteda:tokens]{tokens} objects.
 }
 \examples{
 \dontshow{

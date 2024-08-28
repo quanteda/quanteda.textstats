@@ -25,7 +25,7 @@
 #'   (default is 0.5)
 #' @param tolower logical; if `TRUE`, form collocations as lower-cased
 #'   combinations
-#' @param ... additional arguments passed to [tokens()]
+#' @param ... additional arguments passed to [tokens()][quanteda::tokens]
 #' @references Blaheta, D. & Johnson, M. (2001). [Unsupervised learning of
 #'   multi-word
 #'   verbs](http://web.science.mq.edu.au/~mjohnson/papers/2001/dpb-colloc01.pdf).

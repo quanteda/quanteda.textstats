@@ -182,11 +182,11 @@ setMethod("tail", signature(x = "textstat_proxy"), function(x, n = 6L, ...) {
 #' Similarity and distance computation between documents or features
 #'
 #' These functions compute matrixes of distances and similarities between
-#' documents or features from a [dfm()] and return a matrix of
-#' similarities or distances in a sparse format.  These methods are fast
-#' and robust because they operate directly on the sparse [dfm][quanteda::dfm] objects.
-#' The output can easily be coerced to an ordinary matrix, a data.frame of
-#' pairwise comparisons, or a [dist][stats::dist] format.
+#' documents or features from a [dfm][quanteda::dfm] and return a matrix of
+#' similarities or distances in a sparse format.  These methods are fast and
+#' robust because they operate directly on the sparse [dfm][quanteda::dfm]
+#' objects. The output can easily be coerced to an ordinary matrix, a data.frame
+#' of pairwise comparisons, or a [dist][stats::dist] format.
 #' @param x,y a [dfm][quanteda::dfm] objects; `y` is an optional target matrix
 #'   matching `x` in the margin on which the similarity or distance will be
 #'   computed.

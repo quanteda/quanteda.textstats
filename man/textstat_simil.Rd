@@ -53,11 +53,11 @@ unless \code{y} is specified.
 }
 \description{
 These functions compute matrixes of distances and similarities between
-documents or features from a \code{\link[=dfm]{dfm()}} and return a matrix of
-similarities or distances in a sparse format.  These methods are fast
-and robust because they operate directly on the sparse \link[quanteda:dfm]{dfm} objects.
-The output can easily be coerced to an ordinary matrix, a data.frame of
-pairwise comparisons, or a \link[stats:dist]{dist} format.
+documents or features from a \link[quanteda:dfm]{dfm} and return a matrix of
+similarities or distances in a sparse format.  These methods are fast and
+robust because they operate directly on the sparse \link[quanteda:dfm]{dfm}
+objects. The output can easily be coerced to an ordinary matrix, a data.frame
+of pairwise comparisons, or a \link[stats:dist]{dist} format.
 }
 \details{
 \code{textstat_simil} options are: \code{"correlation"} (default),

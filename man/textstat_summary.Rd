@@ -9,7 +9,7 @@ textstat_summary(x, ...)
 \arguments{
 \item{x}{corpus to be summarized}
 
-\item{...}{additional arguments passed through to \code{\link[=dfm]{dfm()}}}
+\item{...}{additional arguments passed through to \link[quanteda:dfm]{dfm()}}
 }
 \description{
 Count syntactic and lexical features of documents such as tokens, types,

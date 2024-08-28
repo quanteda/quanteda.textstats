@@ -21,7 +21,7 @@
 #' \item emojis = number of emojis (`^\p{Emoji_Presentation}+$`)
 #' }
 #' @param x corpus to be summarized
-#' @param ... additional arguments passed through to [dfm()]
+#' @param ... additional arguments passed through to [dfm()][quanteda::dfm]
 #' @export
 #' @keywords textstat
 #' @examples
