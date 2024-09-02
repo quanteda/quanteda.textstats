@@ -1,6 +1,6 @@
+#include <RcppArmadillo.h>
 #include "lib.h"
 #include "dev.h"
-#include <RcppArmadillo.h>
 
 using namespace quanteda;
 
