@@ -1,5 +1,6 @@
 #include "lib.h"
 #include "dev.h"
+#include <RcppArmadillo.h>
 
 using namespace quanteda;
 
@@ -123,7 +124,7 @@ Rcpp::NumericVector cpp_keyness(arma::sp_mat &mt,
     std::vector<double> row0 = to_vector(mt.row(0));
     std::vector<double> row1 = to_vector(mt.row(1));
     DoubleParams stats(mt.n_cols);
-    
+
 #if QUANTEDA_USE_TBB
     tbb::task_arena arena(thread);
     arena.execute([&]{
