@@ -27,9 +27,8 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-
+    
     steps:
-
       - if: matrix.config.os == 'ubuntu-latest'
         run: |
             sudo apt update
@@ -38,8 +37,8 @@ jobs:
         run: |
             brew update
             brew install tbb
-
-      - uses: actions/checkout@v4
+        
+      - uses: actions/checkout@v3
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -54,15 +53,7 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      # - name: Install remotes
-      #   run: |
-      #     Rscript -e "install.packages('remotes', repos='https://ftp.belnet.be/mirror/CRAN')"
-      #
-      # - name: Install quanteda from Github
-      #   run: |
-      #     Rscript -e "remotes::install_github('quanteda/quanteda')"
-
       - uses: r-lib/actions/check-r-package@v2
         with:
+          args: 'c("--no-vignettes", "--no-manual", "--as-cran")'
           upload-snapshots: true
-          build_args: 'c("—-no-manual","—-compact-vignettes=gs+qpdf")'
