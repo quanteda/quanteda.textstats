@@ -7,6 +7,6 @@ if (Sys.info()[["sysname"]] == "Windows") {
     }
 } else {
     if (quanteda:::cpp_tbb_enabled()) {
-        cat("-ltbb")
+        cat("pkg-config --libs tbb")
     }
 }
