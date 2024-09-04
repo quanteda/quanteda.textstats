@@ -123,8 +123,8 @@
 #'   \item{`"Farr.Jenkins.Paterson"`:}{Farr-Jenkins-Paterson's
 #'   Simplification of Flesch's Reading Ease Score (Farr, Jenkins and Paterson 1951). \deqn{
 #'    -31.517 - (1.015 \times ASL) + (1.599 \times
-#'   \frac{n_{wsy=1}}{n_{w}}}{ -31.517
-#'   - (1.015 * ASL) + (1.599 * Nwsy1 / Nw)}
+#'   \frac{n_{wsy=1}}{n_{w}})}{ -31.517
+#'   - (1.015 * ASL) + (1.599 * Nwsy1 / Nw )}
 #'
 #'   where \eqn{n_{wsy=1}} = Nwsy1 = the number of one-syllable words.}
 #'
@@ -316,7 +316,8 @@
 #'
 #' }
 #'
-#' @param x a character or [corpus] object containing the texts
+#' @param x a character or [corpus][quanteda::corpus] object containing the
+#'   texts
 #' @param measure character vector defining the readability measure to calculate.
 #'   Matches are case-insensitive.  See other valid measures under Details.
 #' @param remove_hyphens if `TRUE`, treat constituent words in hyphenated as
@@ -330,7 +331,8 @@
 #'   other cruft that might be in the texts following conversion.
 #'
 #'   For finer-grained control, consider filtering sentences prior first,
-#'   including through pattern-matching, using [corpus_trim()].
+#'   including through pattern-matching, using
+#'   [corpus_trim()][quanteda::corpus_trim].
 #' @param intermediate if `TRUE`, include intermediate quantities in the output
 #' @param ... not used
 #' @importFrom quanteda texts char_trim nsentence char_tolower tokens_remove dfm

@@ -7,7 +7,7 @@
 compute_mattr(x, MATTR_window = 100L)
 }
 \arguments{
-\item{x}{a \link{tokens} object}
+\item{x}{a \link[quanteda:tokens]{tokens} object}
 
 \item{MATTR_window}{integer; the size of the moving window for computation of
 TTR, between 1 and the number of tokens of the document}

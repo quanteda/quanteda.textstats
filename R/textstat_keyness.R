@@ -2,9 +2,10 @@
 #'
 #' Calculate "keyness", a score for features that occur differentially across
 #' different categories.  Here, the categories are defined by reference to a
-#' "target" document index in the [dfm], with the reference group
+#' "target" document index in the [dfm][quanteda::dfm], with the reference group
 #' consisting of all other documents.
-#' @param x a [dfm] containing the features to be examined for keyness
+#' @param x a [dfm][quanteda::dfm] containing the features to be examined for
+#'   keyness
 #' @param target the document index (numeric, character or logical) identifying
 #'   the document forming the "target" for computing keyness; all other
 #'   documents' feature frequencies will be combined for use as a reference
@@ -148,7 +149,7 @@ textstat_keyness.dfm <- function(x, target = 1L, measure = c("chi2", "exact", "l
             warning("correction is always none for pmi")
         result <- data.frame(
             feature = featnames(temp),
-            stat = cpp_keyness(temp, measure, correction, get_threads()),
+            stat = cpp_keyness(temp, measure, correction, quanteda:::get_threads()),
             p = NA,
             n_target = as.vector(temp[1, ]),
             n_reference = as.vector(temp[2, ]),

@@ -7,7 +7,7 @@
 dfm_split_hyphenated_features(x)
 }
 \arguments{
-\item{x}{input \link{dfm}}
+\item{x}{input \link[quanteda:dfm]{dfm}}
 }
 \description{
 Takes a dfm that contains features with hyphenated words, such as

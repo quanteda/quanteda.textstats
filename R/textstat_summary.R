@@ -10,8 +10,8 @@
 #' \item sents
 #' = number of sentences; equal `ntoken(tokens(x), what = "sentence")`
 #' \item
-#' tokens = number of tokens; equal to [ntoken()]
-#' \item types = number of unique tokens; equal to [ntype()]
+#' tokens = number of tokens; equal to [ntoken()][quanteda::ntoken]
+#' \item types = number of unique tokens; equal to [ntype()][quanteda::ntype]
 #' \item puncts = number of punctuation marks (`^\p{P}+$`)
 #' \item numbers = number of numeric tokens
 #' (`^\p{Sc}{0,1}\p{N}+([.,]*\p{N})*\p{Sc}{0,1}$`)
@@ -21,7 +21,7 @@
 #' \item emojis = number of emojis (`^\p{Emoji_Presentation}+$`)
 #' }
 #' @param x corpus to be summarized
-#' @param ... additional arguments passed through to [dfm()]
+#' @param ... additional arguments passed through to [dfm()][quanteda::dfm]
 #' @export
 #' @keywords textstat
 #' @examples
@@ -65,19 +65,19 @@ textstat_summary.dfm <- function(x, ...) {
 }
 
 summarize <- function(x, ...) {
-    
+
     # for old ICU
     skip_emoji <- as.numeric(stringi::stri_info()[["Unicode.version"]]) < 9
-    
+
     patterns <- removals_regex(punct = TRUE, symbols = TRUE,
                                numbers = TRUE, url = TRUE)
     patterns[["tag"]] <-
         list("username" = paste0("^", quanteda::quanteda_options("pattern_username"), "$"),
              "hashtag" = paste0("^", quanteda::quanteda_options("pattern_hashtag"), "$"))
-    
-    if (!skip_emoji) 
+
+    if (!skip_emoji)
         patterns[["emoji"]] <- "^\\p{Emoji_Presentation}+$"
-    
+
     dict <- quanteda::dictionary(patterns)
     y <- dfm(if (is.corpus(x)) tokens(x) else x, ...)
     temp <- quanteda::convert(
@@ -85,10 +85,10 @@ summarize <- function(x, ...) {
         "data.frame",
         docid_field = "document"
     )
-    
-    if (skip_emoji) 
+
+    if (skip_emoji)
         temp$emoji <- NA
-    
+
     result <- data.frame(
         "document" = quanteda::docnames(y),
         "chars" = NA,

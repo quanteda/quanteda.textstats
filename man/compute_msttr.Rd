@@ -7,7 +7,7 @@
 compute_msttr(x, MSTTR_segment)
 }
 \arguments{
-\item{x}{input \link{tokens}}
+\item{x}{input \link[quanteda:tokens]{tokens}}
 
 \item{MSTTR_segment}{a numeric value defining the size of the each segment
 for the computation of the the Mean Segmental Type-Token Ratio (Johnson, 1944)}

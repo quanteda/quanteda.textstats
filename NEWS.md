@@ -1,3 +1,7 @@
+# quanteda.textstats 0.97
+
+* Fixes Rd link issues and other issues causing warnings under the new and improved CRAN checks.
+
 # quanteda.textstats 0.96
 
 * Fixes for C++ header compatibility for existing **quanteda** 3.x and the forthcoming 4.0 version.

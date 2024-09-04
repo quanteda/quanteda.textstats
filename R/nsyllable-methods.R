@@ -1,6 +1,6 @@
 #' nsyllable methods for tokens
 #'
-#' Extends `nsyllable()` methods for [quanteda.textstats::tokens] objects.
+#' Extends `nsyllable()` methods for [tokens][quanteda::tokens] objects.
 #' @inheritParams nsyllable::nsyllable
 #' @examples
 #' \dontshow{

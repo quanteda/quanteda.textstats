@@ -182,13 +182,14 @@ setMethod("tail", signature(x = "textstat_proxy"), function(x, n = 6L, ...) {
 #' Similarity and distance computation between documents or features
 #'
 #' These functions compute matrixes of distances and similarities between
-#' documents or features from a [dfm()] and return a matrix of
-#' similarities or distances in a sparse format.  These methods are fast
-#' and robust because they operate directly on the sparse [dfm] objects.
-#' The output can easily be coerced to an ordinary matrix, a data.frame of
-#' pairwise comparisons, or a [dist][stats::dist] format.
-#' @param x,y a [dfm] objects; `y` is an optional target matrix matching
-#'   `x` in the margin on which the similarity or distance will be computed.
+#' documents or features from a [dfm][quanteda::dfm] and return a matrix of
+#' similarities or distances in a sparse format.  These methods are fast and
+#' robust because they operate directly on the sparse [dfm][quanteda::dfm]
+#' objects. The output can easily be coerced to an ordinary matrix, a data.frame
+#' of pairwise comparisons, or a [dist][stats::dist] format.
+#' @param x,y a [dfm][quanteda::dfm] objects; `y` is an optional target matrix
+#'   matching `x` in the margin on which the similarity or distance will be
+#'   computed.
 #' @param selection (deprecated - use `y` instead).
 #' @param margin identifies the margin of the dfm on which similarity or
 #'   difference will be computed:  `"documents"` for documents or
@@ -355,7 +356,6 @@ textstat_simil.dfm <- function(x, y = NULL, selection = NULL,
 #' @details `textstat_dist` options are: `"euclidean"` (default),
 #'   `"manhattan"`, `"maximum"`, `"canberra"`,
 #'   and `"minkowski"`.
-#' @importFrom RcppParallel RcppParallelLibs
 #' @examples
 #'
 #' # distances for documents
@@ -644,8 +644,8 @@ setMethod("as.matrix", "textstat_simil_symm_sparse",
 #' This is an underlying function for `textstat_dist` and
 #' `textstat_simil` but returns `TsparseMatrix`.
 #' @keywords internal
-#' @param y if a [dfm] object is provided, proximity between documents or
-#'   features in `x` and `y` is computed.
+#' @param y if a [dfm][quanteda::dfm] object is provided, proximity between
+#'   documents or features in `x` and `y` is computed.
 #' @param use_na if `TRUE`, return `NA` for proximity to empty
 #'   vectors. Note that use of `NA` makes the proximity matrices denser.
 #' @inheritParams textstat_dist

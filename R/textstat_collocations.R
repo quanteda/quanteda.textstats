@@ -4,16 +4,17 @@
 #' collocations, from text.
 #'
 #' Documents are grouped for the purposes of scoring, but collocations will not
-#' span sentences. If `x` is a [tokens] object and some tokens have been
-#' removed, this should be done using `[tokens_remove](x, pattern, padding =
-#' TRUE)` so that counts will still be accurate, but the pads will prevent those
-#' collocations from being scored.
-#' @param x a character, [corpus], or [tokens] object whose collocations will be
-#'   scored.  The tokens object should include punctuation, and if any words
-#'   have been removed, these should have been removed with `padding = TRUE`.
-#'   While identifying collocations for tokens objects is supported, you will
-#'   get better results with character or corpus objects due to relatively
-#'   imperfect detection of sentence boundaries from texts already tokenized.
+#' span sentences. If `x` is a [tokens][quanteda::tokens] object and some tokens
+#' have been removed, this should be done using `[tokens_remove](x, pattern,
+#' padding = TRUE)` so that counts will still be accurate, but the pads will
+#' prevent those collocations from being scored.
+#' @param x a character, [corpus][quanteda::corpus], or
+#'   [tokens][quanteda::tokens] object whose collocations will be scored.  The
+#'   tokens object should include punctuation, and if any words have been
+#'   removed, these should have been removed with `padding = TRUE`. While
+#'   identifying collocations for tokens objects is supported, you will get
+#'   better results with character or corpus objects due to relatively imperfect
+#'   detection of sentence boundaries from texts already tokenized.
 #' @param method association measure for detecting collocations. Currently this
 #'   is limited to `"lambda"`.  See Details.
 #' @param size integer; the length of the collocations
@@ -24,7 +25,7 @@
 #'   (default is 0.5)
 #' @param tolower logical; if `TRUE`, form collocations as lower-cased
 #'   combinations
-#' @param ... additional arguments passed to [tokens()]
+#' @param ... additional arguments passed to [tokens()][quanteda::tokens]
 #' @references Blaheta, D. & Johnson, M. (2001). [Unsupervised learning of
 #'   multi-word
 #'   verbs](http://web.science.mq.edu.au/~mjohnson/papers/2001/dpb-colloc01.pdf).
@@ -160,7 +161,7 @@ textstat_collocations.tokens <- function(x, method = "lambda",
     if (is.null(id_ignore)) id_ignore <- integer()
     result <- cpp_collocations(x, types, id_ignore, min_count, size,
                                if (method == "lambda1") "lambda1" else "lambda",
-                               smoothing, get_threads())
+                               smoothing, quanteda:::get_threads())
 
     # compute z for lambda methods
     result$z <- result$lambda / result$sigma
