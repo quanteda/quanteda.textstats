@@ -2,9 +2,9 @@
 
 Purpose:
 
-* To fix Rd link issues.
-
-Note that this 
+* Fixes issues related to the TBB libraries not being found on macOS platforms.  
+  We now use pkgconfig to detect whether TBB is installed or not and to 
+  generate the Makevars files using pkgconfig.
 
 ## Test environments
 
