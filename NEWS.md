@@ -1,3 +1,7 @@
+# quanteda.textstats 1.0
+
+* Fix `textstat_summary()` to avoid errors when `x` has no documents.
+
 # quanteda.textstats 0.97
 
 * Fixes Rd link issues and other issues causing warnings under the new and improved CRAN checks.

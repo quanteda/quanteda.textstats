@@ -18,7 +18,11 @@ test_that("textstat_summary method works", {
         names(summ_corp),
         col_summ
     )
-
+    expect_equal(
+        names(textstat_summary(head(corp, 0))),
+        col_summ
+    )
+    
     # tokens
     summ_toks <- textstat_summary(toks)
     expect_equal(
@@ -41,13 +45,17 @@ test_that("textstat_summary method works", {
     )
     expect_equal(
         summ_toks$sents,
-        rep(NA, quanteda::ndoc(toks))
+        rep(NA_integer_, quanteda::ndoc(toks))
     )
     expect_equal(
         names(summ_toks),
         col_summ
     )
-
+    expect_equal(
+        names(textstat_summary(head(toks, 0))),
+        col_summ
+    )
+    
     # dfm
     summ_dfm <- textstat_summary(dfmt)
     expect_equal(
@@ -70,10 +78,14 @@ test_that("textstat_summary method works", {
     )
     expect_equal(
         summ_dfm$sents,
-        rep(NA, quanteda::ndoc(dfmt))
+        rep(NA_integer_, quanteda::ndoc(dfmt))
     )
     expect_equal(
         names(summ_dfm),
+        col_summ
+    )
+    expect_equal(
+        names(textstat_summary(head(dfmt, 0))),
         col_summ
     )
 })

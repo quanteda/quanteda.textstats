@@ -90,18 +90,18 @@ summarize <- function(x, ...) {
         temp$emoji <- NA
 
     result <- data.frame(
-        "document" = quanteda::docnames(y),
-        "chars" = NA,
-        "sents" = NA,
-        "tokens" = quanteda::ntoken(y),
-        "types" = quanteda::ntype(y),
+        "document" = docnames(y),
+        "chars" = rep(NA_integer_, ndoc(y)),
+        "sents" = rep(NA_integer_, ndoc(y)),
+        "tokens" = ntoken(y),
+        "types" = ntype(y),
         "puncts" = as.integer(temp$punct),
         "numbers" = as.integer(temp$numbers),
         "symbols" = as.integer(temp$symbols),
         "urls" = as.integer(temp$url),
         "tags" = as.integer(temp$tag),
         "emojis" = as.integer(temp$emoji),
-        row.names = seq_len(quanteda::ndoc(y)),
+        row.names = seq_len(ndoc(y)),
         stringsAsFactors = FALSE
     )
 
