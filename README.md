@@ -9,9 +9,9 @@ Version](https://www.r-pkg.org/badges/version/quanteda.textstats)](https://CRAN.
 [![Downloads](https://cranlogs.r-pkg.org/badges/quanteda.textstats)](https://CRAN.R-project.org/package=quanteda.textstats)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/quanteda.textstats?color=orange)](https://CRAN.R-project.org/package=quanteda.textstats)
-[![Codecov test
-coverage](https://codecov.io/gh/quanteda/quanteda.textstats/branch/master/graph/badge.svg)](https://app.codecov.io/gh/quanteda/quanteda.textstats?branch=master)
 [![R-CMD-check](https://github.com/quanteda/quanteda.textstats/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/quanteda/quanteda.textstats/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/quanteda/quanteda.textstats/graph/badge.svg)](https://app.codecov.io/gh/quanteda/quanteda.textstats)
 <!-- badges: end -->
 
 ## About
