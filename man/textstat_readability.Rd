@@ -122,7 +122,7 @@ and Dale 1995).
 \deqn{64 - (0.95 \times 100 \times \frac{n_{wd}}{n_{w}}) - (0.69 \times ASL)}{
   64 - (0.95 * 100 * Nwd / Nw) - (0.69 * ASL)}}
 
-\item{\code{"Dale.Chall.Old"}:}{The original Dale-Chall Readability formula
+\item{\code{"Dale.Chall.old"}:}{The original Dale-Chall Readability formula
 (Dale and Chall (1948).
 \deqn{0.1579 \times 100 \times \frac{n_{wd}}{n_{w}} + 0.0496 \times ASL [+ 3.6365]}{
   0.1579 * 100 * Nwd / Nw  + 0.0496 * ASL [+ 3.6365]}
